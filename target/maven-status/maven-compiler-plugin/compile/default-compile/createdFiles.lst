@@ -1,4 +1,5 @@
 com\mycompany\sistemagestionagua\SistemaGestionAgua.class
+com\mycompany\sistemagestionagua\vista\vistaAgregarServicio.class
 com\mycompany\sistemagestionagua\vista\VistaPrincipal.class
 com\mycompany\sistemagestionagua\vista\VistaPrincipal$1.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal.class
