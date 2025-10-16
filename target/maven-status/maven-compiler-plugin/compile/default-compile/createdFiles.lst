@@ -1,5 +1,10 @@
 com\mycompany\sistemagestionagua\SistemaGestionAgua.class
+com\mycompany\sistemagestionagua\vista\VistaPrincipal$2.class
+com\mycompany\sistemagestionagua\vista\VistaPrincipal$6.class
+com\mycompany\sistemagestionagua\vista\VistaPrincipal$4.class
 com\mycompany\sistemagestionagua\vista\VistaPrincipal.class
 com\mycompany\sistemagestionagua\vista\VistaPrincipal$1.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal.class
+com\mycompany\sistemagestionagua\vista\VistaPrincipal$3.class
 com\mycompany\sistemagestionagua\modelo\ModeloPrincipal.class
+com\mycompany\sistemagestionagua\vista\VistaPrincipal$5.class

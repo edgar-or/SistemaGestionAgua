@@ -6,6 +6,7 @@ package com.mycompany.sistemagestionagua.controlador;
 
 import com.mycompany.sistemagestionagua.modelo.ModeloPrincipal;
 import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
+import javax.swing.JFrame;
 
 /**
  *
@@ -20,12 +21,21 @@ public class ControladorPrincipal {
         this.vista = vista;
         this.modelo = modelo;
         
-        this.vista.txtMensaje.setText(modelo.mostrarMensaje(true));
+        
+        
+        
+        
+        
+        
         
     }
     
+    
+    
+    
     public void iniciar(){
-        vista.setLocationRelativeTo(vista);
+        vista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        vista.setExtendedState(JFrame.MAXIMIZED_BOTH);
         vista.setVisible(true);
     }
     
