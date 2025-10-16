@@ -34,6 +34,9 @@ public class SistemaGestionAgua {
         ControladorPrincipal controlador = new ControladorPrincipal(vista, modelo);
         FlatLightLaf.setup();
         controlador.iniciar();
+        
+        System.out.println("rene soy irvin");
+        System.out.println("Irvin ");
 
     }
 }
