@@ -51,8 +51,7 @@ public class SistemaGestionAgua {
             ex.printStackTrace();
         }
 
-<<<<<<< HEAD
-=======
+
         VistaPrincipal vista = new VistaPrincipal();
         ModeloPrincipal modelo = new ModeloPrincipal();
 
@@ -63,6 +62,6 @@ public class SistemaGestionAgua {
         System.out.println("rene soy irvin");
         System.out.println("Irvin ");
 
->>>>>>> 6475171d61caf19e6dd98e2dd0409c63dbb3f7e1
+
     }
 }
