@@ -1,6 +1,14 @@
 com\mycompany\sistemagestionagua\SistemaGestionAgua.class
+<<<<<<< HEAD
 com\mycompany\sistemagestionagua\vista\vistaAgregarServicio.class
+=======
+com\mycompany\sistemagestionagua\vista\VistaPrincipal$2.class
+com\mycompany\sistemagestionagua\vista\VistaPrincipal$6.class
+com\mycompany\sistemagestionagua\vista\VistaPrincipal$4.class
+>>>>>>> 33b4c3f9f3030c17f58f0d61a6916f1f283d1f3a
 com\mycompany\sistemagestionagua\vista\VistaPrincipal.class
 com\mycompany\sistemagestionagua\vista\VistaPrincipal$1.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal.class
+com\mycompany\sistemagestionagua\vista\VistaPrincipal$3.class
 com\mycompany\sistemagestionagua\modelo\ModeloPrincipal.class
+com\mycompany\sistemagestionagua\vista\VistaPrincipal$5.class

@@ -51,7 +51,18 @@ public class SistemaGestionAgua {
             ex.printStackTrace();
         }
 
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> dccc2d478868567f2e8534a056f53b99652a99e5
+>>>>>>> 7a16f5706f96e4144603d41f14f23b77895fe7ac
+>>>>>>> 33b4c3f9f3030c17f58f0d61a6916f1f283d1f3a
         VistaPrincipal vista = new VistaPrincipal();
         ModeloPrincipal modelo = new ModeloPrincipal();
 
@@ -59,9 +70,21 @@ public class SistemaGestionAgua {
         FlatLightLaf.setup();
         controlador.iniciar();
         
+        
+        
         System.out.println("rene soy irvin");
         System.out.println("Irvin ");
 
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> dccc2d478868567f2e8534a056f53b99652a99e5
+>>>>>>> 7a16f5706f96e4144603d41f14f23b77895fe7ac
+>>>>>>> 33b4c3f9f3030c17f58f0d61a6916f1f283d1f3a
     }
 }
