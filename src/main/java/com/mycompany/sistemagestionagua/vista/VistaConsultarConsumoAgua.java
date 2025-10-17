@@ -37,6 +37,9 @@ public class VistaConsultarConsumoAgua extends javax.swing.JInternalFrame {
         txtConsumoMes = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtServicio = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        btnRegistrarConsumo = new javax.swing.JButton();
+        btnCerrarConsumo = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
 
         jMenu1.setText("jMenu1");
@@ -99,18 +102,50 @@ public class VistaConsultarConsumoAgua extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel3.setText("Servicio requerido");
+
+        btnRegistrarConsumo.setBackground(new java.awt.Color(0, 0, 102));
+        btnRegistrarConsumo.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        btnRegistrarConsumo.setForeground(new java.awt.Color(0, 102, 204));
+        btnRegistrarConsumo.setText("Registrar");
+        btnRegistrarConsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarConsumoActionPerformed(evt);
+            }
+        });
+
+        btnCerrarConsumo.setBackground(new java.awt.Color(102, 0, 0));
+        btnCerrarConsumo.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        btnCerrarConsumo.setForeground(new java.awt.Color(255, 153, 153));
+        btnCerrarConsumo.setText("Cerrar");
+        btnCerrarConsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarConsumoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtConsumoMes, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(104, 104, 104))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(198, 198, 198)
+                .addComponent(btnRegistrarConsumo)
+                .addGap(18, 18, 18)
+                .addComponent(btnCerrarConsumo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,8 +155,14 @@ public class VistaConsultarConsumoAgua extends javax.swing.JInternalFrame {
                     .addComponent(txtConsumoMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(57, 57, 57)
-                .addComponent(txtServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRegistrarConsumo)
+                    .addComponent(btnCerrarConsumo))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         setJMenuBar(jMenuBar1);
@@ -152,10 +193,21 @@ public class VistaConsultarConsumoAgua extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtServicioActionPerformed
 
+    private void btnRegistrarConsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarConsumoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegistrarConsumoActionPerformed
+
+    private void btnCerrarConsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarConsumoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCerrarConsumoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton btnCerrarConsumo;
+    public javax.swing.JButton btnRegistrarConsumo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
