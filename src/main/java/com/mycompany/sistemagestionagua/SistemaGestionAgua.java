@@ -50,12 +50,6 @@ public class SistemaGestionAgua {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-<<<<<<< HEAD
-        
-        
-        
-     
-=======
 
 
         VistaPrincipal vista = new VistaPrincipal();
@@ -66,11 +60,8 @@ public class SistemaGestionAgua {
         controlador.iniciar();
         
         
-        
-        System.out.println("rene soy irvin");
-        System.out.println("Irvin ");
+  
 
 
->>>>>>> baeebe6bb316700265aa28be84c725fb9ec73c44
     }
 }
