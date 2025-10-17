@@ -11,7 +11,8 @@ import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
 import com.mycompany.sistemagestionagua.vista.VistaAgregarUsuario;
 import com.mycompany.sistemagestionagua.vista.VistaConsultarUsurioIndividual;
 import com.mycompany.sistemagestionagua.vista.VistaEliminarUsuario;
-import com.mycompany.sistemagestionagua.vista.vistaAgregarServicio;
+import com.mycompany.sistemagestionagua.vista.vistaVerUsuarios;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,6 +31,7 @@ public class ControladorPrincipal {
     Base base;
     VistaConsultarUsurioIndividual visConsulUser; 
     VistaEliminarUsuario visEliminarUser; 
+    vistaVerUsuarios  visVerUsers;
     
 
     public ControladorPrincipal(VistaPrincipal vista, ModeloPrincipal modelo) {
@@ -38,6 +40,7 @@ public class ControladorPrincipal {
         this.base = new Base();
         this.visConsulUser = new VistaConsultarUsurioIndividual(); 
         this.visEliminarUser = new VistaEliminarUsuario(); 
+        this.visVerUsers = new vistaVerUsuarios(); 
 
         this.vistaAgregarUsuario = new VistaAgregarUsuario();
         onEvento();
@@ -51,7 +54,9 @@ public class ControladorPrincipal {
     }
 
    private void onEvento() {
-        vista.menuRegistrarUsuario.addActionListener(new ActionListener() {
+       
+       
+        vista.menuAgregarUsuario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 vistaAgregarUsuario.setSize(600, 400);
@@ -124,139 +129,30 @@ public class ControladorPrincipal {
         
         });
         
-        //pantalla de Consultar Usuario
-        vista.menuConsultarUser.addActionListener(new ActionListener() {
+
+         //vista de ver usuarios
+         
+         vista.menuVerUser.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                visConsulUser.setSize(600, 400);
-                visConsulUser.setVisible(true);
+                visVerUsers.setSize(600, 400);
+                visVerUsers.setVisible(true);
                 
                 Dimension desktopSize = vista.escritorio.getSize();
-                Dimension internal = visConsulUser.getSize();
+                Dimension internal = visVerUsers.getSize();
 
                 int x = (desktopSize.width - internal.width) / 2;
                 int y = (desktopSize.height - internal.height) / 2;
 
-                visConsulUser.setLocation(x, y);
+                visVerUsers.setLocation(x, y);
                 
-                vista.escritorio.add(visConsulUser);
-                
+                vista.escritorio.add(visVerUsers);
+
             }
         });
-        
-         visConsulUser.btnCerrarConsultarUser.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                visConsulUser.dispose();
-
-            }       
-        
-        });
          
          
-         this.visConsulUser.btnBuscarUsuario.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String texto = visConsulUser.txtBuscarUsuario.getText();
-                
-
-                if (texto.isEmpty()) {
-                    JOptionPane.showMessageDialog(vista, "¿Que estas buscando?", "Mi empresa", JOptionPane.WARNING_MESSAGE);
-                } else {
-                    Usuario temp = base.buscar(texto); 
-                    if (temp!= null) {
-                        visConsulUser.txtNombreAgreUsuario.setText(temp.getNombre());
-                                                visConsulUser.txtApellidoAgreUsuario.setText(temp.getApellido());
-                        visConsulUser.txtduiUsuario.setText(String.valueOf(temp.getDui()));
-
-                    }else{
-                                            JOptionPane.showMessageDialog(vista, "Dato NO encontrado", "Mi empresa", JOptionPane.WARNING_MESSAGE);
-
-                    }
-                }
-
-            }
-
-           
-        });
          
-         
-         //pantalla de Eliminar Usuario
-        vista.menuEliminarUser.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                visEliminarUser.setSize(600, 400);
-                visEliminarUser.setVisible(true);
-                
-                Dimension desktopSize = vista.escritorio.getSize();
-                Dimension internal = visEliminarUser.getSize();
-
-                int x = (desktopSize.width - internal.width) / 2;
-                int y = (desktopSize.height - internal.height) / 2;
-
-                visEliminarUser.setLocation(x, y);
-                
-                vista.escritorio.add(visEliminarUser);
-                
-            }
-        });
-        
-        
-        visEliminarUser.btnCerrarConsultarUser.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                visEliminarUser.dispose();
-
-            }       
-        
-        });
-         
-         
-         this.visEliminarUser.btnBuscarUsuario.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String texto = visEliminarUser.txtBuscarUsuario.getText();
-                
-
-                if (texto.isEmpty()) {
-                    JOptionPane.showMessageDialog(vista, "¿Que estas buscando?", "Mi empresa", JOptionPane.WARNING_MESSAGE);
-                } else {
-                    Usuario temp = base.buscarEliminar(texto); 
-                    if (temp!= null) {
-                        visEliminarUser.txtNombreAgreUsuario.setText(temp.getNombre());
-                                                visEliminarUser.txtApellidoAgreUsuario.setText(temp.getApellido());
-
-                    }else{
-                                            JOptionPane.showMessageDialog(vista, "Dato NO encontrado", "Mi empresa", JOptionPane.WARNING_MESSAGE);
-
-                    }
-                }
-
-            }
-
-           
-        });
-         
-         
-         this.visEliminarUser.btnEliminarUser.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String texto = visEliminarUser.txtBuscarUsuario.getText(); 
-                
-                if (base.eliminar(texto)==true) {
-                                                                JOptionPane.showMessageDialog(vista, "Usuario Eliminado", "Mi empresa", JOptionPane.WARNING_MESSAGE);
-
-                }else{
-                                                                                    JOptionPane.showMessageDialog(vista, "Usuario NO Eliminado", "Mi empresa", JOptionPane.WARNING_MESSAGE);
-
-                }
-
-                
-
-            }
-
-           
-        });
          
          
         
