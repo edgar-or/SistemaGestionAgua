@@ -1,1 +1,5 @@
 /target/
+
+# Ignorar todo el paquete de vistas (formularios Swing)
+src/main/java/com/mycompany/sistemagestionagua/vista/
+
