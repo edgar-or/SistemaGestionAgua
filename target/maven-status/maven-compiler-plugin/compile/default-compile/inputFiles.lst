@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\controlador\ControladorPrincipal.java
 C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\Base.java
 C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\ModeloPrincipal.java
@@ -11,3 +12,17 @@ C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\Vista
 C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaModificarUsuario.java
 C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaPrincipal.java
 C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\vistaVerUsuarios.java
+=======
+C:\Users\USUARIO\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\controlador\ControladorPrincipal.java
+C:\Users\USUARIO\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\Base.java
+C:\Users\USUARIO\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\ModeloPrincipal.java
+C:\Users\USUARIO\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\Usuario.java
+C:\Users\USUARIO\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\SistemaGestionAgua.java
+C:\Users\USUARIO\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\vistaAgregarServicio.java
+C:\Users\USUARIO\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaAgregarUsuario.java
+C:\Users\USUARIO\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaConsultarConsumoAgua.java
+C:\Users\USUARIO\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaConsultarUsurioIndividual.java
+C:\Users\USUARIO\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaEliminarUsuario.java
+C:\Users\USUARIO\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaModificarUsuario.java
+C:\Users\USUARIO\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaPrincipal.java
+>>>>>>> 65c6004d8acad2a3381ebb9053a0bfcb42fff3af
