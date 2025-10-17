@@ -66,7 +66,17 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
+<<<<<<< HEAD
                           <Component id="btnRegistra" min="-2" max="-2" attributes="0"/>
+=======
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                  <Component id="btnCerrarUsuario" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+>>>>>>> baeebe6bb316700265aa28be84c725fb9ec73c44
                       </Group>
                   </Group>
                   <EmptySpace pref="99" max="32767" attributes="0"/>
@@ -94,8 +104,15 @@
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
+<<<<<<< HEAD
                   <Component id="btnRegistra" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="76" max="32767" attributes="0"/>
+=======
+                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btnCerrarUsuario" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="47" max="32767" attributes="0"/>
+>>>>>>> baeebe6bb316700265aa28be84c725fb9ec73c44
               </Group>
           </Group>
         </DimensionLayout>
@@ -167,6 +184,14 @@
         <Component class="javax.swing.JButton" name="btnRegistra">
           <Properties>
             <Property name="text" type="java.lang.String" value="REGISTRAR"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnCerrarUsuario">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="CERRAR"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

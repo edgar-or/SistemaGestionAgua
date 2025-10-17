@@ -34,8 +34,14 @@ public class vistaAgragarUsuario extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         txtApellido = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+<<<<<<< HEAD
         txtDui = new javax.swing.JTextField();
         btnRegistra = new javax.swing.JButton();
+=======
+        jTextField3 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        btnCerrarUsuario = new javax.swing.JButton();
+>>>>>>> baeebe6bb316700265aa28be84c725fb9ec73c44
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -67,6 +73,8 @@ public class vistaAgragarUsuario extends javax.swing.JInternalFrame {
 
         btnRegistra.setText("REGISTRAR");
 
+        btnCerrarUsuario.setText("CERRAR");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -90,7 +98,15 @@ public class vistaAgragarUsuario extends javax.swing.JInternalFrame {
                             .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(109, 109, 109)
+<<<<<<< HEAD
                         .addComponent(btnRegistra)))
+=======
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(btnCerrarUsuario)))))
+>>>>>>> baeebe6bb316700265aa28be84c725fb9ec73c44
                 .addContainerGap(99, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -111,8 +127,15 @@ public class vistaAgragarUsuario extends javax.swing.JInternalFrame {
                     .addComponent(txtDui, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
+<<<<<<< HEAD
                 .addComponent(btnRegistra)
                 .addContainerGap(76, Short.MAX_VALUE))
+=======
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCerrarUsuario)
+                .addContainerGap(47, Short.MAX_VALUE))
+>>>>>>> baeebe6bb316700265aa28be84c725fb9ec73c44
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -134,7 +157,12 @@ public class vistaAgragarUsuario extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+<<<<<<< HEAD
     public javax.swing.JButton btnRegistra;
+=======
+    public javax.swing.JButton btnCerrarUsuario;
+    private javax.swing.JButton jButton1;
+>>>>>>> baeebe6bb316700265aa28be84c725fb9ec73c44
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

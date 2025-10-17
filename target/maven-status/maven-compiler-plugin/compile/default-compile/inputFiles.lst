@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\controlador\ControladorPrincipal.java
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\Base.java
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\ModeloPrincipal.java
@@ -6,3 +7,13 @@ C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagu
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\vistaAgragarUsuario.java
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaPrincipal.java
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaRegistrarConsumoAgua.java
+=======
+C:\Users\MINEDUCYT\OneDrive\Documentos\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\controlador\ControladorPrincipal.java
+C:\Users\MINEDUCYT\OneDrive\Documentos\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\ModeloPrincipal.java
+C:\Users\MINEDUCYT\OneDrive\Documentos\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\Usuario.java
+C:\Users\MINEDUCYT\OneDrive\Documentos\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\SistemaGestionAgua.java
+C:\Users\MINEDUCYT\OneDrive\Documentos\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\vistaAgragarUsuario.java
+C:\Users\MINEDUCYT\OneDrive\Documentos\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\vistaAgregarServicio.java
+C:\Users\MINEDUCYT\OneDrive\Documentos\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaConsultarConsumoAgua.java
+C:\Users\MINEDUCYT\OneDrive\Documentos\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaPrincipal.java
+>>>>>>> baeebe6bb316700265aa28be84c725fb9ec73c44
