@@ -24,10 +24,10 @@ public class SistemaGestionAgua {
     public static void main(String[] args) {
 
         try {
-            //FlatLightLaf.setup();
+            FlatLightLaf.setup();
             // Si quieres, puedes probar FlatDarkLaf, FlatIntelliJLaf, etc.
             //FlatDarkLaf.setup();
-            FlatMacDarkLaf.setup(); // tema macOS oscuro
+            //FlatMacDarkLaf.setup(); // tema macOS oscuro
 
             // 🔹 Activar decoraciones modernas en ventanas
             JFrame.setDefaultLookAndFeelDecorated(true);
@@ -60,9 +60,7 @@ public class SistemaGestionAgua {
         controlador.iniciar();
         
         
-        
-        System.out.println("rene soy irvin");
-        System.out.println("Irvin ");
+  
 
 
     }
