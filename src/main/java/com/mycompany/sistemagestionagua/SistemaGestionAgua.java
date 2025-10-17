@@ -24,10 +24,10 @@ public class SistemaGestionAgua {
     public static void main(String[] args) {
 
         try {
-            //FlatLightLaf.setup();
+            FlatLightLaf.setup();
             // Si quieres, puedes probar FlatDarkLaf, FlatIntelliJLaf, etc.
             //FlatDarkLaf.setup();
-            FlatMacDarkLaf.setup(); // tema macOS oscuro
+            //FlatMacDarkLaf.setup(); // tema macOS oscuro
 
             // 🔹 Activar decoraciones modernas en ventanas
             JFrame.setDefaultLookAndFeelDecorated(true);
@@ -50,33 +50,9 @@ public class SistemaGestionAgua {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-<<<<<<< HEAD
-
-=======
-<<<<<<< HEAD
-
-=======
->>>>>>> dccc2d478868567f2e8534a056f53b99652a99e5
->>>>>>> 7a16f5706f96e4144603d41f14f23b77895fe7ac
-        VistaPrincipal vista = new VistaPrincipal();
-        ModeloPrincipal modelo = new ModeloPrincipal();
-
-        ControladorPrincipal controlador = new ControladorPrincipal(vista, modelo);
-        FlatLightLaf.setup();
-        controlador.iniciar();
         
         
         
-        System.out.println("rene soy irvin");
-        System.out.println("Irvin ");
-
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-
-=======
->>>>>>> dccc2d478868567f2e8534a056f53b99652a99e5
->>>>>>> 7a16f5706f96e4144603d41f14f23b77895fe7ac
+     
     }
 }
