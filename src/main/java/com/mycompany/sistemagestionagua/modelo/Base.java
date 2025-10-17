@@ -12,10 +12,12 @@ import java.util.ArrayList;
  */
 public class Base {
     
-    ArrayList<Usuario> usuarios; 
+    ArrayList<Usuario> usuarios;
+    ArrayList<Servicio> servicios; 
 
      public Base() {
         usuarios = new ArrayList<>();
+        servicios= new ArrayList<>();
     }
 
     public boolean agregar(Usuario e) {
@@ -26,9 +28,22 @@ public class Base {
             return false;
         }
     }
+    
+    public boolean agregarServicio(Servicio s) {
+        try {
+            servicios.add(s);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
 
     public ArrayList<Usuario> getEmpleados() {
         return usuarios;
+    }
+
+    public ArrayList<Servicio> getServicios() {
+        return servicios;
     }
 
     public Usuario buscar(String texto) {
@@ -45,6 +60,73 @@ public class Base {
         return encontrado;
 
     }
+    
+    public Servicio buscarServicioPorDui(String dui) {
+        Servicio encontrado = null;
+
+        for (Servicio servicio : servicios) {
+            if (servicio.getDuiPropietario().contains(dui)) {
+                encontrado = servicio;
+                break;
+
+            }
+
+        }
+        return encontrado;
+
+    }
+    
+     public String buscarPorNombre(String nombre) {
+    for (Usuario usuario : usuarios) {
+        if (usuario.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
+            return usuario.getDui();
+        }
+    }
+    return null; // si no encuentra, retorna null
+}
+     
+     
+      public Servicio buscarServicio(String dui) {
+        Servicio encontrado = null;
+        
+
+        for (Servicio servicio : servicios) {
+            if (dui.equals(servicio.getDuiPropietario())) {
+                encontrado = servicio;
+                break;
+
+            }
+
+        }
+        return encontrado;
+
+    }
+      
+      
+      
+       public Servicio buscarServicioPorNumCuenta(String numCuenta){
+           Servicio encontrado = null; 
+           
+           for (Servicio servicio : servicios) {
+               if (numCuenta.equals(servicio.getNumCuenta())) {
+                   encontrado =servicio;
+                   break; 
+               }
+           }
+           
+           return encontrado; 
+       }
+       
+       
+       public boolean eliminarServicio(String dui) {
+    return usuarios.removeIf(servicio -> servicio.getDui().equals(dui));
+}
+     
+     
+      
+     
+    
+    
     
     public Usuario buscarEliminar(String texto) {
         Usuario encontrado = null;

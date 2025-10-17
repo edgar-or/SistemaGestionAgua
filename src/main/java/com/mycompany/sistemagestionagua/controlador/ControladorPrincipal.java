@@ -7,12 +7,12 @@ package com.mycompany.sistemagestionagua.controlador;
 import com.mycompany.sistemagestionagua.modelo.Base;
 import com.mycompany.sistemagestionagua.modelo.ModeloPrincipal;
 import com.mycompany.sistemagestionagua.modelo.Usuario;
-import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
 import com.mycompany.sistemagestionagua.vista.VistaAgregarUsuario;
 import com.mycompany.sistemagestionagua.vista.VistaConsultarUsurioIndividual;
 import com.mycompany.sistemagestionagua.vista.VistaEliminarUsuario;
+import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
+import com.mycompany.sistemagestionagua.vista.vistaAgregarServicio;
 import com.mycompany.sistemagestionagua.vista.vistaVerUsuarios;
-
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,7 +31,7 @@ public class ControladorPrincipal {
     Base base;
     VistaConsultarUsurioIndividual visConsulUser; 
     VistaEliminarUsuario visEliminarUser; 
-    vistaVerUsuarios  visVerUsers;
+    vistaVerUsuarios visVerUsers; 
     
 
     public ControladorPrincipal(VistaPrincipal vista, ModeloPrincipal modelo) {
@@ -54,9 +54,7 @@ public class ControladorPrincipal {
     }
 
    private void onEvento() {
-       
-       
-        vista.menuAgregarUsuario.addActionListener(new ActionListener() {
+        vista.menuRegistrarUsuario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 vistaAgregarUsuario.setSize(600, 400);
@@ -129,12 +127,10 @@ public class ControladorPrincipal {
         
         });
         
-
-         //vista de ver usuarios
-         
-         vista.menuVerUser.addActionListener(new ActionListener(){
+        vista.menuVerUser.addActionListener( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                
                 visVerUsers.setSize(600, 400);
                 visVerUsers.setVisible(true);
                 
@@ -147,9 +143,32 @@ public class ControladorPrincipal {
                 visVerUsers.setLocation(x, y);
                 
                 vista.escritorio.add(visVerUsers);
-
+                
             }
         });
+        
+        visVerUsers.btnCerrarVer.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                visVerUsers.dispose();
+
+            }       
+        
+        });
+        
+        
+        
+        
+       
+         
+         
+         
+         
+         
+         
+        
+        
+
          
          
          
