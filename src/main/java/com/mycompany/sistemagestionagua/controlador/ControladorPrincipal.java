@@ -10,6 +10,7 @@ import com.mycompany.sistemagestionagua.modelo.Usuario;
 import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
 import com.mycompany.sistemagestionagua.vista.VistaAgregarUsuario;
 import com.mycompany.sistemagestionagua.vista.VistaConsultarUsurioIndividual;
+import com.mycompany.sistemagestionagua.vista.VistaEliminarUsuario;
 import com.mycompany.sistemagestionagua.vista.vistaAgregarServicio;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -28,6 +29,7 @@ public class ControladorPrincipal {
     VistaAgregarUsuario vistaAgregarUsuario;
     Base base;
     VistaConsultarUsurioIndividual visConsulUser; 
+    VistaEliminarUsuario visEliminarUser; 
     
 
     public ControladorPrincipal(VistaPrincipal vista, ModeloPrincipal modelo) {
@@ -35,6 +37,7 @@ public class ControladorPrincipal {
         this.modelo = modelo;
         this.base = new Base();
         this.visConsulUser = new VistaConsultarUsurioIndividual(); 
+        this.visEliminarUser = new VistaEliminarUsuario(); 
 
         this.vistaAgregarUsuario = new VistaAgregarUsuario();
         onEvento();
@@ -176,6 +179,89 @@ public class ControladorPrincipal {
 
            
         });
+         
+         
+         //pantalla de Eliminar Usuario
+        vista.menuEliminarUser.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                visEliminarUser.setSize(600, 400);
+                visEliminarUser.setVisible(true);
+                
+                Dimension desktopSize = vista.escritorio.getSize();
+                Dimension internal = visEliminarUser.getSize();
+
+                int x = (desktopSize.width - internal.width) / 2;
+                int y = (desktopSize.height - internal.height) / 2;
+
+                visEliminarUser.setLocation(x, y);
+                
+                vista.escritorio.add(visEliminarUser);
+                
+            }
+        });
+        
+        
+        visEliminarUser.btnCerrarConsultarUser.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                visEliminarUser.dispose();
+
+            }       
+        
+        });
+         
+         
+         this.visEliminarUser.btnBuscarUsuario.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String texto = visEliminarUser.txtBuscarUsuario.getText();
+                
+
+                if (texto.isEmpty()) {
+                    JOptionPane.showMessageDialog(vista, "¿Que estas buscando?", "Mi empresa", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    Usuario temp = base.buscarEliminar(texto); 
+                    if (temp!= null) {
+                        visEliminarUser.txtNombreAgreUsuario.setText(temp.getNombre());
+                                                visEliminarUser.txtApellidoAgreUsuario.setText(temp.getApellido());
+
+                    }else{
+                                            JOptionPane.showMessageDialog(vista, "Dato NO encontrado", "Mi empresa", JOptionPane.WARNING_MESSAGE);
+
+                    }
+                }
+
+            }
+
+           
+        });
+         
+         
+         this.visEliminarUser.btnEliminarUser.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String texto = visEliminarUser.txtBuscarUsuario.getText(); 
+                
+                if (base.eliminar(texto)==true) {
+                                                                JOptionPane.showMessageDialog(vista, "Usuario Eliminado", "Mi empresa", JOptionPane.WARNING_MESSAGE);
+
+                }else{
+                                                                                    JOptionPane.showMessageDialog(vista, "Usuario NO Eliminado", "Mi empresa", JOptionPane.WARNING_MESSAGE);
+
+                }
+
+                
+
+            }
+
+           
+        });
+         
+         
+        
+        
+         
          
          
 

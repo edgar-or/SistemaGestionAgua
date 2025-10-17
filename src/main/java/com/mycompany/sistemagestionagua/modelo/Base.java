@@ -34,9 +34,9 @@ public class Base {
     public Usuario buscar(String texto) {
         Usuario encontrado = null;
 
-        for (Usuario empleado : usuarios) {
-            if (empleado.getNombre().toLowerCase().contains(texto.toLowerCase())) {
-                encontrado = empleado;
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNombre().toLowerCase().contains(texto.toLowerCase())) {
+                encontrado = usuario;
                 break;
 
             }
@@ -45,13 +45,29 @@ public class Base {
         return encontrado;
 
     }
+    
+    public Usuario buscarEliminar(String texto) {
+        Usuario encontrado = null;
+
+        for (Usuario usuario : usuarios) {
+            if (usuario.getDui().equals(texto)) {
+                encontrado = usuario;
+                break;
+
+            }
+
+        }
+        return encontrado;
+
+    }
+    
 
     public ArrayList<Usuario> buscarTodos(String texto) {
 
         ArrayList<Usuario> temp = new ArrayList<>();
-        for (Usuario empleado : usuarios) {
-            if (empleado.getNombre().toLowerCase().contains(texto.toLowerCase())) {
-                temp.add(empleado);
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNombre().toLowerCase().contains(texto.toLowerCase())) {
+                temp.add(usuario);
 
             }
 
@@ -65,6 +81,11 @@ public class Base {
         }
 
     }
+    
+    
+    public boolean eliminar(String texto) {
+    return usuarios.removeIf(usuario -> usuario.getDui().equals(texto));
+}
     
     
     
