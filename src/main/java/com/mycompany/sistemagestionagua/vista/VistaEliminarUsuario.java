@@ -8,12 +8,12 @@ package com.mycompany.sistemagestionagua.vista;
  *
  * @author MINEDUCYT
  */
-public class VistaModificarUsuario extends javax.swing.JInternalFrame {
+public class VistaEliminarUsuario extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form VistaModificarUsuario
+     * Creates new form VistaEliminarUsuario
      */
-    public VistaModificarUsuario() {
+    public VistaEliminarUsuario() {
         initComponents();
     }
 
@@ -26,80 +26,24 @@ public class VistaModificarUsuario extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        txtNombreUsuarioBuscar = new javax.swing.JTextField();
-        btnCerrarModUsuario = new javax.swing.JButton();
-        btnBuscarUsuario = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        lblModificarUsuarios = new javax.swing.JTextArea();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        txtNombreUsuarioBuscarEli = new javax.swing.JTextField();
+        btnCerrarEliUsuario = new javax.swing.JButton();
+        btnBuscarUsuarioEli = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        btnModUsuario = new javax.swing.JButton();
-
-        jPanel2.setBackground(new java.awt.Color(0, 153, 153));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(153, 255, 255));
-        jLabel2.setText("Nombre:");
-
-        txtNombreUsuarioBuscar.setBackground(new java.awt.Color(0, 204, 204));
-        txtNombreUsuarioBuscar.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
-        txtNombreUsuarioBuscar.setForeground(new java.awt.Color(0, 102, 102));
-        txtNombreUsuarioBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreUsuarioBuscarActionPerformed(evt);
-            }
-        });
-
-        btnCerrarModUsuario.setBackground(new java.awt.Color(153, 0, 0));
-        btnCerrarModUsuario.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
-        btnCerrarModUsuario.setForeground(new java.awt.Color(255, 153, 153));
-        btnCerrarModUsuario.setText("Cerrar");
-
-        btnBuscarUsuario.setBackground(new java.awt.Color(0, 0, 102));
-        btnBuscarUsuario.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
-        btnBuscarUsuario.setForeground(new java.awt.Color(153, 153, 255));
-        btnBuscarUsuario.setText("Buscar Usuario");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnCerrarModUsuario)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBuscarUsuario)
-                    .addComponent(txtNombreUsuarioBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(101, 101, 101))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtNombreUsuarioBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBuscarUsuario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCerrarModUsuario)
-                .addContainerGap())
-        );
+        btnEliUsuario = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lblEliminarUsuarios = new javax.swing.JTextArea();
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 102));
 
         jLabel1.setBackground(new java.awt.Color(0, 102, 102));
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Modificar Usuario");
+        jLabel1.setText("Eliminar Usuario");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -115,22 +59,71 @@ public class VistaModificarUsuario extends javax.swing.JInternalFrame {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
-        lblModificarUsuarios.setBackground(new java.awt.Color(0, 153, 153));
-        lblModificarUsuarios.setColumns(20);
-        lblModificarUsuarios.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
-        lblModificarUsuarios.setForeground(new java.awt.Color(0, 255, 255));
-        lblModificarUsuarios.setRows(5);
-        jScrollPane1.setViewportView(lblModificarUsuarios);
+        jPanel2.setBackground(new java.awt.Color(0, 153, 153));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(153, 255, 255));
+        jLabel2.setText("Nombre:");
+
+        txtNombreUsuarioBuscarEli.setBackground(new java.awt.Color(0, 204, 204));
+        txtNombreUsuarioBuscarEli.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        txtNombreUsuarioBuscarEli.setForeground(new java.awt.Color(0, 102, 102));
+        txtNombreUsuarioBuscarEli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreUsuarioBuscarEliActionPerformed(evt);
+            }
+        });
+
+        btnCerrarEliUsuario.setBackground(new java.awt.Color(153, 0, 0));
+        btnCerrarEliUsuario.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        btnCerrarEliUsuario.setForeground(new java.awt.Color(255, 153, 153));
+        btnCerrarEliUsuario.setText("Cerrar");
+
+        btnBuscarUsuarioEli.setBackground(new java.awt.Color(0, 0, 102));
+        btnBuscarUsuarioEli.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        btnBuscarUsuarioEli.setForeground(new java.awt.Color(153, 153, 255));
+        btnBuscarUsuarioEli.setText("Buscar Usuario");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnCerrarEliUsuario)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBuscarUsuarioEli)
+                    .addComponent(txtNombreUsuarioBuscarEli, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(101, 101, 101))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtNombreUsuarioBuscarEli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscarUsuarioEli)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCerrarEliUsuario)
+                .addContainerGap())
+        );
 
         jPanel3.setBackground(new java.awt.Color(0, 153, 153));
 
-        btnModUsuario.setBackground(new java.awt.Color(0, 102, 51));
-        btnModUsuario.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
-        btnModUsuario.setForeground(new java.awt.Color(153, 255, 153));
-        btnModUsuario.setText("Modificar");
-        btnModUsuario.addActionListener(new java.awt.event.ActionListener() {
+        btnEliUsuario.setBackground(new java.awt.Color(0, 102, 51));
+        btnEliUsuario.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        btnEliUsuario.setForeground(new java.awt.Color(153, 255, 153));
+        btnEliUsuario.setText("Eliminar");
+        btnEliUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModUsuarioActionPerformed(evt);
+                btnEliUsuarioActionPerformed(evt);
             }
         });
 
@@ -140,16 +133,23 @@ public class VistaModificarUsuario extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnModUsuario)
+                .addComponent(btnEliUsuario)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnModUsuario)
+                .addComponent(btnEliUsuario)
                 .addContainerGap())
         );
+
+        lblEliminarUsuarios.setBackground(new java.awt.Color(0, 153, 153));
+        lblEliminarUsuarios.setColumns(20);
+        lblEliminarUsuarios.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        lblEliminarUsuarios.setForeground(new java.awt.Color(0, 255, 255));
+        lblEliminarUsuarios.setRows(5);
+        jScrollPane1.setViewportView(lblEliminarUsuarios);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -174,7 +174,7 @@ public class VistaModificarUsuario extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -182,26 +182,26 @@ public class VistaModificarUsuario extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNombreUsuarioBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreUsuarioBuscarActionPerformed
+    private void txtNombreUsuarioBuscarEliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreUsuarioBuscarEliActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreUsuarioBuscarActionPerformed
+    }//GEN-LAST:event_txtNombreUsuarioBuscarEliActionPerformed
 
-    private void btnModUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModUsuarioActionPerformed
+    private void btnEliUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnModUsuarioActionPerformed
+    }//GEN-LAST:event_btnEliUsuarioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton btnBuscarUsuario;
-    public javax.swing.JButton btnCerrarModUsuario;
-    public javax.swing.JButton btnModUsuario;
+    public javax.swing.JButton btnBuscarUsuarioEli;
+    public javax.swing.JButton btnCerrarEliUsuario;
+    public javax.swing.JButton btnEliUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    public javax.swing.JTextArea lblModificarUsuarios;
-    public javax.swing.JTextField txtNombreUsuarioBuscar;
+    public javax.swing.JTextArea lblEliminarUsuarios;
+    public javax.swing.JTextField txtNombreUsuarioBuscarEli;
     // End of variables declaration//GEN-END:variables
 }
