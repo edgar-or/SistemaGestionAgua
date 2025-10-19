@@ -50,18 +50,5 @@ public class SistemaGestionAgua {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-
-        VistaPrincipal vista = new VistaPrincipal();
-        ModeloPrincipal modelo = new ModeloPrincipal();
-
-        ControladorPrincipal controlador = new ControladorPrincipal(vista, modelo);
-        FlatLightLaf.setup();
-        controlador.iniciar();
-        
-        
-  
-
-
     }
 }
