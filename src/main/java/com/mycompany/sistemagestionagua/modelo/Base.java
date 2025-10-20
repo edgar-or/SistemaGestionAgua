@@ -11,11 +11,13 @@ import java.util.ArrayList;
  * @author ayala
  */
 public class Base {
-    
-    ArrayList<Usuario> usuarios; 
 
-     public Base() {
+    ArrayList<Usuario> usuarios;
+    ArrayList<Servicio> servicios;
+
+    public Base() {
         usuarios = new ArrayList<>();
+        servicios = new ArrayList<>();
     }
 
     public boolean agregar(Usuario e) {
@@ -27,66 +29,114 @@ public class Base {
         }
     }
 
-    public ArrayList<Usuario> getEmpleados() {
+    public boolean agregarServicio(Servicio s) {
+        try {
+            servicios.add(s);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    public ArrayList<Usuario> getUsuario() {
         return usuarios;
     }
 
-    public Usuario buscar(String texto) {
-        Usuario encontrado = null;
-
-        for (Usuario usuario : usuarios) {
-            if (usuario.getNombre().toLowerCase().contains(texto.toLowerCase())) {
-                encontrado = usuario;
-                break;
-
-            }
-
-        }
-        return encontrado;
-
+    public ArrayList<Servicio> getServicios() {
+        return servicios;
     }
-    
-    public Usuario buscarEliminar(String texto) {
-        Usuario encontrado = null;
 
-        for (Usuario usuario : usuarios) {
-            if (usuario.getDui().equals(texto)) {
-                encontrado = usuario;
-                break;
-
-            }
-
-        }
-        return encontrado;
-
-    }
-    
-
-    public ArrayList<Usuario> buscarTodos(String texto) {
-
+    public ArrayList<Usuario> buscarUsuario(String identificador, String busca) {
         ArrayList<Usuario> temp = new ArrayList<>();
+        Usuario encontrado = null;
+
         for (Usuario usuario : usuarios) {
-            if (usuario.getNombre().toLowerCase().contains(texto.toLowerCase())) {
-                temp.add(usuario);
+            if (identificador.equalsIgnoreCase("nombre") && usuario.getNombre().toLowerCase().contains(busca.toLowerCase())) {
+                encontrado = usuario;
+                temp.add(encontrado);
+
+            } else if (identificador.equalsIgnoreCase("apellido") && usuario.getApellido().toLowerCase().contains(busca.toLowerCase())) {
+                encontrado = usuario;
+                temp.add(encontrado);
+
+            } else if (identificador.equalsIgnoreCase("dui") && usuario.getDui().equals(busca)) {
+                encontrado = usuario;
+                temp.add(encontrado);
+            }
+
+        }
+        return temp;
+
+    }
+
+    public String bNumCuenta(String dui) {
+        for (Servicio servicio : servicios) {
+            if (dui.equals(servicio.getDuiPropietario())) {
+                return servicio.getNumCuenta();
+            }
+        }
+        return null;
+    }
+
+    public String buscarPorNombre(String nombre) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
+                return usuario.getDui();
+            }
+        }
+        return null; // si no encuentra, retorna null
+    }
+
+    public String buscarServicioPorNumCuenta(String buscar) {
+        for (Servicio servicio : servicios) {
+            if (servicio.equals(buscar)) {
+                return servicio.getDuiPropietario();
+
+            }
+        }
+        return null;
+    }
+
+    public String buscarServicio(String buscar) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNombre().toLowerCase().contains(buscar.toLowerCase())) {
+                return usuario.getDui();
+            } else if (usuario.getDui().equals(buscar)) {
+                return usuario.getDui();
+
+            } else {
+                buscarServicioPorNumCuenta(buscar);
+            }
+        }
+        return null; // si no encuentra, retorna null
+    }
+
+    public Servicio encontrarServicio(String dui) {
+        Servicio encontrado = null;
+
+        for (Servicio servicio : servicios) {
+            if (dui.equals(servicio.getDuiPropietario())) {
+                encontrado = servicio;
+                break;
 
             }
 
         }
-
-        if (temp.isEmpty()) {
-            return null;
-
-        } else {
-            return temp;
-        }
+        return encontrado;
 
     }
-    
-    
-    public boolean eliminar(String texto) {
-    return usuarios.removeIf(usuario -> usuario.getDui().equals(texto));
-}
-    
-    
-    
+
+    public boolean eliminarUsuario(String dui) {
+
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuarios.get(i).getDui().equals(dui)) {
+                usuarios.remove(i);
+                return true;
+            }
+
+        }
+        return false;
+
+    }
+
 }
