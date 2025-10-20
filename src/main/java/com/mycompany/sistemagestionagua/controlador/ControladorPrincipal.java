@@ -8,10 +8,9 @@ import com.mycompany.sistemagestionagua.modelo.Base;
 import com.mycompany.sistemagestionagua.modelo.ModeloPrincipal;
 import com.mycompany.sistemagestionagua.modelo.Usuario;
 import com.mycompany.sistemagestionagua.vista.VistaAgregarUsuario;
-import com.mycompany.sistemagestionagua.vista.VistaConsultarUsurioIndividual;
-import com.mycompany.sistemagestionagua.vista.VistaEliminarUsuario;
 import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
 import com.mycompany.sistemagestionagua.vista.vistaAgregarServicio;
+import com.mycompany.sistemagestionagua.vista.vistaVerServicios;
 import com.mycompany.sistemagestionagua.vista.vistaVerUsuarios;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -32,18 +31,16 @@ public class ControladorPrincipal {
     ModeloPrincipal modelo;
     VistaAgregarUsuario vistaAgregarUsuario;
     Base base;
-    VistaConsultarUsurioIndividual visConsulUser;
-    VistaEliminarUsuario visEliminarUser;
+    vistaVerServicios verServicio;
+    
     vistaVerUsuarios visVerUsers;
 
     public ControladorPrincipal(VistaPrincipal vista, ModeloPrincipal modelo) {
         this.vista = vista;
         this.modelo = modelo;
         this.base = new Base();
-        this.visConsulUser = new VistaConsultarUsurioIndividual();
-        this.visEliminarUser = new VistaEliminarUsuario();
         this.visVerUsers = new vistaVerUsuarios();
-
+         this.verServicio = new vistaVerServicios();  
         this.vistaAgregarUsuario = new VistaAgregarUsuario();
         onEvento();
 
@@ -243,11 +240,53 @@ public class ControladorPrincipal {
 
             }
         });
+        
+        //fin de tabla ver usuarios
+
+        //inicio servicios
+        vista.menuVerServicios.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                verServicio.setSize(900, 600);
+                verServicio.setVisible(true);
+
+                Dimension desktopSize = vista.escritorio.getSize();
+                Dimension internal = verServicio.getSize();
+
+                int x = (desktopSize.width - internal.width) / 2;
+                int y = (desktopSize.height - internal.height) / 2;
+
+                verServicio.setLocation(x, y);
+
+                vista.escritorio.add(verServicio);
+
+                mostrarUsersTabla(base.getUsuario());
+
+                // agregamos los eventos a los JTextField
+                eventoCampo(verServicio.txtBuscar1, verServicio.txtBuscar2, verServicio.txtBuscar3);
+                eventoCampo(verServicio.txtBuscar2, verServicio.txtBuscar1, verServicio.txtBuscar3);
+                eventoCampo(verServicio.txtBuscar3, verServicio.txtBuscar1, verServicio.txtBuscar2);
+
+            }
+        });
+        
+        verServicio.btnCerrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                verServicio.dispose();
+
+            }
+
+        });
+        
 
 
+    }//no tocar
 
-    }
-
+    
+    //fumciones aqui abajo 
     public void mostrarUsersTabla(ArrayList<Usuario> usuarios) {
         DefaultTableModel modeloTabla = new DefaultTableModel() {
             @Override
