@@ -132,7 +132,7 @@ public class ControladorPrincipal {
 
          //vista de ver usuarios
          
-         vista.menuVerUser.addActionListener(new ActionListener(){
+         vista.menuVerUsers.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 visVerUsers.setSize(600, 400);
