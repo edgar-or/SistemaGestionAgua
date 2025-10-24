@@ -346,12 +346,12 @@ public class ControladorPrincipal {
 
                 vista.escritorio.add(verServicio);
 
-                mostrarUsersTabla(base.getUsuario());
+                mostrarServiciosTabla(base.getServicios());
 
                 // agregamos los eventos a los JTextField
-                eventoCampo(verServicio.txtBuscarDui, verServicio.txtBuscarCuenta, verServicio.txtBuscar3);
-                eventoCampo(verServicio.txtBuscarCuenta, verServicio.txtBuscarDui, verServicio.txtBuscar3);
-                eventoCampo(verServicio.txtBuscar3, verServicio.txtBuscarDui, verServicio.txtBuscarCuenta);
+                eventoCampo(verServicio.txtBuscarDui, verServicio.txtBuscarCuenta, verServicio.txtBuscarDireccion);
+                eventoCampo(verServicio.txtBuscarCuenta, verServicio.txtBuscarDui, verServicio.txtBuscarDireccion);
+                eventoCampo(verServicio.txtBuscarDireccion, verServicio.txtBuscarDui, verServicio.txtBuscarCuenta);
 
             }
         });
@@ -379,9 +379,9 @@ public class ControladorPrincipal {
                     identificador = "DUI";
                     busca = verServicio.txtBuscarCuenta.getText().trim();
 
-                } else if (!verServicio.txtBuscar3.getText().isEmpty()) {
+                } else if (!verServicio.txtBuscarDireccion.getText().isEmpty()) {
                     identificador = "Cuenta";
-                    busca = verServicio.txtBuscar3.getText().trim();
+                    busca = verServicio.txtBuscarDireccion.getText().trim();
 
                 }
                 if (busca == null) {
@@ -394,7 +394,7 @@ public class ControladorPrincipal {
                     JOptionPane.showMessageDialog(vista, "No se encontraron servicios con la informacion ingresada", "ANDA", JOptionPane.WARNING_MESSAGE);
                     verServicio.txtBuscarDui.setText("");
                     verServicio.txtBuscarCuenta.setText("");
-                    verServicio.txtBuscar3.setText("");
+                    verServicio.txtBuscarDireccion.setText("");
                     //detiene la ejecucion
                     return;
                 }
@@ -518,6 +518,12 @@ public class ControladorPrincipal {
 
     }
     
+    
+    
+    
+    
+    
+    
     //funcion para servicio
     public void mostrarServiciosTabla(ArrayList<Servicio> servicios) {
         DefaultTableModel modeloTabla = new DefaultTableModel() {
@@ -530,7 +536,6 @@ public class ControladorPrincipal {
         String titulos[] = {"N°", "DUI propietario", "Nombre", "Apellido", "Direccion"};
         modeloTabla.setColumnIdentifiers(titulos);
 
-        //ArrayList<Usuario> usuarios = base.getUsuario();
         String resp = "";
         
         
@@ -543,10 +548,26 @@ public class ControladorPrincipal {
                 resp = servicio.getDuiPropietario();
             }
 
-            Object datos[] = {modeloTabla.getRowCount() + 1, servicio.getDuiPropietario(), servicio.getNombre(), usuario.getApellido(), resp};
+            Object datos[] = {modeloTabla.getRowCount() + 1, servicio.getDuiPropietario(), servicio.getnumeroCuenta(), servicio.getDireccion(), resp};
             modeloTabla.addRow(datos);
         }
-        this.visVerUsers.tablaUsuarios.setModel(modeloTabla);
+        this.verServicio.tablaServicios.setModel(modeloTabla);
 
     }
+    
+     private String getServicioSeleccionado() {
+        int fila = verServicio.tablaServicios.getSelectedRow();
+
+        if (fila == -1) {
+
+            JOptionPane.showMessageDialog(verServicio, "Seleccione un usuario de la tabla");
+            return null;
+
+        }
+
+        String dui = verServicio.tablaServicios.getValueAt(fila, 1).toString(); // Columna 1 = DUI
+        return dui;
+
+    } 
+
 }
