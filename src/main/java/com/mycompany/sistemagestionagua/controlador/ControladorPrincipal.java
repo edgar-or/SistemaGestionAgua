@@ -1,4 +1,3 @@
-
 package com.mycompany.sistemagestionagua.controlador;
 
 import com.mycompany.sistemagestionagua.modelo.Base;
@@ -36,6 +35,7 @@ public class ControladorPrincipal {
 
     vistaVerUsuarios visVerUsers;
     VistaModificarUsuario visModficarUser;
+    vistaAgregarServicio visAgregarServicio;
 
     public ControladorPrincipal(VistaPrincipal vista, ModeloPrincipal modelo) {
         this.vista = vista;
@@ -43,14 +43,13 @@ public class ControladorPrincipal {
         this.base = new Base();
         this.visVerUsers = new vistaVerUsuarios();
         this.visModficarUser = new VistaModificarUsuario();
+        this.visAgregarServicio = new vistaAgregarServicio();
 
         this.verServicio = new vistaVerServicios();
 
+        this.visModficarUser = new VistaModificarUsuario();
 
-        this.visModficarUser= new VistaModificarUsuario(); 
-
-
-         this.verServicio = new vistaVerServicios();  
+        this.verServicio = new vistaVerServicios();
 
         this.vistaAgregarUsuario = new VistaAgregarUsuario();
         onEvento();
@@ -299,7 +298,7 @@ public class ControladorPrincipal {
 
                 if (base.modificarUsuario(seleccionado, nuevoDui, nuevoNombre, nuevoApellido)) {
                     JOptionPane.showMessageDialog(vista, "Usuario modificado con éxito", "ANDA", JOptionPane.INFORMATION_MESSAGE);
-                                    visModficarUser.dispose();
+                    visModficarUser.dispose();
 
                     mostrarUsersTabla(base.getUsuario());
 
@@ -319,10 +318,60 @@ public class ControladorPrincipal {
 
         });
 
+        //Agregar Servicios
+        visVerUsers.btnAgregarServicio.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String seleccionado = getUsuarioSeleccionado();
+
+                if (seleccionado != null) {
+
+                    visAgregarServicio.setSize(600, 400);
+
+                    // 1. Agregar primero al escritorio
+                    vista.escritorio.add(visAgregarServicio);
+
+                    // 2. Centrar
+                    Dimension desktopSize = vista.escritorio.getSize();
+                    Dimension internal = visAgregarServicio.getSize();
+                    int x = (desktopSize.width - internal.width) / 2;
+                    int y = (desktopSize.height - internal.height) / 2;
+                    visAgregarServicio.setLocation(x, y);
+
+                    visAgregarServicio.setVisible(true);
+
+                    visAgregarServicio.txtNumDui.setText(seleccionado);
+                    visAgregarServicio.txtNumDui.setEnabled(false);
+
+                }
+
+            }
+        });
+
+        visAgregarServicio.btnAgregarSer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!visAgregarServicio.txtDireccion.getText().isEmpty()) {
+                    String dui = visAgregarServicio.txtNumDui.getText();
+                    String numCuenta = visAgregarServicio.txtNumCuenta.getText();
+                    String direccion = visAgregarServicio.txtDireccion.getText();
+
+                    try {
+                        base.agregarServicio(new Servicio(direccion, numCuenta, direccion));
+                        JOptionPane.showMessageDialog(vista, "Servicio agregado correctamente", "ANDA", JOptionPane.INFORMATION_MESSAGE);
+
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(vista, "El servicio NO se pudo agregar", "ANDA", JOptionPane.WARNING_MESSAGE);
+
+                    }
+
+                }
+            }
+        });
+
         //inicio servicios
         vista.menuVerServicios.addActionListener(new ActionListener() {
-
-
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -359,7 +408,6 @@ public class ControladorPrincipal {
 
         });
 
-        
         verServicio.btnBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -397,7 +445,7 @@ public class ControladorPrincipal {
 
             }
         });
-        
+
         verServicio.btnEliminar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -431,7 +479,7 @@ public class ControladorPrincipal {
 
             }
         });// fin tabla de servicios
-        
+
     }//no tocar
 
     //fumciones aqui abajo 
@@ -511,13 +559,7 @@ public class ControladorPrincipal {
         return dui;
 
     }
-    
-    
-    
-    
-    
-    
-    
+
     //funcion para servicio
     public void mostrarServiciosTabla(ArrayList<Servicio> servicios) {
         DefaultTableModel modeloTabla = new DefaultTableModel() {
@@ -531,8 +573,6 @@ public class ControladorPrincipal {
         modeloTabla.setColumnIdentifiers(titulos);
 
         String resp = "";
-        
-        
 
         for (Servicio servicio : servicios) {
 
@@ -548,8 +588,8 @@ public class ControladorPrincipal {
         this.verServicio.tablaServicios.setModel(modeloTabla);
 
     }
-    
-     private String getServicioSeleccionado() {
+
+    private String getServicioSeleccionado() {
         int fila = verServicio.tablaServicios.getSelectedRow();
 
         if (fila == -1) {
@@ -562,6 +602,6 @@ public class ControladorPrincipal {
         String dui = verServicio.tablaServicios.getValueAt(fila, 1).toString(); // Columna 1 = DUI
         return dui;
 
-    } 
+    }
 
 }
