@@ -35,7 +35,6 @@ com\mycompany\sistemagestionagua\vista\vistaVerUsuarios$1.class
 com\mycompany\sistemagestionagua\vista\vistaAgregarServicio$1.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarConsumoAgua.class
 com\mycompany\sistemagestionagua\vista\VistaEliminarUsuario$3.class
-com\mycompany\sistemagestionagua\vista\vistaverServicios.class
 com\mycompany\sistemagestionagua\vista\VistaEliminarUsuario.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$4.class
 com\mycompany\sistemagestionagua\modelo\Base.class
