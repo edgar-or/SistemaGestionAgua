@@ -327,10 +327,8 @@ public class ControladorPrincipal {
 
         //inicio servicios
         vista.menuVerServicios.addActionListener(new ActionListener() {
-<<<<<<< HEAD
-=======
 
->>>>>>> bc31e30c4397257a425642ef6c15f632d83ba4fd
+
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -366,8 +364,7 @@ public class ControladorPrincipal {
             }
 
         });
-<<<<<<< HEAD
-=======
+
         
         verServicio.btnBuscar.addActionListener(new ActionListener() {
             @Override
@@ -381,7 +378,6 @@ public class ControladorPrincipal {
                 } else if (!verServicio.txtBuscarCuenta.getText().isEmpty()) {
                     identificador = "DUI";
                     busca = verServicio.txtBuscarCuenta.getText().trim();
->>>>>>> bc31e30c4397257a425642ef6c15f632d83ba4fd
 
                 } else if (!verServicio.txtBuscar3.getText().isEmpty()) {
                     identificador = "Cuenta";

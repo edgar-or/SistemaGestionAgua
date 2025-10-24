@@ -61,10 +61,7 @@ public class Base {
 
         return temp;
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> bc31e30c4397257a425642ef6c15f632d83ba4fd
 
     public String bNumCuenta(String dui) {
         for (Servicio servicio : servicios) {
