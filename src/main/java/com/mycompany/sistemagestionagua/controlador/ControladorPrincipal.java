@@ -6,6 +6,9 @@ import com.mycompany.sistemagestionagua.modelo.ModeloPrincipal;
 import com.mycompany.sistemagestionagua.modelo.Servicio;
 import com.mycompany.sistemagestionagua.modelo.Usuario;
 import com.mycompany.sistemagestionagua.vista.VistaAgregarUsuario;
+import com.mycompany.sistemagestionagua.vista.VistaConsultarUsurioIndividual;
+import com.mycompany.sistemagestionagua.vista.VistaEliminarUsuario;
+import com.mycompany.sistemagestionagua.vista.VistaModificarUsuario;
 import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
 import com.mycompany.sistemagestionagua.vista.vistaAgregarServicio;
 import com.mycompany.sistemagestionagua.vista.vistaVerServicios;
@@ -32,13 +35,19 @@ public class ControladorPrincipal {
     vistaVerServicios verServicio;
     
     vistaVerUsuarios visVerUsers;
+    VistaModificarUsuario visModficarUser; 
 
     public ControladorPrincipal(VistaPrincipal vista, ModeloPrincipal modelo) {
         this.vista = vista;
         this.modelo = modelo;
         this.base = new Base();
         this.visVerUsers = new vistaVerUsuarios();
+
+        this.visModficarUser= new VistaModificarUsuario(); 
+
+
          this.verServicio = new vistaVerServicios();  
+
         this.vistaAgregarUsuario = new VistaAgregarUsuario();
         onEvento();
 
@@ -241,8 +250,63 @@ public class ControladorPrincipal {
         
         //fin de tabla ver usuarios
 
+
+        //boton modificar en ver usuarios. 
+        visVerUsers.btnModificar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String seleccionado = getUsuarioSeleccionado();
+                if (seleccionado != null) {
+
+                    visModficarUser.setSize(600, 400);
+                    visModficarUser.btnModificarUsuario.setText("Modificar");
+
+                    // 1. Agregar primero al escritorio
+                    vista.escritorio.add(visModficarUser);
+
+                    // 2. Centrar
+                    Dimension desktopSize = vista.escritorio.getSize();
+                    Dimension internal = visModficarUser.getSize();
+                    int x = (desktopSize.width - internal.width) / 2;
+                    int y = (desktopSize.height - internal.height) / 2;
+                    visModficarUser.setLocation(x, y);
+                    
+                    //cargar datos de usuario
+                    ArrayList<Usuario> usuarios =  base.buscarUsuario("dui", seleccionado);
+                    
+                    for (Usuario usuario : usuarios) {
+                        visModficarUser.txtNombreAgreUsuario.setText(usuario.getNombre());
+                        visModficarUser.txtApellidoAgreUsuario.setText(usuario.getApellido());
+                        visModficarUser.txtduiUsuario.setText(usuario.getDui());
+
+                    }
+                    
+                    
+                    
+
+                    // 3. Mostrar al final
+                    visModficarUser.setVisible(true);
+                    
+                    
+
+                }
+
+            }
+        });
+        
+        visModficarUser.btCerrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                visModficarUser.dispose();
+
+            }
+
+        });
+
         //inicio servicios
         vista.menuVerServicios.addActionListener(new ActionListener() {
+
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -263,9 +327,9 @@ public class ControladorPrincipal {
                 mostrarUsersTabla(base.getUsuario());
 
                 // agregamos los eventos a los JTextField
-                eventoCampo(verServicio.txtBuscar1, verServicio.txtBuscar2, verServicio.txtBuscar3);
-                eventoCampo(verServicio.txtBuscar2, verServicio.txtBuscar1, verServicio.txtBuscar3);
-                eventoCampo(verServicio.txtBuscar3, verServicio.txtBuscar1, verServicio.txtBuscar2);
+                eventoCampo(verServicio.txtBuscarDui, verServicio.txtBuscarCuenta, verServicio.txtBuscar3);
+                eventoCampo(verServicio.txtBuscarCuenta, verServicio.txtBuscarDui, verServicio.txtBuscar3);
+                eventoCampo(verServicio.txtBuscar3, verServicio.txtBuscarDui, verServicio.txtBuscarCuenta);
 
             }
         });
@@ -284,13 +348,13 @@ public class ControladorPrincipal {
             public void actionPerformed(ActionEvent e) {
                 String busca = null;
                 String identificador = null;
-                if (!verServicio.txtBuscar1.getText().isEmpty()) {
+                if (!verServicio.txtBuscarDui.getText().isEmpty()) {
                     identificador = "nombre";
-                    busca = verServicio.txtBuscar1.getText().trim();
+                    busca = verServicio.txtBuscarDui.getText().trim();
 
-                } else if (!verServicio.txtBuscar2.getText().isEmpty()) {
+                } else if (!verServicio.txtBuscarCuenta.getText().isEmpty()) {
                     identificador = "DUI";
-                    busca = verServicio.txtBuscar2.getText().trim();
+                    busca = verServicio.txtBuscarCuenta.getText().trim();
 
                 } else if (!verServicio.txtBuscar3.getText().isEmpty()) {
                     identificador = "Cuenta";
@@ -305,8 +369,8 @@ public class ControladorPrincipal {
                 } else if (base.buscarUsuario(identificador, busca).isEmpty()) {
                     mostrarUsersTabla(base.getUsuario());
                     JOptionPane.showMessageDialog(vista, "No se encontraron servicios con la informacion ingresada", "ANDA", JOptionPane.WARNING_MESSAGE);
-                    verServicio.txtBuscar1.setText("");
-                    verServicio.txtBuscar2.setText("");
+                    verServicio.txtBuscarDui.setText("");
+                    verServicio.txtBuscarCuenta.setText("");
                     verServicio.txtBuscar3.setText("");
                     //detiene la ejecucion
                     return;
@@ -419,8 +483,6 @@ public class ControladorPrincipal {
 
     private String getUsuarioSeleccionado() {
         int fila = visVerUsers.tablaUsuarios.getSelectedRow();
-        
-        
 
         if (fila == -1) {
 
@@ -428,10 +490,7 @@ public class ControladorPrincipal {
             return null;
 
         }
-        
-         
 
-        
         String dui = visVerUsers.tablaUsuarios.getValueAt(fila, 1).toString(); // Columna 1 = DUI
         return dui;
 

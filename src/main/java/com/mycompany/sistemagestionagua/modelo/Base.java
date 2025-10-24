@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.mycompany.sistemagestionagua.modelo;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author ayala
- */
 public class Base {
 
     ArrayList<Usuario> usuarios;
@@ -65,9 +58,10 @@ public class Base {
             }
 
         }
+        
         return temp;
+    }
 
-    } 
 
     public String bNumCuenta(String dui) {
         for (Servicio servicio : servicios) {
