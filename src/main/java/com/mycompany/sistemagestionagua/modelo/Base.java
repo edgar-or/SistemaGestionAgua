@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.mycompany.sistemagestionagua.modelo;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author ayala
- */
 public class Base {
 
     ArrayList<Usuario> usuarios;
@@ -67,26 +60,22 @@ public class Base {
         }
 
         return temp;
-
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> bc31e30c4397257a425642ef6c15f632d83ba4fd
 
     public String bNumCuenta(String dui) {
         for (Servicio servicio : servicios) {
             if (dui.equals(servicio.getDuiPropietario())) {
-                return servicio.getNumCuenta();
+                return servicio.getnumeroCuenta();
             }
         }
         return null;
     }
 
-    public String buscarPorNombre(String nombre) {
-        for (Usuario usuario : usuarios) {
-            if (usuario.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
-                return usuario.getDui();
-            }
-        }
-        return null; // si no encuentra, retorna null
-    }
+    
 
     public String buscarServicioPorNumCuenta(String buscar) {
         for (Servicio servicio : servicios) {
@@ -137,6 +126,56 @@ public class Base {
 
         }
         return false;
+
+    }
+    
+    //arralist de metodo servicios
+    
+    
+    public String nombrePorDui(String dui){
+        for (Usuario usuario : usuarios) {
+            if (dui.equals(usuario.getDui())) {
+                return usuario.getNombre();
+            }
+        }
+         return null; 
+
+    }
+    public String buscarPorNombre(String nombre) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
+                return usuario.getDui();
+            }
+        }
+        return null; // si no encuentra, retorna null
+    }
+    
+    public String buscarPorApellido(String apellido){
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNombre().toLowerCase().contains(apellido.toLowerCase())) {
+                return usuario.getDui();
+            }
+        }
+        return null; // si no encuentra, retorna null
+    }
+    
+    
+    
+    
+    
+    public ArrayList<Servicio> buscarServicio(String identificador, String busca) {
+        ArrayList<Servicio> temp = new ArrayList<>();
+        Servicio encontrado = null;
+
+        for (Servicio servicio : servicios) {
+            if (identificador.equalsIgnoreCase("dui") && servicio.getDuiPropietario().toLowerCase().contains(busca.toLowerCase())) {
+                encontrado = servicio;
+                temp.add(encontrado);
+
+            }
+
+        }
+        return temp;
 
     }
 
