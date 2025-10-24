@@ -35,6 +35,10 @@ com\mycompany\sistemagestionagua\vista\VistaConsultarUsurioIndividual.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarConsumoAgua$4.class
 com\mycompany\sistemagestionagua\vista\vistaVerUsuarios$1.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarConsumoAgua.class
+<<<<<<< HEAD
+com\mycompany\sistemagestionagua\vista\VistaEliminarUsuario$3.class
+=======
+>>>>>>> 679acfbd5e20af94e62752262dccf9b18a82f676
 com\mycompany\sistemagestionagua\vista\VistaEliminarUsuario.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$4.class
 com\mycompany\sistemagestionagua\modelo\Base.class
