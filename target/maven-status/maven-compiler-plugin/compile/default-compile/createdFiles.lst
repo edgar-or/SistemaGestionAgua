@@ -23,6 +23,7 @@ com\mycompany\sistemagestionagua\SistemaGestionAgua.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$6.class
 com\mycompany\sistemagestionagua\vista\VistaPrincipal.class
 com\mycompany\sistemagestionagua\vista\VistaModificarUsuario$4.class
+com\mycompany\sistemagestionagua\vista\vistaAgregarServicio$1.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$11.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$17.class
 com\mycompany\sistemagestionagua\vista\VistaEliminarUsuario$3.class
