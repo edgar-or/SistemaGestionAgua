@@ -47,12 +47,18 @@ public class ControladorPrincipal {
         this.visAgregarServicio = new vistaAgregarServicio();
 
         this.verServicio = new vistaVerServicios();
+<<<<<<< HEAD
 
         this.agregarconsumo=new VistaAgregarConsumo();
 
 
         this.visModficarUser = new VistaModificarUsuario();
 
+=======
+        this.agregarconsumo=new VistaAgregarConsumo();
+
+        this.visModficarUser = new VistaModificarUsuario();
+>>>>>>> 4e697bd5d807950280616b0a1c50fd0b1f2cb827
 
         this.verServicio = new vistaVerServicios();
 
@@ -485,7 +491,10 @@ public class ControladorPrincipal {
 
             }
         });// fin tabla de servicios
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4e697bd5d807950280616b0a1c50fd0b1f2cb827
         
         //vistaparaconsumo
         
