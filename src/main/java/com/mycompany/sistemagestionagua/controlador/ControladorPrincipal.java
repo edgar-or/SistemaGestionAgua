@@ -5,6 +5,7 @@ import com.mycompany.sistemagestionagua.modelo.Base;
 import com.mycompany.sistemagestionagua.modelo.ModeloPrincipal;
 import com.mycompany.sistemagestionagua.modelo.Servicio;
 import com.mycompany.sistemagestionagua.modelo.Usuario;
+import com.mycompany.sistemagestionagua.vista.VistaAgregarConsumo;
 import com.mycompany.sistemagestionagua.vista.VistaAgregarUsuario;
 import com.mycompany.sistemagestionagua.vista.VistaConsultarUsurioIndividual;
 import com.mycompany.sistemagestionagua.vista.VistaEliminarUsuario;
@@ -33,7 +34,7 @@ public class ControladorPrincipal {
     VistaAgregarUsuario vistaAgregarUsuario;
     Base base;
     vistaVerServicios verServicio;
-
+    VistaAgregarConsumo agregarconsumo;
     vistaVerUsuarios visVerUsers;
     VistaModificarUsuario visModficarUser;
 
@@ -45,7 +46,7 @@ public class ControladorPrincipal {
         this.visModficarUser = new VistaModificarUsuario();
 
         this.verServicio = new vistaVerServicios();
-
+        this.agregarconsumo=new VistaAgregarConsumo();
 
         this.visModficarUser= new VistaModificarUsuario(); 
 
@@ -249,6 +250,7 @@ public class ControladorPrincipal {
         });
 
         //fin de tabla ver usuarios
+        
         //boton modificar en ver usuarios. 
         visVerUsers.btnModificar.addActionListener(new ActionListener() {
             @Override
@@ -432,6 +434,55 @@ public class ControladorPrincipal {
             }
         });// fin tabla de servicios
         
+        //vistaparaconsumo
+        
+        verServicio.btnAgrgarConsumo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String seleccionado = getUsuarioSeleccionado();
+                if (seleccionado != null) {
+
+                    agregarconsumo.setSize(600, 400);
+
+                    // 1. Agregar primero al escritorio
+                    vista.escritorio.add(agregarconsumo);
+
+                    // 2. Centrar
+                    Dimension desktopSize = vista.escritorio.getSize();
+                    Dimension internal = agregarconsumo.getSize();
+                    int x = (desktopSize.width - internal.width) / 2;
+                    int y = (desktopSize.height - internal.height) / 2;
+                    agregarconsumo.setLocation(x, y);
+
+                    //cargar datos de consumo
+                    /*
+                    ArrayList<Usuario> usuarios = base.buscarUsuario("dui", seleccionado);
+
+                    for (Usuario usuario : usuarios) {
+                        visModficarUser.txtNombreAgreUsuario.setText(usuario.getNombre());
+                        visModficarUser.txtApellidoAgreUsuario.setText(usuario.getApellido());
+                        visModficarUser.txtduiUsuario.setText(usuario.getDui());
+
+                    }*/
+
+                    // 3. Mostrar al final
+                    agregarconsumo.setVisible(true);
+
+                }
+
+            }
+        });
+        
+        agregarconsumo.btnCerrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                agregarconsumo.dispose();
+
+            }
+
+        });
+        
     }//no tocar
 
     //fumciones aqui abajo 
@@ -527,7 +578,7 @@ public class ControladorPrincipal {
             }
         };
 
-        String titulos[] = {"N°", "DUI propietario", "Nombre", "Apellido", "Direccion"};
+        String titulos[] = {"N°", "DUI propietario", "Nombre", "Apellido", "Direccion","N° Cuenta"};
         modeloTabla.setColumnIdentifiers(titulos);
 
         String resp = "";
