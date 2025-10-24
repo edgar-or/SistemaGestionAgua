@@ -13,6 +13,7 @@ import com.mycompany.sistemagestionagua.vista.VistaEliminarUsuario;
 import com.mycompany.sistemagestionagua.vista.VistaModificarUsuario;
 import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
 import com.mycompany.sistemagestionagua.vista.vistaAgregarServicio;
+import com.mycompany.sistemagestionagua.vista.vistaVerServicios;
 import com.mycompany.sistemagestionagua.vista.vistaVerUsuarios;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -33,8 +34,8 @@ public class ControladorPrincipal {
     ModeloPrincipal modelo;
     VistaAgregarUsuario vistaAgregarUsuario;
     Base base;
-    VistaConsultarUsurioIndividual visConsulUser;
-    VistaEliminarUsuario visEliminarUser;
+    vistaVerServicios verServicio;
+    
     vistaVerUsuarios visVerUsers;
     VistaModificarUsuario visModficarUser; 
 
@@ -42,11 +43,13 @@ public class ControladorPrincipal {
         this.vista = vista;
         this.modelo = modelo;
         this.base = new Base();
-        this.visConsulUser = new VistaConsultarUsurioIndividual();
-        this.visEliminarUser = new VistaEliminarUsuario();
         this.visVerUsers = new vistaVerUsuarios();
+<<<<<<< HEAD
         this.visModficarUser= new VistaModificarUsuario(); 
 
+=======
+         this.verServicio = new vistaVerServicios();  
+>>>>>>> 71915abeda44dd2cdca5ebe76e0b5533a21e3858
         this.vistaAgregarUsuario = new VistaAgregarUsuario();
         onEvento();
 
@@ -130,11 +133,16 @@ public class ControladorPrincipal {
                 vistaAgregarUsuario.dispose();
 
             }
-
+            
         });
 
+
+
         //ver Usuarios Tabla. 
+           
+            
         vista.menuVerUsers.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -241,7 +249,10 @@ public class ControladorPrincipal {
 
             }
         });
+        
+        //fin de tabla ver usuarios
 
+<<<<<<< HEAD
         //boton modificar en ver usuarios. 
         visVerUsers.btnModificar.addActionListener(new ActionListener() {
             @Override
@@ -294,9 +305,52 @@ public class ControladorPrincipal {
             }
 
         });
+=======
+        //inicio servicios
+        vista.menuVerServicios.addActionListener(new ActionListener() {
+>>>>>>> 71915abeda44dd2cdca5ebe76e0b5533a21e3858
 
-    }
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+                verServicio.setSize(900, 600);
+                verServicio.setVisible(true);
+
+                Dimension desktopSize = vista.escritorio.getSize();
+                Dimension internal = verServicio.getSize();
+
+                int x = (desktopSize.width - internal.width) / 2;
+                int y = (desktopSize.height - internal.height) / 2;
+
+                verServicio.setLocation(x, y);
+
+                vista.escritorio.add(verServicio);
+
+                mostrarUsersTabla(base.getUsuario());
+
+                // agregamos los eventos a los JTextField
+                eventoCampo(verServicio.txtBuscar1, verServicio.txtBuscar2, verServicio.txtBuscar3);
+                eventoCampo(verServicio.txtBuscar2, verServicio.txtBuscar1, verServicio.txtBuscar3);
+                eventoCampo(verServicio.txtBuscar3, verServicio.txtBuscar1, verServicio.txtBuscar2);
+
+            }
+        });
+        
+        verServicio.btnCerrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                verServicio.dispose();
+
+            }
+
+        });
+        
+
+
+    }//no tocar
+
+    
+    //fumciones aqui abajo 
     public void mostrarUsersTabla(ArrayList<Usuario> usuarios) {
         DefaultTableModel modeloTabla = new DefaultTableModel() {
             @Override
@@ -375,3 +429,4 @@ public class ControladorPrincipal {
     }
 
 }
+

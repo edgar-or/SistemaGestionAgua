@@ -17,6 +17,12 @@
             <artifactId>flatlaf</artifactId>
             <version>3.5</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.pierrenodet</groupId>
+            <artifactId>lunium-core_2.12</artifactId>
+            <version>0.0.1</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     
 </project>
