@@ -1,10 +1,12 @@
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$7.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarUsuario$3.class
 com\mycompany\sistemagestionagua\vista\VistaPrincipal$2.class
+com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$13.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarConsumoAgua$3.class
 com\mycompany\sistemagestionagua\vista\vistaVerUsuarios$2.class
 com\mycompany\sistemagestionagua\vista\vistaVerUsuarios.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$9.class
+com\mycompany\sistemagestionagua\vista\VistaAgregarConsumo$1.class
 com\mycompany\sistemagestionagua\vista\vistaVerServicios$1.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$5.class
 com\mycompany\sistemagestionagua\vista\vistaVerServicios$2.class
@@ -15,6 +17,7 @@ com\mycompany\sistemagestionagua\modelo\Usuario.class
 com\mycompany\sistemagestionagua\modelo\Servicio.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$8.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$10.class
+com\mycompany\sistemagestionagua\vista\VistaAgregarConsumo$2.class
 com\mycompany\sistemagestionagua\vista\VistaPrincipal$1.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal.class
 com\mycompany\sistemagestionagua\vista\vistaVerServicios$4.class
@@ -26,6 +29,7 @@ com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$6.class
 com\mycompany\sistemagestionagua\vista\vistaAgregarServicio.class
 com\mycompany\sistemagestionagua\vista\VistaPrincipal.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarUsuario$2.class
+com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$12.class
 com\mycompany\sistemagestionagua\vista\VistaPrincipal$3.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarConsumoAgua$4.class
 com\mycompany\sistemagestionagua\vista\vistaVerUsuarios$1.class
@@ -37,3 +41,4 @@ com\mycompany\sistemagestionagua\vista\VistaConsultarConsumoAgua$2.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$2.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarUsuario$1.class
 com\mycompany\sistemagestionagua\vista\vistaVerServicios$3.class
+com\mycompany\sistemagestionagua\vista\VistaAgregarConsumo.class

@@ -9,26 +9,26 @@ package com.mycompany.sistemagestionagua.modelo;
  * @author USUARIO
  */
 public class Servicio {
-    private String numCuenta; 
     private String duiPropietario;
+    private String numeroCuenta;
     private String direccion; 
 
-    public Servicio(String numCuenta, String duiPropietario, String direccion) {
-        this.numCuenta = numCuenta;
-        this.duiPropietario = duiPropietario;
+    public Servicio( String duiPropietario, String numeroCuenta, String direccion) {
         this.direccion = direccion;
+        this.duiPropietario = duiPropietario;
+        this.numeroCuenta = numeroCuenta;
     }
 
-    public String getNumCuenta() {
-        return numCuenta;
+    public String getDireccion() {
+        return direccion;
     }
 
     public String getDuiPropietario() {
         return duiPropietario;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String getnumeroCuenta() {
+        return numeroCuenta;
     }
     
     

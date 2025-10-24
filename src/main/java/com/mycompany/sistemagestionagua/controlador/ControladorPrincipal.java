@@ -6,6 +6,7 @@ package com.mycompany.sistemagestionagua.controlador;
 
 import com.mycompany.sistemagestionagua.modelo.Base;
 import com.mycompany.sistemagestionagua.modelo.ModeloPrincipal;
+import com.mycompany.sistemagestionagua.modelo.Servicio;
 import com.mycompany.sistemagestionagua.modelo.Usuario;
 import com.mycompany.sistemagestionagua.vista.VistaAgregarUsuario;
 import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
@@ -281,8 +282,78 @@ public class ControladorPrincipal {
 
         });
         
+        verServicio.btnBuscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String busca = null;
+                String identificador = null;
+                if (!verServicio.txtBuscar1.getText().isEmpty()) {
+                    identificador = "nombre";
+                    busca = verServicio.txtBuscar1.getText().trim();
 
+                } else if (!verServicio.txtBuscar2.getText().isEmpty()) {
+                    identificador = "DUI";
+                    busca = verServicio.txtBuscar2.getText().trim();
 
+                } else if (!verServicio.txtBuscar3.getText().isEmpty()) {
+                    identificador = "Cuenta";
+                    busca = verServicio.txtBuscar3.getText().trim();
+
+                }
+                if (busca == null) {
+                    JOptionPane.showMessageDialog(vista, "Ingrese una informacion de servicio para buscar", "ANDA", JOptionPane.WARNING_MESSAGE);
+                    mostrarUsersTabla(base.getUsuario());
+                    //detiene la ejecucion
+                    return;
+                } else if (base.buscarUsuario(identificador, busca).isEmpty()) {
+                    mostrarUsersTabla(base.getUsuario());
+                    JOptionPane.showMessageDialog(vista, "No se encontraron servicios con la informacion ingresada", "ANDA", JOptionPane.WARNING_MESSAGE);
+                    verServicio.txtBuscar1.setText("");
+                    verServicio.txtBuscar2.setText("");
+                    verServicio.txtBuscar3.setText("");
+                    //detiene la ejecucion
+                    return;
+                }
+
+                mostrarUsersTabla(base.buscarUsuario(identificador, busca));
+
+            }
+        });
+        
+        verServicio.btnEliminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String seleccionado = getUsuarioSeleccionado();
+
+                if (seleccionado != null) {
+                    int opcion = JOptionPane.showConfirmDialog(
+                            verServicio,
+                            "¿Está seguro que desea eliminar este servicio? ",
+                            "Confirmación",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.WARNING_MESSAGE
+                    );
+
+                    if (opcion == JOptionPane.YES_OPTION) { // Si confirma
+
+                        boolean eliminado = base.eliminarUsuario(seleccionado);
+                        if (eliminado != false) {
+                            JOptionPane.showMessageDialog(vista, "Servicio  eliminado con exito ", "ANDA", JOptionPane.INFORMATION_MESSAGE);
+                            mostrarUsersTabla(base.getUsuario());
+                        } else {
+                            JOptionPane.showMessageDialog(vista, "El servicio NO se pudo eliminar", "ANDA", JOptionPane.WARNING_MESSAGE);
+                        }
+
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(vista, "Operacion cancelada ", "ANDA", JOptionPane.INFORMATION_MESSAGE);
+
+                }
+
+            }
+        });// fin tabla de servicios
+        
     }//no tocar
 
     
@@ -368,6 +439,37 @@ public class ControladorPrincipal {
         return dui;
 
     }
+    
+    //funcion para servicio
+    public void mostrarServiciosTabla(ArrayList<Servicio> servicios) {
+        DefaultTableModel modeloTabla = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // <-- evita edición en todas las columnas
+            }
+        };
 
+        String titulos[] = {"N°", "DUI propietario", "Nombre", "Apellido", "Direccion"};
+        modeloTabla.setColumnIdentifiers(titulos);
+
+        //ArrayList<Usuario> usuarios = base.getUsuario();
+        String resp = "";
+        
+        
+
+        for (Servicio servicio : servicios) {
+
+            if (servicio.getDuiPropietario() == null) {
+                resp = "No tiene ningun servicio";
+            } else {
+                resp = servicio.getDuiPropietario();
+            }
+
+            Object datos[] = {modeloTabla.getRowCount() + 1, servicio.getDuiPropietario(), servicio.getNombre(), usuario.getApellido(), resp};
+            modeloTabla.addRow(datos);
+        }
+        this.visVerUsers.tablaUsuarios.setModel(modeloTabla);
+
+    }
 }
 
