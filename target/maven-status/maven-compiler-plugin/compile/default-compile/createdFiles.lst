@@ -15,7 +15,9 @@ com\mycompany\sistemagestionagua\vista\VistaModificarUsuario$1.class
 com\mycompany\sistemagestionagua\modelo\ModeloPrincipal.class
 com\mycompany\sistemagestionagua\SistemaGestionAgua.class
 com\mycompany\sistemagestionagua\vista\VistaPrincipal.class
+com\mycompany\sistemagestionagua\vista\VistaModificarUsuario$4.class
 com\mycompany\sistemagestionagua\vista\vistaAgregarServicio$1.class
+com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$11.class
 com\mycompany\sistemagestionagua\vista\VistaEliminarUsuario$3.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarConsumoAgua$2.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$2.class
@@ -26,6 +28,7 @@ com\mycompany\sistemagestionagua\vista\VistaAgregarUsuario$3.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarConsumoAgua$3.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarUsurioIndividual$2.class
 com\mycompany\sistemagestionagua\vista\vistaVerServicios$2.class
+com\mycompany\sistemagestionagua\vista\VistaModificarUsuario$3.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarUsuario.class
 com\mycompany\sistemagestionagua\vista\VistaPrincipal$4.class
 com\mycompany\sistemagestionagua\modelo\Servicio.class

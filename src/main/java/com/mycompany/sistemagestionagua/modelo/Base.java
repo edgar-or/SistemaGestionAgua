@@ -65,9 +65,12 @@ public class Base {
             }
 
         }
+        
         return temp;
 
     }
+    
+   
 
     public String bNumCuenta(String dui) {
         for (Servicio servicio : servicios) {

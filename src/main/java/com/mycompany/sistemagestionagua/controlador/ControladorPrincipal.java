@@ -10,6 +10,7 @@ import com.mycompany.sistemagestionagua.modelo.Usuario;
 import com.mycompany.sistemagestionagua.vista.VistaAgregarUsuario;
 import com.mycompany.sistemagestionagua.vista.VistaConsultarUsurioIndividual;
 import com.mycompany.sistemagestionagua.vista.VistaEliminarUsuario;
+import com.mycompany.sistemagestionagua.vista.VistaModificarUsuario;
 import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
 import com.mycompany.sistemagestionagua.vista.vistaAgregarServicio;
 import com.mycompany.sistemagestionagua.vista.vistaVerUsuarios;
@@ -35,6 +36,7 @@ public class ControladorPrincipal {
     VistaConsultarUsurioIndividual visConsulUser;
     VistaEliminarUsuario visEliminarUser;
     vistaVerUsuarios visVerUsers;
+    VistaModificarUsuario visModficarUser; 
 
     public ControladorPrincipal(VistaPrincipal vista, ModeloPrincipal modelo) {
         this.vista = vista;
@@ -43,6 +45,7 @@ public class ControladorPrincipal {
         this.visConsulUser = new VistaConsultarUsurioIndividual();
         this.visEliminarUser = new VistaEliminarUsuario();
         this.visVerUsers = new vistaVerUsuarios();
+        this.visModficarUser= new VistaModificarUsuario(); 
 
         this.vistaAgregarUsuario = new VistaAgregarUsuario();
         onEvento();
@@ -239,26 +242,58 @@ public class ControladorPrincipal {
             }
         });
 
-        //deseleccionar la fila de tabla users
-//        visVerUsers.tablaUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
-//    @Override
-//    public void mouseClicked(java.awt.event.MouseEvent e) {
-//        int fila = visVerUsers.tablaUsuarios.getSelectedRow(); // fila seleccionada
-//
-//        // si no hay fila se sale
-//        if (fila == -1) {
-//            return;
-//        }
-//
-//        // Detecta la fila sobre la que se hizo clic
-//        int filaClick = visVerUsers.tablaUsuarios.rowAtPoint(e.getPoint());
-//
-//        // Si la fila clickeada es la misma que la que ya está seleccionada se deselcciona
-//        if (fila == filaClick) {
-//            visVerUsers.tablaUsuarios.clearSelection();
-//        }
-//    }
-//});
+        //boton modificar en ver usuarios. 
+        visVerUsers.btnModificar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String seleccionado = getUsuarioSeleccionado();
+                if (seleccionado != null) {
+
+                    visModficarUser.setSize(600, 400);
+                    visModficarUser.btnModificarUsuario.setText("Modificar");
+
+                    // 1. Agregar primero al escritorio
+                    vista.escritorio.add(visModficarUser);
+
+                    // 2. Centrar
+                    Dimension desktopSize = vista.escritorio.getSize();
+                    Dimension internal = visModficarUser.getSize();
+                    int x = (desktopSize.width - internal.width) / 2;
+                    int y = (desktopSize.height - internal.height) / 2;
+                    visModficarUser.setLocation(x, y);
+                    
+                    //cargar datos de usuario
+                    ArrayList<Usuario> usuarios =  base.buscarUsuario("dui", seleccionado);
+                    
+                    for (Usuario usuario : usuarios) {
+                        visModficarUser.txtNombreAgreUsuario.setText(usuario.getNombre());
+                        visModficarUser.txtApellidoAgreUsuario.setText(usuario.getApellido());
+                        visModficarUser.txtduiUsuario.setText(usuario.getDui());
+
+                    }
+                    
+                    
+                    
+
+                    // 3. Mostrar al final
+                    visModficarUser.setVisible(true);
+                    
+                    
+
+                }
+
+            }
+        });
+        
+        visModficarUser.btCerrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                visModficarUser.dispose();
+
+            }
+
+        });
 
     }
 
@@ -326,8 +361,6 @@ public class ControladorPrincipal {
 
     private String getUsuarioSeleccionado() {
         int fila = visVerUsers.tablaUsuarios.getSelectedRow();
-        
-        
 
         if (fila == -1) {
 
@@ -335,10 +368,7 @@ public class ControladorPrincipal {
             return null;
 
         }
-        
-         
 
-        
         String dui = visVerUsers.tablaUsuarios.getValueAt(fila, 1).toString(); // Columna 1 = DUI
         return dui;
 
