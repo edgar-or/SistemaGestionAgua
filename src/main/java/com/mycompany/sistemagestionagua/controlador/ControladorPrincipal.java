@@ -35,21 +35,18 @@ public class ControladorPrincipal {
     VistaAgregarUsuario vistaAgregarUsuario;
     Base base;
     vistaVerServicios verServicio;
-    
+
     vistaVerUsuarios visVerUsers;
-    VistaModificarUsuario visModficarUser; 
+    VistaModificarUsuario visModficarUser;
 
     public ControladorPrincipal(VistaPrincipal vista, ModeloPrincipal modelo) {
         this.vista = vista;
         this.modelo = modelo;
         this.base = new Base();
         this.visVerUsers = new vistaVerUsuarios();
-<<<<<<< HEAD
-        this.visModficarUser= new VistaModificarUsuario(); 
+        this.visModficarUser = new VistaModificarUsuario();
 
-=======
-         this.verServicio = new vistaVerServicios();  
->>>>>>> 71915abeda44dd2cdca5ebe76e0b5533a21e3858
+        this.verServicio = new vistaVerServicios();
         this.vistaAgregarUsuario = new VistaAgregarUsuario();
         onEvento();
 
@@ -133,14 +130,10 @@ public class ControladorPrincipal {
                 vistaAgregarUsuario.dispose();
 
             }
-            
+
         });
 
-
-
         //ver Usuarios Tabla. 
-           
-            
         vista.menuVerUsers.addActionListener(new ActionListener() {
 
             @Override
@@ -249,10 +242,8 @@ public class ControladorPrincipal {
 
             }
         });
-        
-        //fin de tabla ver usuarios
 
-<<<<<<< HEAD
+        //fin de tabla ver usuarios
         //boton modificar en ver usuarios. 
         visVerUsers.btnModificar.addActionListener(new ActionListener() {
             @Override
@@ -262,7 +253,6 @@ public class ControladorPrincipal {
                 if (seleccionado != null) {
 
                     visModficarUser.setSize(600, 400);
-                    visModficarUser.btnModificarUsuario.setText("Modificar");
 
                     // 1. Agregar primero al escritorio
                     vista.escritorio.add(visModficarUser);
@@ -273,30 +263,48 @@ public class ControladorPrincipal {
                     int x = (desktopSize.width - internal.width) / 2;
                     int y = (desktopSize.height - internal.height) / 2;
                     visModficarUser.setLocation(x, y);
-                    
+
                     //cargar datos de usuario
-                    ArrayList<Usuario> usuarios =  base.buscarUsuario("dui", seleccionado);
-                    
+                    ArrayList<Usuario> usuarios = base.buscarUsuario("dui", seleccionado);
+
                     for (Usuario usuario : usuarios) {
                         visModficarUser.txtNombreAgreUsuario.setText(usuario.getNombre());
                         visModficarUser.txtApellidoAgreUsuario.setText(usuario.getApellido());
                         visModficarUser.txtduiUsuario.setText(usuario.getDui());
 
                     }
-                    
-                    
-                    
 
                     // 3. Mostrar al final
                     visModficarUser.setVisible(true);
-                    
-                    
 
                 }
 
             }
         });
-        
+
+        visModficarUser.btnModificarUsuario.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String seleccionado = getUsuarioSeleccionado();
+
+                String nuevoNombre = visModficarUser.txtNombreAgreUsuario.getText();
+                String nuevoApellido = visModficarUser.txtApellidoAgreUsuario.getText();
+                String nuevoDui = visModficarUser.txtduiUsuario.getText();
+
+                if (base.modificarUsuario(seleccionado, nuevoDui, nuevoNombre, nuevoApellido)) {
+                    JOptionPane.showMessageDialog(vista, "Usuario modificado con éxito", "ANDA", JOptionPane.INFORMATION_MESSAGE);
+                                    visModficarUser.dispose();
+
+                    mostrarUsersTabla(base.getUsuario());
+
+                } else {
+                    JOptionPane.showMessageDialog(vista, "El usuario NO se pudo modificar", "ANDA", JOptionPane.WARNING_MESSAGE);
+                }
+
+            }
+        });
+
         visModficarUser.btCerrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -305,10 +313,9 @@ public class ControladorPrincipal {
             }
 
         });
-=======
+
         //inicio servicios
         vista.menuVerServicios.addActionListener(new ActionListener() {
->>>>>>> 71915abeda44dd2cdca5ebe76e0b5533a21e3858
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -335,7 +342,7 @@ public class ControladorPrincipal {
 
             }
         });
-        
+
         verServicio.btnCerrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -344,12 +351,9 @@ public class ControladorPrincipal {
             }
 
         });
-        
-
 
     }//no tocar
 
-    
     //fumciones aqui abajo 
     public void mostrarUsersTabla(ArrayList<Usuario> usuarios) {
         DefaultTableModel modeloTabla = new DefaultTableModel() {
@@ -429,4 +433,3 @@ public class ControladorPrincipal {
     }
 
 }
-

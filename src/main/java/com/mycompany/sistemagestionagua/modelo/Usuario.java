@@ -37,4 +37,18 @@ public class Usuario {
         return dui;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public void setDui(String dui) {
+        this.dui = dui;
+    }
+    
+    
+
 }

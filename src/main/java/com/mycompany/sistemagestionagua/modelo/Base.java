@@ -65,12 +65,10 @@ public class Base {
             }
 
         }
-        
+
         return temp;
 
     }
-    
-   
 
     public String bNumCuenta(String dui) {
         for (Servicio servicio : servicios) {
@@ -137,6 +135,21 @@ public class Base {
                 return true;
             }
 
+        }
+        return false;
+
+    }
+
+    public boolean modificarUsuario(String dui, String nuevoDui, String nuevoNombre, String nuevoApellido) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getDui().equals(dui)) {
+                usuario.setNombre(nuevoNombre);
+                usuario.setDui(nuevoDui);
+                usuario.setApellido(nuevoApellido);
+                        
+                return true; // Se modificó con éxito
+
+            }
         }
         return false;
 
