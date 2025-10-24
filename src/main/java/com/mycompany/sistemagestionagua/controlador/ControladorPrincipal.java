@@ -42,18 +42,16 @@ public class ControladorPrincipal {
         this.modelo = modelo;
         this.base = new Base();
         this.visVerUsers = new vistaVerUsuarios();
-<<<<<<< HEAD
         this.visModficarUser = new VistaModificarUsuario();
 
         this.verServicio = new vistaVerServicios();
-=======
+
 
         this.visModficarUser= new VistaModificarUsuario(); 
 
 
          this.verServicio = new vistaVerServicios();  
 
->>>>>>> bc31e30c4397257a425642ef6c15f632d83ba4fd
         this.vistaAgregarUsuario = new VistaAgregarUsuario();
         onEvento();
 
@@ -250,11 +248,7 @@ public class ControladorPrincipal {
             }
         });
 
-<<<<<<< HEAD
         //fin de tabla ver usuarios
-=======
-
->>>>>>> bc31e30c4397257a425642ef6c15f632d83ba4fd
         //boton modificar en ver usuarios. 
         visVerUsers.btnModificar.addActionListener(new ActionListener() {
             @Override
