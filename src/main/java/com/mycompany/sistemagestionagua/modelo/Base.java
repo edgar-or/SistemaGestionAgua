@@ -58,10 +58,13 @@ public class Base {
             }
 
         }
-        
+
         return temp;
     }
+<<<<<<< HEAD
+=======
 
+>>>>>>> bc31e30c4397257a425642ef6c15f632d83ba4fd
 
     public String bNumCuenta(String dui) {
         for (Servicio servicio : servicios) {
@@ -173,6 +176,21 @@ public class Base {
 
         }
         return temp;
+
+    }
+
+    public boolean modificarUsuario(String dui, String nuevoDui, String nuevoNombre, String nuevoApellido) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getDui().equals(dui)) {
+                usuario.setNombre(nuevoNombre);
+                usuario.setDui(nuevoDui);
+                usuario.setApellido(nuevoApellido);
+                        
+                return true; // Se modificó con éxito
+
+            }
+        }
+        return false;
 
     }
 
