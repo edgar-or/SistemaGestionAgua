@@ -49,6 +49,15 @@ public class ControladorPrincipal {
         this.verServicio = new vistaVerServicios();
         this.agregarconsumo = new VistaAgregarConsumo();
 
+
+        this.agregarconsumo=new VistaAgregarConsumo();
+
+
+        this.visModficarUser = new VistaModificarUsuario();
+
+
+        this.agregarconsumo=new VistaAgregarConsumo();
+
         this.visModficarUser = new VistaModificarUsuario();
 
         this.verServicio = new vistaVerServicios();
@@ -494,6 +503,7 @@ public class ControladorPrincipal {
             }
         });// fin tabla de servicios
 
+        
         //vistaparaconsumo
         verServicio.btnAgrgarConsumo.addActionListener(new ActionListener() {
             @Override
