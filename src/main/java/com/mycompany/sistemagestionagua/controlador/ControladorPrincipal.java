@@ -38,7 +38,7 @@ public class ControladorPrincipal {
     VistaModificarUsuario visModficarUser;
     vistaAgregarServicio visAgregarServicio;
 
-    public ControladorPrincipal(VistaPrincipal vista, ModeloPrincipal modelo) {
+    public ControladorPrincipal(VistaPrincipal vista) {
         this.vista = vista;
         this.modelo = modelo;
         this.base = new Base();
