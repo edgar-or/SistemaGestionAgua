@@ -192,5 +192,15 @@ public class Base {
         return false;
 
     }
+    
+    public String nombre(String n){
+        for (Usuario usuario : usuarios) {
+            if (usuario.getDui().equals(n)) {
+                return usuario.getNombre() ;
 
+            }
+        }
+        return null;
+        
+    }
 }

@@ -12,6 +12,7 @@ com\mycompany\sistemagestionagua\vista\vistaVerServicios.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarUsurioIndividual$1.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarConsumoAgua$1.class
 com\mycompany\sistemagestionagua\modelo\Usuario.class
+com\mycompany\sistemagestionagua\vista\VistaRuta.class
 com\mycompany\sistemagestionagua\vista\vistaVerServicios$7.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$10.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarConsumo$2.class
