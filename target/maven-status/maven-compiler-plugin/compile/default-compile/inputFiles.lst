@@ -1,9 +1,12 @@
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\controlador\ControladorPrincipal.java
+C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\controlador\LoginControlador.java
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\Base.java
+C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\LoginModelo.java
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\ModeloPrincipal.java
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\Servicio.java
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\Usuario.java
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\SistemaGestionAgua.java
+C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\LoginVista.java
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaAgregarConsumo.java
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\vistaAgregarServicio.java
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaAgregarUsuario.java
