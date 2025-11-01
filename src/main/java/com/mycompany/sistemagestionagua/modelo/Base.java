@@ -63,13 +63,15 @@ public class Base {
     }
 
 
-    public String bNumCuenta(String dui) {
+    public ArrayList<String> bNumCuenta(String dui) {
+        ArrayList<String> temp = new ArrayList<>();
+        
         for (Servicio servicio : servicios) {
             if (dui.equals(servicio.getDuiPropietario())) {
-                return servicio.getnumeroCuenta();
+                temp.add(servicio.getnumeroCuenta());
             }
         }
-        return null;
+        return temp;
     }
 
     

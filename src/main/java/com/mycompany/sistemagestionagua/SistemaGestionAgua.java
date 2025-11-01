@@ -8,7 +8,10 @@ import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.mycompany.sistemagestionagua.controlador.ControladorPrincipal;
+import com.mycompany.sistemagestionagua.controlador.LoginControlador;
+import com.mycompany.sistemagestionagua.modelo.LoginModelo;
 import com.mycompany.sistemagestionagua.modelo.ModeloPrincipal;
+import com.mycompany.sistemagestionagua.vista.LoginVista;
 import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
 import java.awt.Font;
 import javax.swing.JDialog;
@@ -40,12 +43,20 @@ public class SistemaGestionAgua {
             // 🔹 Opcional: establecer fuente base (se aplicará a todo)
             UIManager.put("defaultFont", new javax.swing.plaf.FontUIResource("SansSerif", Font.PLAIN, 14));
 
-            VistaPrincipal vista = new VistaPrincipal();
-            ModeloPrincipal modelo = new ModeloPrincipal();
+//            VistaPrincipal vista = new VistaPrincipal();
+//            ModeloPrincipal modelo = new ModeloPrincipal();
+//
+//            ControladorPrincipal controlador = new ControladorPrincipal(vista);
+//            FlatLightLaf.setup();
+//            controlador.iniciar();
 
-            ControladorPrincipal controlador = new ControladorPrincipal(vista, modelo);
-            FlatLightLaf.setup();
-            controlador.iniciar();
+
+               LoginModelo loginModelo = new LoginModelo(); 
+               LoginVista loginVista = new LoginVista();
+               LoginControlador controladorLogin = new LoginControlador(loginVista, loginModelo); 
+               controladorLogin.iniciar();
+               
+               
 
         } catch (Exception ex) {
             ex.printStackTrace();

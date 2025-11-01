@@ -38,7 +38,7 @@ public class ControladorPrincipal {
     VistaModificarUsuario visModficarUser;
     vistaAgregarServicio visAgregarServicio;
 
-    public ControladorPrincipal(VistaPrincipal vista, ModeloPrincipal modelo) {
+    public ControladorPrincipal(VistaPrincipal vista) {
         this.vista = vista;
         this.modelo = modelo;
         this.base = new Base();
@@ -47,6 +47,9 @@ public class ControladorPrincipal {
         this.visAgregarServicio = new vistaAgregarServicio();
 
         this.verServicio = new vistaVerServicios();
+
+        this.agregarconsumo = new VistaAgregarConsumo();
+
 
 
         this.agregarconsumo=new VistaAgregarConsumo();
@@ -259,7 +262,6 @@ public class ControladorPrincipal {
         });
 
         //fin de tabla ver usuarios
-        
         //boton modificar en ver usuarios. 
         visVerUsers.btnModificar.addActionListener(new ActionListener() {
             @Override
@@ -355,6 +357,9 @@ public class ControladorPrincipal {
 
                     visAgregarServicio.txtNumDui.setText(seleccionado);
                     visAgregarServicio.txtNumDui.setEnabled(false);
+                    visAgregarServicio.txtNumCuenta.setText(generarNumCuenta());
+                    visAgregarServicio.txtNumCuenta.setEnabled(false);
+
 
                 }
 
@@ -370,15 +375,24 @@ public class ControladorPrincipal {
                     String direccion = visAgregarServicio.txtDireccion.getText();
 
                     try {
-                        base.agregarServicio(new Servicio(direccion, numCuenta, direccion));
+                        base.agregarServicio(new Servicio(dui, numCuenta, direccion));
                         JOptionPane.showMessageDialog(vista, "Servicio agregado correctamente", "ANDA", JOptionPane.INFORMATION_MESSAGE);
-
+                        visAgregarServicio.txtDireccion.setText("");
+                        mostrarUsersTabla(base.getUsuario());
+                        visAgregarServicio.dispose();
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(vista, "El servicio NO se pudo agregar", "ANDA", JOptionPane.WARNING_MESSAGE);
 
                     }
 
                 }
+            }
+        });
+
+        visAgregarServicio.btnCerrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                visAgregarServicio.dispose();
             }
         });
 
@@ -493,10 +507,8 @@ public class ControladorPrincipal {
         });// fin tabla de servicios
 
 
-
         
         //vistaparaconsumo
-        
         verServicio.btnAgrgarConsumo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -526,7 +538,6 @@ public class ControladorPrincipal {
                         visModficarUser.txtduiUsuario.setText(usuario.getDui());
 
                     }*/
-
                     // 3. Mostrar al final
                     agregarconsumo.setVisible(true);
 
@@ -534,7 +545,7 @@ public class ControladorPrincipal {
 
             }
         });
-        
+
         agregarconsumo.btnCerrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -543,7 +554,6 @@ public class ControladorPrincipal {
             }
 
         });
-        
 
     }//no tocar
 
@@ -563,11 +573,15 @@ public class ControladorPrincipal {
         String resp = "";
 
         for (Usuario usuario : usuarios) {
+            ArrayList<String> temp = base.bNumCuenta(usuario.getDui());
 
-            if (base.bNumCuenta(usuario.getDui()) == null) {
+            if (temp== null|| temp.isEmpty()) {
                 resp = "No tiene ningun servicio";
             } else {
-                resp = base.bNumCuenta(usuario.getDui());
+
+                    resp = String.join(", ", temp);
+                
+
             }
 
             Object datos[] = {modeloTabla.getRowCount() + 1, usuario.getDui(), usuario.getNombre(), usuario.getApellido(), resp};
@@ -634,7 +648,7 @@ public class ControladorPrincipal {
             }
         };
 
-        String titulos[] = {"N°", "DUI propietario", "Nombre", "Apellido", "Direccion","N° Cuenta"};
+        String titulos[] = {"N°", "DUI propietario", "Nombre", "Apellido", "Direccion", "N° Cuenta"};
         modeloTabla.setColumnIdentifiers(titulos);
 
         String resp = "";
@@ -653,6 +667,16 @@ public class ControladorPrincipal {
         this.verServicio.tablaServicios.setModel(modeloTabla);
 
     }
+    
+    
+    private static int correlativo = 1;
+
+private String generarNumCuenta() {
+    int año = java.time.Year.now().getValue(); // obtiene el año actual
+    String numero = String.format("%04d", correlativo); 
+    correlativo++; 
+    return año + "-" + numero;
+}
 
     private String getServicioSeleccionado() {
         int fila = verServicio.tablaServicios.getSelectedRow();
