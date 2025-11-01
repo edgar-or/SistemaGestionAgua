@@ -38,7 +38,8 @@ public class LoginControlador {
                vista.setVisible(true);
                 
                 
-                new ControladorPrincipal(vista); 
+                ControladorPrincipal controladorPrincipal = new ControladorPrincipal(vista); 
+                controladorPrincipal.iniciar();
                 
                 
                 
