@@ -7,10 +7,13 @@ public class Base {
 
     ArrayList<Usuario> usuarios;
     ArrayList<Servicio> servicios;
+    ArrayList<ModeloRuta> rutas; 
 
     public Base() {
         usuarios = new ArrayList<>();
         servicios = new ArrayList<>();
+        rutas = new ArrayList<>();
+        
     }
 
     public boolean agregar(Usuario e) {
@@ -191,6 +194,32 @@ public class Base {
         }
         return false;
 
+    }
+    
+    
+    //logica de rutas. 
+    
+    public boolean agregarRuta(ModeloRuta o){
+        try {
+            rutas.add(o);
+            return true; 
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    public boolean eliminarRuta (String id){
+        
+        for (ModeloRuta ruta : rutas) {
+            if (ruta.getId().equals(id)) {
+                rutas.remove(ruta);
+                return true;
+            }else{
+                return false;
+            }
+            
+        }
+        return false;
     }
 
 }

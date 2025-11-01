@@ -6,21 +6,33 @@ package com.mycompany.sistemagestionagua.modelo;
 
 public class ModeloRuta {
 
+    private String id;
     private String ruta;
     private String municipio;
     private String colonia;
     private String descripcion;
 
-    public ModeloRuta(String ruta, String municipio, String colonia, String descripcion) {
+    public ModeloRuta(String id, String ruta, String municipio, String colonia, String descripcion) {
+        this.id = id;
         this.ruta = ruta;
         this.municipio = municipio;
         this.colonia = colonia;
         this.descripcion = descripcion;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
+
     public String getRuta() {
         return ruta;
     }
+    
 
     public String getMunicipio() {
         return municipio;

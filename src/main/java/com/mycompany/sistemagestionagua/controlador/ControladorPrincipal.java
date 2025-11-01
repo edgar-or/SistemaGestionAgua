@@ -2,6 +2,7 @@ package com.mycompany.sistemagestionagua.controlador;
 
 import com.mycompany.sistemagestionagua.modelo.Base;
 import com.mycompany.sistemagestionagua.modelo.ModeloPrincipal;
+import com.mycompany.sistemagestionagua.modelo.ModeloRuta;
 import com.mycompany.sistemagestionagua.modelo.Servicio;
 import com.mycompany.sistemagestionagua.modelo.Usuario;
 import com.mycompany.sistemagestionagua.vista.VistaAgregarConsumo;
@@ -39,6 +40,8 @@ public class ControladorPrincipal {
     VistaModificarUsuario visModficarUser;
     vistaAgregarServicio visAgregarServicio;
     VistaRuta vistaRuta; 
+    
+    
 
     public ControladorPrincipal(VistaPrincipal vista) {
         this.vista = vista;
@@ -580,6 +583,30 @@ public class ControladorPrincipal {
             }
         });
         
+        vistaRuta.btnCerrar.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                vistaRuta.dispose();
+            }
+        });
+        
+        vistaRuta.btnGudar.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                String id = "1";
+                String ruta = vistaRuta.txtDepto.getText(); 
+                String municipio = vistaRuta.txtMunicipio.getText(); 
+                String colonia = vistaRuta.txtColonia.getText();
+                String descripcion = vistaRuta.txtDescripcion.getText();
+                
+                //---------------------------PENDIENTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+                
+                
+                
+            }
+        });
+        
         
         
         
@@ -609,6 +636,7 @@ public class ControladorPrincipal {
             } else {
 
                     resp = String.join(", ", temp);
+                    
                 
 
             }
