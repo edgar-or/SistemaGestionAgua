@@ -10,6 +10,7 @@ import com.mycompany.sistemagestionagua.vista.VistaConsultarUsurioIndividual;
 import com.mycompany.sistemagestionagua.vista.VistaEliminarUsuario;
 import com.mycompany.sistemagestionagua.vista.VistaModificarUsuario;
 import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
+import com.mycompany.sistemagestionagua.vista.VistaRuta;
 import com.mycompany.sistemagestionagua.vista.vistaAgregarServicio;
 import com.mycompany.sistemagestionagua.vista.vistaVerServicios;
 import com.mycompany.sistemagestionagua.vista.vistaVerUsuarios;
@@ -37,6 +38,7 @@ public class ControladorPrincipal {
     vistaVerUsuarios visVerUsers;
     VistaModificarUsuario visModficarUser;
     vistaAgregarServicio visAgregarServicio;
+    VistaRuta vistaRuta; 
 
     public ControladorPrincipal(VistaPrincipal vista) {
         this.vista = vista;
@@ -45,6 +47,7 @@ public class ControladorPrincipal {
         this.visVerUsers = new vistaVerUsuarios();
         this.visModficarUser = new VistaModificarUsuario();
         this.visAgregarServicio = new vistaAgregarServicio();
+        this.vistaRuta = new VistaRuta(); 
 
         this.verServicio = new vistaVerServicios();
 
@@ -554,6 +557,32 @@ public class ControladorPrincipal {
             }
 
         });
+        
+        
+        
+        
+        //Ver Rutas
+        vista.menuVerRutas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                vistaRuta.setSize(600, 400);
+                vistaRuta.setVisible(true);
+
+                Dimension desktopSize = vista.escritorio.getSize();
+                Dimension internal = vistaRuta.getSize();
+
+                int x = (desktopSize.width - internal.width) / 2;
+                int y = (desktopSize.height - internal.height) / 2;
+
+                vistaRuta.setLocation(x, y);
+
+                vista.escritorio.add(vistaRuta);
+            }
+        });
+        
+        
+        
+        
 
     }//no tocar
 
