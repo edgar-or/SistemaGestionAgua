@@ -196,7 +196,6 @@ public class Base {
 
     }
     
-<<<<<<< HEAD
     
     //logica de rutas. 
     
@@ -222,12 +221,11 @@ public class Base {
         }
         return false;
     }
-=======
+
     public String nombre(String n){
         for (Usuario usuario : usuarios) {
             if (usuario.getDui().equals(n)) {
                 return usuario.getNombre() ;
->>>>>>> 305ba309cca6c541b36708da3f5569050b3a28c7
 
             }
         }
