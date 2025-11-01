@@ -24,10 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author ayala
- */
+
 public class ControladorPrincipal {
 
     VistaPrincipal vista;
@@ -698,6 +695,7 @@ public class ControladorPrincipal {
 
     //funcion para servicio
     public void mostrarServiciosTabla(ArrayList<Servicio> servicios) {
+        
         DefaultTableModel modeloTabla = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -709,18 +707,32 @@ public class ControladorPrincipal {
         modeloTabla.setColumnIdentifiers(titulos);
 
         String resp = "";
-
+        String nombre="";
+        
+        
+        
         for (Servicio servicio : servicios) {
-
+              
             if (servicio.getDuiPropietario() == null) {
                 resp = "No tiene ningun servicio";
             } else {
                 resp = servicio.getDuiPropietario();
             }
-
-            Object datos[] = {modeloTabla.getRowCount() + 1, servicio.getDuiPropietario(), servicio.getnumeroCuenta(), servicio.getDireccion(), resp};
+            
+           nombre=String.join(nombre);
+           
+            Object datos[] = {modeloTabla.getRowCount() + 1, servicio.getDuiPropietario(), servicio.getnumeroCuenta(), servicio.getDireccion(), nombre,  resp};
             modeloTabla.addRow(datos);
         }
+        
+        //pendiente
+         for (Servicio servicio : servicios ) {
+               nombre= base.nombre(servicio.getDuiPropietario());
+         }
+          
+        
+         
+        
         this.verServicio.tablaServicios.setModel(modeloTabla);
 
     }
@@ -749,5 +761,7 @@ private String generarNumCuenta() {
         return dui;
 
     }
+    
+   
 
 }
