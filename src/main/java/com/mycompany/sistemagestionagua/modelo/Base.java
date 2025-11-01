@@ -225,8 +225,11 @@ public class Base {
     public String nombre(String n){
         for (Usuario usuario : usuarios) {
             if (usuario.getDui().equals(n)) {
-                return usuario.getNombre() ;
+                return usuario.getNombre();
 
+            }
+            else{
+                return null;
             }
         }
         return null;

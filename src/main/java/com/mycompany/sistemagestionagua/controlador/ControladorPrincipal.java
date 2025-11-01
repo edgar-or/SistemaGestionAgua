@@ -24,7 +24,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-
 public class ControladorPrincipal {
 
     VistaPrincipal vista;
@@ -36,9 +35,7 @@ public class ControladorPrincipal {
     vistaVerUsuarios visVerUsers;
     VistaModificarUsuario visModficarUser;
     vistaAgregarServicio visAgregarServicio;
-    VistaRuta vistaRuta; 
-    
-    
+    VistaRuta vistaRuta;
 
     public ControladorPrincipal(VistaPrincipal vista) {
         this.vista = vista;
@@ -47,24 +44,19 @@ public class ControladorPrincipal {
         this.visVerUsers = new vistaVerUsuarios();
         this.visModficarUser = new VistaModificarUsuario();
         this.visAgregarServicio = new vistaAgregarServicio();
-        this.vistaRuta = new VistaRuta(); 
+        this.vistaRuta = new VistaRuta();
 
         this.verServicio = new vistaVerServicios();
 
         this.agregarconsumo = new VistaAgregarConsumo();
 
-
-
-        this.agregarconsumo=new VistaAgregarConsumo();
-
+        this.agregarconsumo = new VistaAgregarConsumo();
 
         this.visModficarUser = new VistaModificarUsuario();
 
-
-        this.agregarconsumo=new VistaAgregarConsumo();
+        this.agregarconsumo = new VistaAgregarConsumo();
 
         this.visModficarUser = new VistaModificarUsuario();
-
 
         this.verServicio = new vistaVerServicios();
 
@@ -363,7 +355,6 @@ public class ControladorPrincipal {
                     visAgregarServicio.txtNumCuenta.setText(generarNumCuenta());
                     visAgregarServicio.txtNumCuenta.setEnabled(false);
 
-
                 }
 
             }
@@ -509,8 +500,6 @@ public class ControladorPrincipal {
             }
         });// fin tabla de servicios
 
-
-        
         //vistaparaconsumo
         verServicio.btnAgrgarConsumo.addActionListener(new ActionListener() {
             @Override
@@ -557,10 +546,7 @@ public class ControladorPrincipal {
             }
 
         });
-        
-        
-        
-        
+
         //Ver Rutas
         vista.menuVerRutas.addActionListener(new ActionListener() {
             @Override
@@ -579,34 +565,27 @@ public class ControladorPrincipal {
                 vista.escritorio.add(vistaRuta);
             }
         });
-        
-        vistaRuta.btnCerrar.addActionListener(new ActionListener(){
+
+        vistaRuta.btnCerrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 vistaRuta.dispose();
             }
         });
-        
-        vistaRuta.btnGudar.addActionListener(new ActionListener(){
+
+        vistaRuta.btnGudar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+
                 String id = "1";
-                String ruta = vistaRuta.txtDepto.getText(); 
-                String municipio = vistaRuta.txtMunicipio.getText(); 
+                String ruta = vistaRuta.txtDepto.getText();
+                String municipio = vistaRuta.txtMunicipio.getText();
                 String colonia = vistaRuta.txtColonia.getText();
                 String descripcion = vistaRuta.txtDescripcion.getText();
-                
+
                 //---------------------------PENDIENTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-                
-                
-                
             }
         });
-        
-        
-        
-        
 
     }//no tocar
 
@@ -628,13 +607,11 @@ public class ControladorPrincipal {
         for (Usuario usuario : usuarios) {
             ArrayList<String> temp = base.bNumCuenta(usuario.getDui());
 
-            if (temp== null|| temp.isEmpty()) {
+            if (temp == null || temp.isEmpty()) {
                 resp = "No tiene ningun servicio";
             } else {
 
-                    resp = String.join(", ", temp);
-                    
-                
+                resp = String.join(", ", temp);
 
             }
 
@@ -695,7 +672,7 @@ public class ControladorPrincipal {
 
     //funcion para servicio
     public void mostrarServiciosTabla(ArrayList<Servicio> servicios) {
-        
+
         DefaultTableModel modeloTabla = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -707,45 +684,29 @@ public class ControladorPrincipal {
         modeloTabla.setColumnIdentifiers(titulos);
 
         String resp = "";
-        String nombre="";
-        
-        
-        
+        String nombre = "";
+
+        //pendiente
         for (Servicio servicio : servicios) {
-              
-            if (servicio.getDuiPropietario() == null) {
-                resp = "No tiene ningun servicio";
-            } else {
-                resp = servicio.getDuiPropietario();
-            }
-            
-           nombre=String.join(nombre);
-           
-            Object datos[] = {modeloTabla.getRowCount() + 1, servicio.getDuiPropietario(), servicio.getnumeroCuenta(), servicio.getDireccion(), nombre,  resp};
+
+            nombre = base.nombre(servicio.getDuiPropietario());
+
+            Object datos[] = {modeloTabla.getRowCount() + 1, servicio.getDuiPropietario(), servicio.getnumeroCuenta(), servicio.getDireccion(), nombre, resp};
             modeloTabla.addRow(datos);
         }
-        
-        //pendiente
-         for (Servicio servicio : servicios ) {
-               nombre= base.nombre(servicio.getDuiPropietario());
-         }
-          
-        
-         
-        
+
         this.verServicio.tablaServicios.setModel(modeloTabla);
 
     }
-    
-    
+
     private static int correlativo = 1;
 
-private String generarNumCuenta() {
-    int año = java.time.Year.now().getValue(); // obtiene el año actual
-    String numero = String.format("%04d", correlativo); 
-    correlativo++; 
-    return año + "-" + numero;
-}
+    private String generarNumCuenta() {
+        int año = java.time.Year.now().getValue(); // obtiene el año actual
+        String numero = String.format("%04d", correlativo);
+        correlativo++;
+        return año + "-" + numero;
+    }
 
     private String getServicioSeleccionado() {
         int fila = verServicio.tablaServicios.getSelectedRow();
@@ -761,7 +722,5 @@ private String generarNumCuenta() {
         return dui;
 
     }
-    
-   
 
 }

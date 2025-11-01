@@ -14,10 +14,7 @@ com\mycompany\sistemagestionagua\vista\VistaConsultarUsurioIndividual$1.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarConsumoAgua$1.class
 com\mycompany\sistemagestionagua\modelo\Usuario.class
 com\mycompany\sistemagestionagua\vista\VistaRuta.class
-<<<<<<< HEAD
-=======
 com\mycompany\sistemagestionagua\vista\VistaRuta$1.class
->>>>>>> c22270e48fc92ac81eedbf89f7e596382d707c66
 com\mycompany\sistemagestionagua\vista\vistaVerServicios$7.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$10.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarConsumo$2.class
@@ -45,6 +42,7 @@ com\mycompany\sistemagestionagua\vista\vistaVerServicios$3.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$14.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarUsuario$3.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$15.class
+com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$25.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarConsumoAgua$3.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarUsurioIndividual$2.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$9.class
@@ -56,6 +54,7 @@ com\mycompany\sistemagestionagua\vista\VistaAgregarUsuario.class
 com\mycompany\sistemagestionagua\modelo\Servicio.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$8.class
 com\mycompany\sistemagestionagua\vista\VistaPrincipal$1.class
+com\mycompany\sistemagestionagua\modelo\ModeloRuta.class
 com\mycompany\sistemagestionagua\vista\LoginVista.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$18.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$1.class
@@ -78,3 +77,4 @@ com\mycompany\sistemagestionagua\modelo\Base.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$19.class
 com\mycompany\sistemagestionagua\vista\VistaModificarUsuario$2.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarConsumo.class
+com\mycompany\sistemagestionagua\controlador\ControladorPrincipal$24.class
