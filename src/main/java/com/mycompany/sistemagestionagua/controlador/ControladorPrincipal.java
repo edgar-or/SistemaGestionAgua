@@ -36,6 +36,7 @@ public class ControladorPrincipal {
     VistaModificarUsuario visModficarUser;
     vistaAgregarServicio visAgregarServicio;
     VistaRuta vistaRuta;
+    ControladorUsuario controladorUsuario;
 
     public ControladorPrincipal(VistaPrincipal vista) {
         this.vista = vista;
@@ -45,6 +46,7 @@ public class ControladorPrincipal {
         this.visModficarUser = new VistaModificarUsuario();
         this.visAgregarServicio = new vistaAgregarServicio();
         this.vistaRuta = new VistaRuta();
+        this.controladorUsuario = new ControladorUsuario(vista);
 
         this.verServicio = new vistaVerServicios();
 
@@ -62,6 +64,8 @@ public class ControladorPrincipal {
 
         this.vistaAgregarUsuario = new VistaAgregarUsuario();
         onEvento();
+        
+        
 
     }
 
@@ -72,260 +76,265 @@ public class ControladorPrincipal {
     }
 
     private void onEvento() {
+        
+        
+        vista.menuRegistrarUsuario.addActionListener(e->controladorUsuario.mostrarVistaAgregar());
+        vista.menuVerUsers.addActionListener(e-> controladorUsuario.mostrarVistaVerUsuarios());
+        
 
         //regiatrar Usuario
-        vista.menuRegistrarUsuario.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                vistaAgregarUsuario.setSize(600, 400);
-                vistaAgregarUsuario.setVisible(true);
-
-                Dimension desktopSize = vista.escritorio.getSize();
-                Dimension internal = vistaAgregarUsuario.getSize();
-
-                int x = (desktopSize.width - internal.width) / 2;
-                int y = (desktopSize.height - internal.height) / 2;
-
-                vistaAgregarUsuario.setLocation(x, y);
-
-                vista.escritorio.add(vistaAgregarUsuario);
-            }
-        });
-
-        vistaAgregarUsuario.btnAgregarUsuario.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String dui = vistaAgregarUsuario.txtduiUsuario.getText();
-                String nombre = vistaAgregarUsuario.txtNombreAgreUsuario.getText();
-                String apellido = vistaAgregarUsuario.txtApellidoAgreUsuario.getText();
-
-                if (dui.isEmpty() || nombre.isEmpty() || apellido.isEmpty()) {
-                    JOptionPane.showMessageDialog(vista, "Complete los campos", "ANDA", JOptionPane.WARNING_MESSAGE);
-
-                } else {
-                    // Validar el formato del DUI ANTES de crear el objeto
-                    if (!Usuario.validarDUI(dui)) {
-                        JOptionPane.showMessageDialog(vista, "Formato de DUI inválido.\nEjemplo: 12345678-9", "ANDA", JOptionPane.WARNING_MESSAGE);
-                        vistaAgregarUsuario.txtduiUsuario.requestFocus();
-                        return;
-                    }
-
-                    try {
-
-                        if (base.agregar(new Usuario(nombre, apellido, dui))) {
-                            JOptionPane.showMessageDialog(vista, "Datos guardados", "ANDA", JOptionPane.INFORMATION_MESSAGE);
-                            limpiar();
-
-                        } else {
-                            JOptionPane.showMessageDialog(vista, "No se pudieron guardar los datos", "ANDA", JOptionPane.WARNING_MESSAGE);
-                            limpiar();
-
-                        }
-
-                    } catch (Exception ex) {
-
-                    }
-                }
-
-            }
-
-            private void limpiar() {
-                vistaAgregarUsuario.txtNombreAgreUsuario.setText("");
-                vistaAgregarUsuario.txtApellidoAgreUsuario.setText("");
-                vistaAgregarUsuario.txtduiUsuario.setText("");
-                vistaAgregarUsuario.txtNombreAgreUsuario.requestFocus();
-            }
-        });
-
-        vistaAgregarUsuario.btnCerrarAgrelUsuario.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                vistaAgregarUsuario.dispose();
-
-            }
-
-        });
-
-        //ver Usuarios Tabla. 
-        vista.menuVerUsers.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                visVerUsers.setSize(900, 600);
-                visVerUsers.setVisible(true);
-
-                Dimension desktopSize = vista.escritorio.getSize();
-                Dimension internal = visVerUsers.getSize();
-
-                int x = (desktopSize.width - internal.width) / 2;
-                int y = (desktopSize.height - internal.height) / 2;
-
-                visVerUsers.setLocation(x, y);
-
-                vista.escritorio.add(visVerUsers);
-
-                mostrarUsersTabla(base.getUsuario());
-
-                // agregamos los eventos a los JTextField
-                eventoCampo(visVerUsers.txtBuscar1, visVerUsers.txtBuscar2, visVerUsers.txtBuscar3);
-                eventoCampo(visVerUsers.txtBuscar2, visVerUsers.txtBuscar1, visVerUsers.txtBuscar3);
-                eventoCampo(visVerUsers.txtBuscar3, visVerUsers.txtBuscar1, visVerUsers.txtBuscar2);
-
-            }
-        });
-
-        visVerUsers.btnCerrar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                visVerUsers.dispose();
-
-            }
-
-        });
-
-        visVerUsers.btnBuscar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String busca = null;
-                String identificador = null;
-                if (!visVerUsers.txtBuscar1.getText().isEmpty()) {
-                    identificador = "nombre";
-                    busca = visVerUsers.txtBuscar1.getText().trim();
-
-                } else if (!visVerUsers.txtBuscar2.getText().isEmpty()) {
-                    identificador = "apellido";
-                    busca = visVerUsers.txtBuscar2.getText().trim();
-
-                } else if (!visVerUsers.txtBuscar3.getText().isEmpty()) {
-                    identificador = "dui";
-                    busca = visVerUsers.txtBuscar3.getText().trim();
-
-                }
-                if (busca == null) {
-                    JOptionPane.showMessageDialog(vista, "Ingrese una informacion de Usuario para buscar", "ANDA", JOptionPane.WARNING_MESSAGE);
-                    mostrarUsersTabla(base.getUsuario());
-                    //detiene la ejecucion
-                    return;
-                } else if (base.buscarUsuario(identificador, busca).isEmpty()) {
-                    mostrarUsersTabla(base.getUsuario());
-                    JOptionPane.showMessageDialog(vista, "No se encontraron usuarios con la informacion ingresada", "ANDA", JOptionPane.WARNING_MESSAGE);
-                    visVerUsers.txtBuscar1.setText("");
-                    visVerUsers.txtBuscar2.setText("");
-                    visVerUsers.txtBuscar3.setText("");
-                    //detiene la ejecucion
-                    return;
-                }
-
-                mostrarUsersTabla(base.buscarUsuario(identificador, busca));
-
-            }
-        });
-
-        visVerUsers.btnEliminar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                String seleccionado = getUsuarioSeleccionado();
-
-                if (seleccionado != null) {
-                    int opcion = JOptionPane.showConfirmDialog(
-                            visVerUsers,
-                            "¿Está seguro que desea eliminar este usuario? ",
-                            "Confirmación",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.WARNING_MESSAGE
-                    );
-
-                    if (opcion == JOptionPane.YES_OPTION) { // Si confirma
-
-                        boolean eliminado = base.eliminarUsuario(seleccionado);
-                        if (eliminado != false) {
-                            JOptionPane.showMessageDialog(vista, "Usuario  eliminado con exito ", "ANDA", JOptionPane.INFORMATION_MESSAGE);
-                            mostrarUsersTabla(base.getUsuario());
-                        } else {
-                            JOptionPane.showMessageDialog(vista, "El usuario NO se pudo eliminar", "ANDA", JOptionPane.WARNING_MESSAGE);
-                        }
-
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(vista, "Operacion cancelada ", "ANDA", JOptionPane.INFORMATION_MESSAGE);
-
-                }
-
-            }
-        });
-
-        //fin de tabla ver usuarios
-        //boton modificar en ver usuarios. 
-        visVerUsers.btnModificar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                String seleccionado = getUsuarioSeleccionado();
-                if (seleccionado != null) {
-
-                    visModficarUser.setSize(600, 400);
-
-                    // 1. Agregar primero al escritorio
-                    vista.escritorio.add(visModficarUser);
-
-                    // 2. Centrar
-                    Dimension desktopSize = vista.escritorio.getSize();
-                    Dimension internal = visModficarUser.getSize();
-                    int x = (desktopSize.width - internal.width) / 2;
-                    int y = (desktopSize.height - internal.height) / 2;
-                    visModficarUser.setLocation(x, y);
-
-                    //cargar datos de usuario
-                    ArrayList<Usuario> usuarios = base.buscarUsuario("dui", seleccionado);
-
-                    for (Usuario usuario : usuarios) {
-                        visModficarUser.txtNombreAgreUsuario.setText(usuario.getNombre());
-                        visModficarUser.txtApellidoAgreUsuario.setText(usuario.getApellido());
-                        visModficarUser.txtduiUsuario.setText(usuario.getDui());
-
-                    }
-
-                    // 3. Mostrar al final
-                    visModficarUser.setVisible(true);
-
-                }
-
-            }
-        });
-
-        visModficarUser.btnModificarUsuario.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                String seleccionado = getUsuarioSeleccionado();
-
-                String nuevoNombre = visModficarUser.txtNombreAgreUsuario.getText();
-                String nuevoApellido = visModficarUser.txtApellidoAgreUsuario.getText();
-                String nuevoDui = visModficarUser.txtduiUsuario.getText();
-
-                if (base.modificarUsuario(seleccionado, nuevoDui, nuevoNombre, nuevoApellido)) {
-                    JOptionPane.showMessageDialog(vista, "Usuario modificado con éxito", "ANDA", JOptionPane.INFORMATION_MESSAGE);
-                    visModficarUser.dispose();
-
-                    mostrarUsersTabla(base.getUsuario());
-
-                } else {
-                    JOptionPane.showMessageDialog(vista, "El usuario NO se pudo modificar", "ANDA", JOptionPane.WARNING_MESSAGE);
-                }
-
-            }
-        });
-
-        visModficarUser.btCerrar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                visModficarUser.dispose();
-
-            }
-
-        });
+//        vista.menuRegistrarUsuario.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                vistaAgregarUsuario.setSize(600, 400);
+//                vistaAgregarUsuario.setVisible(true);
+//
+//                Dimension desktopSize = vista.escritorio.getSize();
+//                Dimension internal = vistaAgregarUsuario.getSize();
+//
+//                int x = (desktopSize.width - internal.width) / 2;
+//                int y = (desktopSize.height - internal.height) / 2;
+//
+//                vistaAgregarUsuario.setLocation(x, y);
+//
+//                vista.escritorio.add(vistaAgregarUsuario);
+//            }
+//        });
+//
+//        vistaAgregarUsuario.btnAgregarUsuario.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                String dui = vistaAgregarUsuario.txtduiUsuario.getText();
+//                String nombre = vistaAgregarUsuario.txtNombreAgreUsuario.getText();
+//                String apellido = vistaAgregarUsuario.txtApellidoAgreUsuario.getText();
+//
+//                if (dui.isEmpty() || nombre.isEmpty() || apellido.isEmpty()) {
+//                    JOptionPane.showMessageDialog(vista, "Complete los campos", "ANDA", JOptionPane.WARNING_MESSAGE);
+//
+//                } else {
+//                    // Validar el formato del DUI ANTES de crear el objeto
+//                    if (!Usuario.validarDUI(dui)) {
+//                        JOptionPane.showMessageDialog(vista, "Formato de DUI inválido.\nEjemplo: 12345678-9", "ANDA", JOptionPane.WARNING_MESSAGE);
+//                        vistaAgregarUsuario.txtduiUsuario.requestFocus();
+//                        return;
+//                    }
+//
+//                    try {
+//
+//                        if (base.agregar(new Usuario(nombre, apellido, dui))) {
+//                            JOptionPane.showMessageDialog(vista, "Datos guardados", "ANDA", JOptionPane.INFORMATION_MESSAGE);
+//                            limpiar();
+//
+//                        } else {
+//                            JOptionPane.showMessageDialog(vista, "No se pudieron guardar los datos", "ANDA", JOptionPane.WARNING_MESSAGE);
+//                            limpiar();
+//
+//                        }
+//
+//                    } catch (Exception ex) {
+//
+//                    }
+//                }
+//
+//            }
+//
+//            private void limpiar() {
+//                vistaAgregarUsuario.txtNombreAgreUsuario.setText("");
+//                vistaAgregarUsuario.txtApellidoAgreUsuario.setText("");
+//                vistaAgregarUsuario.txtduiUsuario.setText("");
+//                vistaAgregarUsuario.txtNombreAgreUsuario.requestFocus();
+//            }
+//        });
+//
+//        vistaAgregarUsuario.btnCerrarAgrelUsuario.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                vistaAgregarUsuario.dispose();
+//
+//            }
+//
+//        });
+//
+//        //ver Usuarios Tabla. 
+//        vista.menuVerUsers.addActionListener(new ActionListener() {
+//
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//                visVerUsers.setSize(900, 600);
+//                visVerUsers.setVisible(true);
+//
+//                Dimension desktopSize = vista.escritorio.getSize();
+//                Dimension internal = visVerUsers.getSize();
+//
+//                int x = (desktopSize.width - internal.width) / 2;
+//                int y = (desktopSize.height - internal.height) / 2;
+//
+//                visVerUsers.setLocation(x, y);
+//
+//                vista.escritorio.add(visVerUsers);
+//
+//                mostrarUsersTabla(base.getUsuario());
+//
+//                // agregamos los eventos a los JTextField
+//                eventoCampo(visVerUsers.txtBuscar1, visVerUsers.txtBuscar2, visVerUsers.txtBuscar3);
+//                eventoCampo(visVerUsers.txtBuscar2, visVerUsers.txtBuscar1, visVerUsers.txtBuscar3);
+//                eventoCampo(visVerUsers.txtBuscar3, visVerUsers.txtBuscar1, visVerUsers.txtBuscar2);
+//
+//            }
+//        });
+//
+//        visVerUsers.btnCerrar.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                visVerUsers.dispose();
+//
+//            }
+//
+//        });
+//
+//        visVerUsers.btnBuscar.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                String busca = null;
+//                String identificador = null;
+//                if (!visVerUsers.txtBuscar1.getText().isEmpty()) {
+//                    identificador = "nombre";
+//                    busca = visVerUsers.txtBuscar1.getText().trim();
+//
+//                } else if (!visVerUsers.txtBuscar2.getText().isEmpty()) {
+//                    identificador = "apellido";
+//                    busca = visVerUsers.txtBuscar2.getText().trim();
+//
+//                } else if (!visVerUsers.txtBuscar3.getText().isEmpty()) {
+//                    identificador = "dui";
+//                    busca = visVerUsers.txtBuscar3.getText().trim();
+//
+//                }
+//                if (busca == null) {
+//                    JOptionPane.showMessageDialog(vista, "Ingrese una informacion de Usuario para buscar", "ANDA", JOptionPane.WARNING_MESSAGE);
+//                    mostrarUsersTabla(base.getUsuario());
+//                    //detiene la ejecucion
+//                    return;
+//                } else if (base.buscarUsuario(identificador, busca).isEmpty()) {
+//                    mostrarUsersTabla(base.getUsuario());
+//                    JOptionPane.showMessageDialog(vista, "No se encontraron usuarios con la informacion ingresada", "ANDA", JOptionPane.WARNING_MESSAGE);
+//                    visVerUsers.txtBuscar1.setText("");
+//                    visVerUsers.txtBuscar2.setText("");
+//                    visVerUsers.txtBuscar3.setText("");
+//                    //detiene la ejecucion
+//                    return;
+//                }
+//
+//                mostrarUsersTabla(base.buscarUsuario(identificador, busca));
+//
+//            }
+//        });
+//
+//        visVerUsers.btnEliminar.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//                String seleccionado = getUsuarioSeleccionado();
+//
+//                if (seleccionado != null) {
+//                    int opcion = JOptionPane.showConfirmDialog(
+//                            visVerUsers,
+//                            "¿Está seguro que desea eliminar este usuario? ",
+//                            "Confirmación",
+//                            JOptionPane.YES_NO_OPTION,
+//                            JOptionPane.WARNING_MESSAGE
+//                    );
+//
+//                    if (opcion == JOptionPane.YES_OPTION) { // Si confirma
+//
+//                        boolean eliminado = base.eliminarUsuario(seleccionado);
+//                        if (eliminado != false) {
+//                            JOptionPane.showMessageDialog(vista, "Usuario  eliminado con exito ", "ANDA", JOptionPane.INFORMATION_MESSAGE);
+//                            mostrarUsersTabla(base.getUsuario());
+//                        } else {
+//                            JOptionPane.showMessageDialog(vista, "El usuario NO se pudo eliminar", "ANDA", JOptionPane.WARNING_MESSAGE);
+//                        }
+//
+//                    }
+//                } else {
+//                    JOptionPane.showMessageDialog(vista, "Operacion cancelada ", "ANDA", JOptionPane.INFORMATION_MESSAGE);
+//
+//                }
+//
+//            }
+//        });
+//
+//        //fin de tabla ver usuarios
+//        //boton modificar en ver usuarios. 
+//        visVerUsers.btnModificar.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//                String seleccionado = getUsuarioSeleccionado();
+//                if (seleccionado != null) {
+//
+//                    visModficarUser.setSize(600, 400);
+//
+//                    // 1. Agregar primero al escritorio
+//                    vista.escritorio.add(visModficarUser);
+//
+//                    // 2. Centrar
+//                    Dimension desktopSize = vista.escritorio.getSize();
+//                    Dimension internal = visModficarUser.getSize();
+//                    int x = (desktopSize.width - internal.width) / 2;
+//                    int y = (desktopSize.height - internal.height) / 2;
+//                    visModficarUser.setLocation(x, y);
+//
+//                    //cargar datos de usuario
+//                    ArrayList<Usuario> usuarios = base.buscarUsuario("dui", seleccionado);
+//
+//                    for (Usuario usuario : usuarios) {
+//                        visModficarUser.txtNombreAgreUsuario.setText(usuario.getNombre());
+//                        visModficarUser.txtApellidoAgreUsuario.setText(usuario.getApellido());
+//                        visModficarUser.txtduiUsuario.setText(usuario.getDui());
+//
+//                    }
+//
+//                    // 3. Mostrar al final
+//                    visModficarUser.setVisible(true);
+//
+//                }
+//
+//            }
+//        });
+//
+//        visModficarUser.btnModificarUsuario.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//                String seleccionado = getUsuarioSeleccionado();
+//
+//                String nuevoNombre = visModficarUser.txtNombreAgreUsuario.getText();
+//                String nuevoApellido = visModficarUser.txtApellidoAgreUsuario.getText();
+//                String nuevoDui = visModficarUser.txtduiUsuario.getText();
+//
+//                if (base.modificarUsuario(seleccionado, nuevoDui, nuevoNombre, nuevoApellido)) {
+//                    JOptionPane.showMessageDialog(vista, "Usuario modificado con éxito", "ANDA", JOptionPane.INFORMATION_MESSAGE);
+//                    visModficarUser.dispose();
+//
+//                    mostrarUsersTabla(base.getUsuario());
+//
+//                } else {
+//                    JOptionPane.showMessageDialog(vista, "El usuario NO se pudo modificar", "ANDA", JOptionPane.WARNING_MESSAGE);
+//                }
+//
+//            }
+//        });
+//
+//        visModficarUser.btCerrar.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                visModficarUser.dispose();
+//
+//            }
+//
+//        });
 
         //Agregar Servicios
         visVerUsers.btnAgregarServicio.addActionListener(new ActionListener() {
