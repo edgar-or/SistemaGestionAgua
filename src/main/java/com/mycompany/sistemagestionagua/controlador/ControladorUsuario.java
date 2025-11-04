@@ -29,12 +29,12 @@ public class ControladorUsuario {
     private vistaVerUsuarios visVerUser;
     private Base base;
 
-    public ControladorUsuario(VistaPrincipal vistaPrincipal) {
+    public ControladorUsuario(VistaPrincipal vistaPrincipal, vistaVerUsuarios visVerUser, Base base) {
         this.vistaPrincipal = vistaPrincipal;
         this.visAgregarUser = new VistaAgregarUsuario();
         this.visModificarUser = new VistaModificarUsuario();
-        this.visVerUser = new vistaVerUsuarios();
-        this.base = new Base();
+        this.visVerUser = visVerUser;
+        this.base = base;
 
         configurarEventos();
 
