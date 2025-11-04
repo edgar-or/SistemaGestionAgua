@@ -37,6 +37,7 @@ public class ControladorPrincipal {
     vistaAgregarServicio visAgregarServicio;
     VistaRuta vistaRuta;
     ControladorUsuario controladorUsuario;
+    ControladorServicio controladorServicio; 
 
     public ControladorPrincipal(VistaPrincipal vista) {
         this.vista = vista;
@@ -44,9 +45,9 @@ public class ControladorPrincipal {
         this.base = new Base();
         this.visVerUsers = new vistaVerUsuarios();
         this.visModficarUser = new VistaModificarUsuario();
-        this.visAgregarServicio = new vistaAgregarServicio();
         this.vistaRuta = new VistaRuta();
-        this.controladorUsuario = new ControladorUsuario(vista);
+        this.controladorUsuario = new ControladorUsuario(vista, visVerUsers,base);
+        this.controladorServicio = new ControladorServicio(vista,visVerUsers,controladorUsuario,base);
 
         this.verServicio = new vistaVerServicios();
 
@@ -80,6 +81,8 @@ public class ControladorPrincipal {
         
         vista.menuRegistrarUsuario.addActionListener(e->controladorUsuario.mostrarVistaAgregar());
         vista.menuVerUsers.addActionListener(e-> controladorUsuario.mostrarVistaVerUsuarios());
+        visVerUsers.btnAgregarServicio.addActionListener(e-> controladorServicio.mostrarAgregarServicio());
+        
         
 
         //regiatrar Usuario
@@ -337,105 +340,105 @@ public class ControladorPrincipal {
 //        });
 
         //Agregar Servicios
-        visVerUsers.btnAgregarServicio.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                String seleccionado = getUsuarioSeleccionado();
-
-                if (seleccionado != null) {
-
-                    visAgregarServicio.setSize(600, 400);
-
-                    // 1. Agregar primero al escritorio
-                    vista.escritorio.add(visAgregarServicio);
-
-                    // 2. Centrar
-                    Dimension desktopSize = vista.escritorio.getSize();
-                    Dimension internal = visAgregarServicio.getSize();
-                    int x = (desktopSize.width - internal.width) / 2;
-                    int y = (desktopSize.height - internal.height) / 2;
-                    visAgregarServicio.setLocation(x, y);
-
-                    visAgregarServicio.setVisible(true);
-
-                    visAgregarServicio.txtNumDui.setText(seleccionado);
-                    visAgregarServicio.txtNumDui.setEnabled(false);
-                    visAgregarServicio.txtNumCuenta.setText(generarNumCuenta());
-                    visAgregarServicio.txtNumCuenta.setEnabled(false);
-
-                }
-
-            }
-        });
-
-        visAgregarServicio.btnAgregarSer.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!visAgregarServicio.txtDireccion.getText().isEmpty()) {
-                    String dui = visAgregarServicio.txtNumDui.getText();
-                    String numCuenta = visAgregarServicio.txtNumCuenta.getText();
-                    String direccion = visAgregarServicio.txtDireccion.getText();
-
-                    try {
-                        base.agregarServicio(new Servicio(dui, numCuenta, direccion));
-                        JOptionPane.showMessageDialog(vista, "Servicio agregado correctamente", "ANDA", JOptionPane.INFORMATION_MESSAGE);
-                        visAgregarServicio.txtDireccion.setText("");
-                        mostrarUsersTabla(base.getUsuario());
-                        visAgregarServicio.dispose();
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(vista, "El servicio NO se pudo agregar", "ANDA", JOptionPane.WARNING_MESSAGE);
-
-                    }
-
-                }
-            }
-        });
-
-        visAgregarServicio.btnCerrar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                visAgregarServicio.dispose();
-            }
-        });
-
-        //inicio servicios
-        vista.menuVerServicios.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                verServicio.setSize(900, 600);
-                verServicio.setVisible(true);
-
-                Dimension desktopSize = vista.escritorio.getSize();
-                Dimension internal = verServicio.getSize();
-
-                int x = (desktopSize.width - internal.width) / 2;
-                int y = (desktopSize.height - internal.height) / 2;
-
-                verServicio.setLocation(x, y);
-
-                vista.escritorio.add(verServicio);
-
-                mostrarServiciosTabla(base.getServicios());
-
-                // agregamos los eventos a los JTextField
-                eventoCampo(verServicio.txtBuscarDui, verServicio.txtBuscarCuenta, verServicio.txtBuscarDireccion);
-                eventoCampo(verServicio.txtBuscarCuenta, verServicio.txtBuscarDui, verServicio.txtBuscarDireccion);
-                eventoCampo(verServicio.txtBuscarDireccion, verServicio.txtBuscarDui, verServicio.txtBuscarCuenta);
-
-            }
-        });
-
-        verServicio.btnCerrar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                verServicio.dispose();
-
-            }
-
-        });
+//        visVerUsers.btnAgregarServicio.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//                String seleccionado = getUsuarioSeleccionado();
+//
+//                if (seleccionado != null) {
+//
+//                    visAgregarServicio.setSize(600, 400);
+//
+//                    // 1. Agregar primero al escritorio
+//                    vista.escritorio.add(visAgregarServicio);
+//
+//                    // 2. Centrar
+//                    Dimension desktopSize = vista.escritorio.getSize();
+//                    Dimension internal = visAgregarServicio.getSize();
+//                    int x = (desktopSize.width - internal.width) / 2;
+//                    int y = (desktopSize.height - internal.height) / 2;
+//                    visAgregarServicio.setLocation(x, y);
+//
+//                    visAgregarServicio.setVisible(true);
+//
+//                    visAgregarServicio.txtNumDui.setText(seleccionado);
+//                    visAgregarServicio.txtNumDui.setEnabled(false);
+//                    visAgregarServicio.txtNumCuenta.setText(generarNumCuenta());
+//                    visAgregarServicio.txtNumCuenta.setEnabled(false);
+//
+//                }
+//
+//            }
+//        });
+//
+//        visAgregarServicio.btnAgregarSer.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                if (!visAgregarServicio.txtDireccion.getText().isEmpty()) {
+//                    String dui = visAgregarServicio.txtNumDui.getText();
+//                    String numCuenta = visAgregarServicio.txtNumCuenta.getText();
+//                    String direccion = visAgregarServicio.txtDireccion.getText();
+//
+//                    try {
+//                        base.agregarServicio(new Servicio(dui, numCuenta, direccion));
+//                        JOptionPane.showMessageDialog(vista, "Servicio agregado correctamente", "ANDA", JOptionPane.INFORMATION_MESSAGE);
+//                        visAgregarServicio.txtDireccion.setText("");
+//                        mostrarUsersTabla(base.getUsuario());
+//                        visAgregarServicio.dispose();
+//                    } catch (Exception ex) {
+//                        JOptionPane.showMessageDialog(vista, "El servicio NO se pudo agregar", "ANDA", JOptionPane.WARNING_MESSAGE);
+//
+//                    }
+//
+//                }
+//            }
+//        });
+//
+//        visAgregarServicio.btnCerrar.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                visAgregarServicio.dispose();
+//            }
+//        });
+//
+//        //inicio servicios
+//        vista.menuVerServicios.addActionListener(new ActionListener() {
+//
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//                verServicio.setSize(900, 600);
+//                verServicio.setVisible(true);
+//
+//                Dimension desktopSize = vista.escritorio.getSize();
+//                Dimension internal = verServicio.getSize();
+//
+//                int x = (desktopSize.width - internal.width) / 2;
+//                int y = (desktopSize.height - internal.height) / 2;
+//
+//                verServicio.setLocation(x, y);
+//
+//                vista.escritorio.add(verServicio);
+//
+//                mostrarServiciosTabla(base.getServicios());
+//
+//                // agregamos los eventos a los JTextField
+//                eventoCampo(verServicio.txtBuscarDui, verServicio.txtBuscarCuenta, verServicio.txtBuscarDireccion);
+//                eventoCampo(verServicio.txtBuscarCuenta, verServicio.txtBuscarDui, verServicio.txtBuscarDireccion);
+//                eventoCampo(verServicio.txtBuscarDireccion, verServicio.txtBuscarDui, verServicio.txtBuscarCuenta);
+//
+//            }
+//        });
+//
+//        verServicio.btnCerrar.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                verServicio.dispose();
+//
+//            }
+//
+//        });
 
         verServicio.btnBuscar.addActionListener(new ActionListener() {
             @Override
