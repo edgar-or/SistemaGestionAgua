@@ -694,13 +694,13 @@ public class ControladorPrincipal {
 
         String resp = "";
         String nombre = "";
-
+        String apellido = "";
         //pendiente
         for (Servicio servicio : servicios) {
 
             nombre = base.nombre(servicio.getDuiPropietario());
 
-            Object datos[] = {modeloTabla.getRowCount() + 1, servicio.getDuiPropietario(), servicio.getnumeroCuenta(), servicio.getDireccion(), nombre, resp};
+            Object datos[] = {modeloTabla.getRowCount() + 1, servicio.getDuiPropietario(), servicio.getnumeroCuenta(), servicio.getDireccion(), nombre, apellido, resp};
             modeloTabla.addRow(datos);
         }
 
