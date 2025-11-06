@@ -599,4 +599,142 @@ public class ControladorPrincipal {
 
     }//no tocar
 
+<<<<<<< HEAD
 }
+=======
+    //fumciones aqui abajo 
+    public void mostrarUsersTabla(ArrayList<Usuario> usuarios) {
+        DefaultTableModel modeloTabla = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // <-- evita edición en todas las columnas
+            }
+        };
+
+        String titulos[] = {"N°", "Dui", "Nombre", "Apellido", "Numeros de Servicios"};
+        modeloTabla.setColumnIdentifiers(titulos);
+
+        //ArrayList<Usuario> usuarios = base.getUsuario();
+        String resp = "";
+
+        for (Usuario usuario : usuarios) {
+            ArrayList<String> temp = base.bNumCuenta(usuario.getDui());
+
+            if (temp == null || temp.isEmpty()) {
+                resp = "No tiene ningun servicio";
+            } else {
+
+                resp = String.join(", ", temp);
+
+            }
+
+            Object datos[] = {modeloTabla.getRowCount() + 1, usuario.getDui(), usuario.getNombre(), usuario.getApellido(), resp};
+            modeloTabla.addRow(datos);
+        }
+        this.visVerUsers.tablaUsuarios.setModel(modeloTabla);
+
+    }
+
+    //evento que desabilita los textfield de los buscadores 
+    private void eventoCampo(JTextField activo, JTextField... otros) {
+        activo.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                bloquear();
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                bloquear();
+            }
+
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                bloquear();
+            }
+
+            private void bloquear() {
+                if (!activo.getText().isEmpty()) {
+                    for (JTextField t : otros) {
+                        t.setEditable(false);
+                    }
+                } else {
+                    for (JTextField t : otros) {
+                        t.setEditable(true);
+                    }
+                }
+            }
+        });
+
+    }
+
+    private String getUsuarioSeleccionado() {
+        int fila = visVerUsers.tablaUsuarios.getSelectedRow();
+
+        if (fila == -1) {
+
+            JOptionPane.showMessageDialog(visVerUsers, "Seleccione un usuario de la tabla");
+            return null;
+
+        }
+
+        String dui = visVerUsers.tablaUsuarios.getValueAt(fila, 1).toString(); // Columna 1 = DUI
+        return dui;
+
+    }
+
+    //funcion para servicio
+    public void mostrarServiciosTabla(ArrayList<Servicio> servicios) {
+
+        DefaultTableModel modeloTabla = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // <-- evita edición en todas las columnas
+            }
+        };
+
+        String titulos[] = {"N°", "DUI propietario", "Nombre", "Apellido", "Direccion", "N° Cuenta"};
+        modeloTabla.setColumnIdentifiers(titulos);
+
+        String resp = "";
+        String nombre = "";
+        String apellido = "";
+        //pendiente
+        for (Servicio servicio : servicios) {
+
+            nombre = base.nombre(servicio.getDuiPropietario());
+
+            Object datos[] = {modeloTabla.getRowCount() + 1, servicio.getDuiPropietario(), servicio.getnumeroCuenta(), servicio.getDireccion(), nombre, apellido, resp};
+            modeloTabla.addRow(datos);
+        }
+
+        this.verServicio.tablaServicios.setModel(modeloTabla);
+
+    }
+
+    private static int correlativo = 1;
+
+    private String generarNumCuenta() {
+        int año = java.time.Year.now().getValue(); // obtiene el año actual
+        String numero = String.format("%04d", correlativo);
+        correlativo++;
+        return año + "-" + numero;
+    }
+
+    private String getServicioSeleccionado() {
+        int fila = verServicio.tablaServicios.getSelectedRow();
+
+        if (fila == -1) {
+
+            JOptionPane.showMessageDialog(verServicio, "Seleccione un usuario de la tabla");
+            return null;
+
+        }
+
+        String dui = verServicio.tablaServicios.getValueAt(fila, 1).toString(); // Columna 1 = DUI
+        return dui;
+
+    }
+
+}
+>>>>>>> 437a13743f5bcf72fd24b4f57f84522b0bd2cc52

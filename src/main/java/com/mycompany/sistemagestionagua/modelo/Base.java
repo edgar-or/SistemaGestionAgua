@@ -252,4 +252,18 @@ public class Base {
         return null;
         
     }
+    
+    public String apellido(String a){
+        for (Usuario usuario : usuarios) {
+            if (usuario.getDui().equals(a)) {
+                return usuario.getNombre();
+
+            }
+            else{
+                return null;
+            }
+        }
+        return null;
+        
+    }
 }
