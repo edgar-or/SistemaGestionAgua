@@ -42,6 +42,12 @@ public class Base {
         return servicios;
     }
 
+    public ArrayList<ModeloRuta> getRutas() {
+        return rutas;
+    }
+    
+    
+
     public ArrayList<Usuario> buscarUsuario(String identificador, String busca) {
         ArrayList<Usuario> temp = new ArrayList<>();
         Usuario encontrado = null;
@@ -208,14 +214,25 @@ public class Base {
         }
     }
     
+    public boolean modificarRuta(String id, String depto, String muni, String col,String desc){
+        for (ModeloRuta ruta : rutas) {
+            if (ruta.getId().equals(id)) {
+                ruta.setDepartamento(depto);
+                ruta.setColonia(col);
+                ruta.setDescripcion(desc);
+                ruta.setMunicipio(muni);
+                return true; 
+            }
+        }
+        return false; 
+    }
+    
     public boolean eliminarRuta (String id){
         
         for (ModeloRuta ruta : rutas) {
             if (ruta.getId().equals(id)) {
                 rutas.remove(ruta);
                 return true;
-            }else{
-                return false;
             }
             
         }

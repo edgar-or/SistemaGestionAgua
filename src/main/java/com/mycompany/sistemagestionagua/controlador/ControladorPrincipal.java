@@ -35,9 +35,9 @@ public class ControladorPrincipal {
     vistaVerUsuarios visVerUsers;
     VistaModificarUsuario visModficarUser;
     vistaAgregarServicio visAgregarServicio;
-    VistaRuta vistaRuta;
     ControladorUsuario controladorUsuario;
-    ControladorServicio controladorServicio; 
+    ControladorServicio controladorServicio;
+    ControladorRuta controladorRuta; 
 
     public ControladorPrincipal(VistaPrincipal vista) {
         this.vista = vista;
@@ -45,15 +45,11 @@ public class ControladorPrincipal {
         this.base = new Base();
         this.visVerUsers = new vistaVerUsuarios();
         this.visModficarUser = new VistaModificarUsuario();
-        this.vistaRuta = new VistaRuta();
         this.controladorUsuario = new ControladorUsuario(vista, visVerUsers,base);
         this.controladorServicio = new ControladorServicio(vista,visVerUsers,controladorUsuario,base);
+        this.controladorRuta = new ControladorRuta(base, vista); 
 
         this.verServicio = new vistaVerServicios();
-
-        this.agregarconsumo = new VistaAgregarConsumo();
-
-        this.agregarconsumo = new VistaAgregarConsumo();
 
         this.visModficarUser = new VistaModificarUsuario();
 
@@ -82,6 +78,8 @@ public class ControladorPrincipal {
         vista.menuRegistrarUsuario.addActionListener(e->controladorUsuario.mostrarVistaAgregar());
         vista.menuVerUsers.addActionListener(e-> controladorUsuario.mostrarVistaVerUsuarios());
         visVerUsers.btnAgregarServicio.addActionListener(e-> controladorServicio.mostrarAgregarServicio());
+        vista.menuVerRutas.addActionListener(e-> controladorRuta.mostrarVista());
+        
         
         
 
@@ -440,299 +438,165 @@ public class ControladorPrincipal {
 //
 //        });
 
-        verServicio.btnBuscar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String busca = null;
-                String identificador = null;
-                if (!verServicio.txtBuscarDui.getText().isEmpty()) {
-                    identificador = "nombre";
-                    busca = verServicio.txtBuscarDui.getText().trim();
+//        verServicio.btnBuscar.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                String busca = null;
+//                String identificador = null;
+//                if (!verServicio.txtBuscarDui.getText().isEmpty()) {
+//                    identificador = "nombre";
+//                    busca = verServicio.txtBuscarDui.getText().trim();
+//
+//                } else if (!verServicio.txtBuscarCuenta.getText().isEmpty()) {
+//                    identificador = "DUI";
+//                    busca = verServicio.txtBuscarCuenta.getText().trim();
+//
+//                } else if (!verServicio.txtBuscarDireccion.getText().isEmpty()) {
+//                    identificador = "Cuenta";
+//                    busca = verServicio.txtBuscarDireccion.getText().trim();
+//
+//                }
+//                if (busca == null) {
+//                    JOptionPane.showMessageDialog(vista, "Ingrese una informacion de servicio para buscar", "ANDA", JOptionPane.WARNING_MESSAGE);
+//                    mostrarUsersTabla(base.getUsuario());
+//                    //detiene la ejecucion
+//                    return;
+//                } else if (base.buscarUsuario(identificador, busca).isEmpty()) {
+//                    mostrarUsersTabla(base.getUsuario());
+//                    JOptionPane.showMessageDialog(vista, "No se encontraron servicios con la informacion ingresada", "ANDA", JOptionPane.WARNING_MESSAGE);
+//                    verServicio.txtBuscarDui.setText("");
+//                    verServicio.txtBuscarCuenta.setText("");
+//                    verServicio.txtBuscarDireccion.setText("");
+//                    //detiene la ejecucion
+//                    return;
+//                }
+//
+//                mostrarUsersTabla(base.buscarUsuario(identificador, busca));
+//
+//            }
+//        });
+//
+//        verServicio.btnEliminar.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//                String seleccionado = getUsuarioSeleccionado();
+//
+//                if (seleccionado != null) {
+//                    int opcion = JOptionPane.showConfirmDialog(
+//                            verServicio,
+//                            "¿Está seguro que desea eliminar este servicio? ",
+//                            "Confirmación",
+//                            JOptionPane.YES_NO_OPTION,
+//                            JOptionPane.WARNING_MESSAGE
+//                    );
+//
+//                    if (opcion == JOptionPane.YES_OPTION) { // Si confirma
+//
+//                        boolean eliminado = base.eliminarUsuario(seleccionado);
+//                        if (eliminado != false) {
+//                            JOptionPane.showMessageDialog(vista, "Servicio  eliminado con exito ", "ANDA", JOptionPane.INFORMATION_MESSAGE);
+//                            mostrarUsersTabla(base.getUsuario());
+//                        } else {
+//                            JOptionPane.showMessageDialog(vista, "El servicio NO se pudo eliminar", "ANDA", JOptionPane.WARNING_MESSAGE);
+//                        }
+//
+//                    }
+//                } else {
+//                    JOptionPane.showMessageDialog(vista, "Operacion cancelada ", "ANDA", JOptionPane.INFORMATION_MESSAGE);
+//
+//                }
+//
+//            }
+//        });// fin tabla de servicios
+//
+//        //vistaparaconsumo
+//        verServicio.btnAgrgarConsumo.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//                String seleccionado = getUsuarioSeleccionado();
+//                if (seleccionado != null) {
+//
+//                    agregarconsumo.setSize(600, 400);
+//
+//                    // 1. Agregar primero al escritorio
+//                    vista.escritorio.add(agregarconsumo);
+//
+//                    // 2. Centrar
+//                    Dimension desktopSize = vista.escritorio.getSize();
+//                    Dimension internal = agregarconsumo.getSize();
+//                    int x = (desktopSize.width - internal.width) / 2;
+//                    int y = (desktopSize.height - internal.height) / 2;
+//                    agregarconsumo.setLocation(x, y);
+//
+//                    //cargar datos de consumo
+//                    /*
+//                    ArrayList<Usuario> usuarios = base.buscarUsuario("dui", seleccionado);
+//
+//                    for (Usuario usuario : usuarios) {
+//                        visModficarUser.txtNombreAgreUsuario.setText(usuario.getNombre());
+//                        visModficarUser.txtApellidoAgreUsuario.setText(usuario.getApellido());
+//                        visModficarUser.txtduiUsuario.setText(usuario.getDui());
+//
+//                    }*/
+//                    // 3. Mostrar al final
+//                    agregarconsumo.setVisible(true);
+//
+//                }
+//
+//            }
+//        });
+//
+//        agregarconsumo.btnCerrar.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                agregarconsumo.dispose();
+//
+//            }
+//
+//        });
 
-                } else if (!verServicio.txtBuscarCuenta.getText().isEmpty()) {
-                    identificador = "DUI";
-                    busca = verServicio.txtBuscarCuenta.getText().trim();
-
-                } else if (!verServicio.txtBuscarDireccion.getText().isEmpty()) {
-                    identificador = "Cuenta";
-                    busca = verServicio.txtBuscarDireccion.getText().trim();
-
-                }
-                if (busca == null) {
-                    JOptionPane.showMessageDialog(vista, "Ingrese una informacion de servicio para buscar", "ANDA", JOptionPane.WARNING_MESSAGE);
-                    mostrarUsersTabla(base.getUsuario());
-                    //detiene la ejecucion
-                    return;
-                } else if (base.buscarUsuario(identificador, busca).isEmpty()) {
-                    mostrarUsersTabla(base.getUsuario());
-                    JOptionPane.showMessageDialog(vista, "No se encontraron servicios con la informacion ingresada", "ANDA", JOptionPane.WARNING_MESSAGE);
-                    verServicio.txtBuscarDui.setText("");
-                    verServicio.txtBuscarCuenta.setText("");
-                    verServicio.txtBuscarDireccion.setText("");
-                    //detiene la ejecucion
-                    return;
-                }
-
-                mostrarUsersTabla(base.buscarUsuario(identificador, busca));
-
-            }
-        });
-
-        verServicio.btnEliminar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                String seleccionado = getUsuarioSeleccionado();
-
-                if (seleccionado != null) {
-                    int opcion = JOptionPane.showConfirmDialog(
-                            verServicio,
-                            "¿Está seguro que desea eliminar este servicio? ",
-                            "Confirmación",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.WARNING_MESSAGE
-                    );
-
-                    if (opcion == JOptionPane.YES_OPTION) { // Si confirma
-
-                        boolean eliminado = base.eliminarUsuario(seleccionado);
-                        if (eliminado != false) {
-                            JOptionPane.showMessageDialog(vista, "Servicio  eliminado con exito ", "ANDA", JOptionPane.INFORMATION_MESSAGE);
-                            mostrarUsersTabla(base.getUsuario());
-                        } else {
-                            JOptionPane.showMessageDialog(vista, "El servicio NO se pudo eliminar", "ANDA", JOptionPane.WARNING_MESSAGE);
-                        }
-
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(vista, "Operacion cancelada ", "ANDA", JOptionPane.INFORMATION_MESSAGE);
-
-                }
-
-            }
-        });// fin tabla de servicios
-
-        //vistaparaconsumo
-        verServicio.btnAgrgarConsumo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                String seleccionado = getUsuarioSeleccionado();
-                if (seleccionado != null) {
-
-                    agregarconsumo.setSize(600, 400);
-
-                    // 1. Agregar primero al escritorio
-                    vista.escritorio.add(agregarconsumo);
-
-                    // 2. Centrar
-                    Dimension desktopSize = vista.escritorio.getSize();
-                    Dimension internal = agregarconsumo.getSize();
-                    int x = (desktopSize.width - internal.width) / 2;
-                    int y = (desktopSize.height - internal.height) / 2;
-                    agregarconsumo.setLocation(x, y);
-
-                    //cargar datos de consumo
-                    /*
-                    ArrayList<Usuario> usuarios = base.buscarUsuario("dui", seleccionado);
-
-                    for (Usuario usuario : usuarios) {
-                        visModficarUser.txtNombreAgreUsuario.setText(usuario.getNombre());
-                        visModficarUser.txtApellidoAgreUsuario.setText(usuario.getApellido());
-                        visModficarUser.txtduiUsuario.setText(usuario.getDui());
-
-                    }*/
-                    // 3. Mostrar al final
-                    agregarconsumo.setVisible(true);
-
-                }
-
-            }
-        });
-
-        agregarconsumo.btnCerrar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                agregarconsumo.dispose();
-
-            }
-
-        });
-
-        //Ver Rutas
-        vista.menuVerRutas.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                vistaRuta.setSize(600, 400);
-                vistaRuta.setVisible(true);
-
-                Dimension desktopSize = vista.escritorio.getSize();
-                Dimension internal = vistaRuta.getSize();
-
-                int x = (desktopSize.width - internal.width) / 2;
-                int y = (desktopSize.height - internal.height) / 2;
-
-                vistaRuta.setLocation(x, y);
-
-                vista.escritorio.add(vistaRuta);
-            }
-        });
-
-        vistaRuta.btnCerrar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                vistaRuta.dispose();
-            }
-        });
-
-        vistaRuta.btnGudar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                String id = "1";
-                String ruta = vistaRuta.txtDepto.getText();
-                String municipio = vistaRuta.txtMunicipio.getText();
-                String colonia = vistaRuta.txtColonia.getText();
-                String descripcion = vistaRuta.txtDescripcion.getText();
-
-                //---------------------------PENDIENTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-            }
-        });
+//        //Ver Rutas
+//        vista.menuVerRutas.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                vistaRuta.setSize(600, 400);
+//                vistaRuta.setVisible(true);
+//
+//                Dimension desktopSize = vista.escritorio.getSize();
+//                Dimension internal = vistaRuta.getSize();
+//
+//                int x = (desktopSize.width - internal.width) / 2;
+//                int y = (desktopSize.height - internal.height) / 2;
+//
+//                vistaRuta.setLocation(x, y);
+//
+//                vista.escritorio.add(vistaRuta);
+//            }
+//        });
+//
+//        vistaRuta.btnCerrar.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                vistaRuta.dispose();
+//            }
+//        });
+//
+//        vistaRuta.btnGudar.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//                String id = "1";
+//                String ruta = vistaRuta.txtDepto.getText();
+//                String municipio = vistaRuta.txtMunicipio.getText();
+//                String colonia = vistaRuta.txtColonia.getText();
+//                String descripcion = vistaRuta.txtDescripcion.getText();
+//
+//                //---------------------------PENDIENTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+//            }
+//        });
 
     }//no tocar
-
-    //fumciones aqui abajo 
-    public void mostrarUsersTabla(ArrayList<Usuario> usuarios) {
-        DefaultTableModel modeloTabla = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false; // <-- evita edición en todas las columnas
-            }
-        };
-
-        String titulos[] = {"N°", "Dui", "Nombre", "Apellido", "Numeros de Servicios"};
-        modeloTabla.setColumnIdentifiers(titulos);
-
-        //ArrayList<Usuario> usuarios = base.getUsuario();
-        String resp = "";
-
-        for (Usuario usuario : usuarios) {
-            ArrayList<String> temp = base.bNumCuenta(usuario.getDui());
-
-            if (temp == null || temp.isEmpty()) {
-                resp = "No tiene ningun servicio";
-            } else {
-
-                resp = String.join(", ", temp);
-
-            }
-
-            Object datos[] = {modeloTabla.getRowCount() + 1, usuario.getDui(), usuario.getNombre(), usuario.getApellido(), resp};
-            modeloTabla.addRow(datos);
-        }
-        this.visVerUsers.tablaUsuarios.setModel(modeloTabla);
-
-    }
-
-    //evento que desabilita los textfield de los buscadores 
-    private void eventoCampo(JTextField activo, JTextField... otros) {
-        activo.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
-            @Override
-            public void insertUpdate(javax.swing.event.DocumentEvent e) {
-                bloquear();
-            }
-
-            @Override
-            public void removeUpdate(javax.swing.event.DocumentEvent e) {
-                bloquear();
-            }
-
-            @Override
-            public void changedUpdate(javax.swing.event.DocumentEvent e) {
-                bloquear();
-            }
-
-            private void bloquear() {
-                if (!activo.getText().isEmpty()) {
-                    for (JTextField t : otros) {
-                        t.setEditable(false);
-                    }
-                } else {
-                    for (JTextField t : otros) {
-                        t.setEditable(true);
-                    }
-                }
-            }
-        });
-
-    }
-
-    private String getUsuarioSeleccionado() {
-        int fila = visVerUsers.tablaUsuarios.getSelectedRow();
-
-        if (fila == -1) {
-
-            JOptionPane.showMessageDialog(visVerUsers, "Seleccione un usuario de la tabla");
-            return null;
-
-        }
-
-        String dui = visVerUsers.tablaUsuarios.getValueAt(fila, 1).toString(); // Columna 1 = DUI
-        return dui;
-
-    }
-
-    //funcion para servicio
-    public void mostrarServiciosTabla(ArrayList<Servicio> servicios) {
-
-        DefaultTableModel modeloTabla = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false; // <-- evita edición en todas las columnas
-            }
-        };
-
-        String titulos[] = {"N°", "DUI propietario", "Nombre", "Apellido", "Direccion", "N° Cuenta"};
-        modeloTabla.setColumnIdentifiers(titulos);
-
-        String resp = "";
-        String nombre = "";
-
-        //pendiente
-        for (Servicio servicio : servicios) {
-
-            nombre = base.nombre(servicio.getDuiPropietario());
-
-            Object datos[] = {modeloTabla.getRowCount() + 1, servicio.getDuiPropietario(), servicio.getnumeroCuenta(), servicio.getDireccion(), nombre, resp};
-            modeloTabla.addRow(datos);
-        }
-
-        this.verServicio.tablaServicios.setModel(modeloTabla);
-
-    }
-
-    private static int correlativo = 1;
-
-    private String generarNumCuenta() {
-        int año = java.time.Year.now().getValue(); // obtiene el año actual
-        String numero = String.format("%04d", correlativo);
-        correlativo++;
-        return año + "-" + numero;
-    }
-
-    private String getServicioSeleccionado() {
-        int fila = verServicio.tablaServicios.getSelectedRow();
-
-        if (fila == -1) {
-
-            JOptionPane.showMessageDialog(verServicio, "Seleccione un usuario de la tabla");
-            return null;
-
-        }
-
-        String dui = verServicio.tablaServicios.getValueAt(fila, 1).toString(); // Columna 1 = DUI
-        return dui;
-
-    }
 
 }

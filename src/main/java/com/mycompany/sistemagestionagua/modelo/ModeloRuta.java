@@ -7,14 +7,19 @@ package com.mycompany.sistemagestionagua.modelo;
 public class ModeloRuta {
 
     private String id;
-    private String ruta;
+    private String departamento;
     private String municipio;
     private String colonia;
     private String descripcion;
 
-    public ModeloRuta(String id, String ruta, String municipio, String colonia, String descripcion) {
+    public ModeloRuta() {
+    }
+    
+    
+
+    public ModeloRuta(String id, String departamento, String municipio, String colonia, String descripcion) {
         this.id = id;
-        this.ruta = ruta;
+        this.departamento = departamento;
         this.municipio = municipio;
         this.colonia = colonia;
         this.descripcion = descripcion;
@@ -29,8 +34,8 @@ public class ModeloRuta {
     }
     
 
-    public String getRuta() {
-        return ruta;
+    public String getDepartametno() {
+        return departamento;
     }
     
 
@@ -46,8 +51,8 @@ public class ModeloRuta {
         return descripcion;
     }
 
-    public void setRuta(String ruta) {
-        this.ruta = ruta;
+    public void setDepartamento(String departamento) {
+        this.departamento = departamento;
     }
 
     public void setMunicipio(String municipio) {
