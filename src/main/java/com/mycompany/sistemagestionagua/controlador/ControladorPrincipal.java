@@ -34,6 +34,7 @@ public class ControladorPrincipal {
     ControladorRuta controladorRuta;
     vistaVerServicios visVerServices;
     ControladorVerServicios controladorVerServices; 
+    ControladorConsumo controladorConsumo;
 
     public ControladorPrincipal(VistaPrincipal vista) {
         this.vista = vista;
@@ -44,7 +45,7 @@ public class ControladorPrincipal {
         this.controladorServicio = new ControladorServicio(vista, controladorUsuario, visVerUsers,base);
         this.controladorRuta = new ControladorRuta(base, vista); 
         this.controladorVerServices = new ControladorVerServicios(vista,visVerServices, base);
-
+        this.controladorConsumo= new ControladorConsumo(vista, base,  visVerServices, controladorVerServices);
         
         onEvento();
         llenarDatos();
@@ -67,7 +68,7 @@ public class ControladorPrincipal {
         visVerUsers.btnAgregarServicio.addActionListener(e-> controladorServicio.mostrarAgregarServicio());
         vista.menuVerRutas.addActionListener(e-> controladorRuta.mostrarVista());
         vista.menuVerServicios.addActionListener(e-> controladorVerServices.mostrarVista());
-        
+        visVerServices.btnAgrgarConsumo.addActionListener(e-> controladorConsumo.mostrarVista());
         
   
 

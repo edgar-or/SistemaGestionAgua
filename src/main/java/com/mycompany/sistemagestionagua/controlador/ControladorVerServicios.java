@@ -34,8 +34,16 @@ public class ControladorVerServicios {
         this.base = base;
 
         eventos();
+        
+        
     }
 
+    public ControladorVerServicios() {
+    }
+    
+    
+    
+    
     private void eventos() {
         visVerServicios.btnCerrar.addActionListener(e -> visVerServicios.dispose());
         visVerServicios.btnEliminar.addActionListener(e -> eliminarServicio());
@@ -204,8 +212,11 @@ public class ControladorVerServicios {
         this.visVerServicios.tablaServicios.setModel(modeloTabla);
 
     }
+    
+    
 
-    private String getServicioSeleccionado() {
+
+    public String getServicioSeleccionado() {
         int fila = visVerServicios.tablaServicios.getSelectedRow();
 
         if (fila == -1) {

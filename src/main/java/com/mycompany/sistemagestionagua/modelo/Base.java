@@ -9,11 +9,13 @@ public class Base {
     ArrayList<Usuario> usuarios;
     ArrayList<Servicio> servicios;
     ArrayList<ModeloRuta> rutas; 
+    ArrayList<ModeloConsumo> consumos;
 
     public Base() {
         usuarios = new ArrayList<>();
         servicios = new ArrayList<>();
         rutas = new ArrayList<>();
+        consumos= new ArrayList<>();
         
     }
 
@@ -313,4 +315,12 @@ public class Base {
             }
             return null; 
         }
+         public boolean agregarConsumos(ModeloConsumo c) {
+        try {
+            consumos.add(c);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
 }
