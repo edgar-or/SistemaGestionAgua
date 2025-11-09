@@ -6,6 +6,7 @@ com\mycompany\sistemagestionagua\vista\VistaEliminarUsuario$2.class
 com\mycompany\sistemagestionagua\vista\vistaVerUsuarios.class
 com\mycompany\sistemagestionagua\modelo\LoginModelo.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarConsumo$1.class
+com\mycompany\sistemagestionagua\vista\VistaAgregarPrecios$1.class
 com\mycompany\sistemagestionagua\vista\vistaVerServicios$1.class
 com\mycompany\sistemagestionagua\vista\vistaVerServicios.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarUsurioIndividual$1.class
@@ -17,6 +18,7 @@ com\mycompany\sistemagestionagua\controlador\ControladorUsuario$1.class
 com\mycompany\sistemagestionagua\vista\VistaRuta$1.class
 com\mycompany\sistemagestionagua\vista\vistaVerServicios$7.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarConsumo$2.class
+com\mycompany\sistemagestionagua\controlador\ControladorPrecioMC.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrincipal.class
 com\mycompany\sistemagestionagua\vista\vistaVerServicios$4.class
 com\mycompany\sistemagestionagua\vista\VistaModificarUsuario$1.class
@@ -32,15 +34,18 @@ com\mycompany\sistemagestionagua\vista\VistaConsultarConsumoAgua$2.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarUsuario$1.class
 com\mycompany\sistemagestionagua\vista\VistaModificarUsuario.class
 com\mycompany\sistemagestionagua\vista\vistaVerServicios$3.class
+com\mycompany\sistemagestionagua\modelo\PrecioMC.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarUsuario$3.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarConsumoAgua$3.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarUsurioIndividual$2.class
 com\mycompany\sistemagestionagua\vista\vistaVerServicios$6.class
 com\mycompany\sistemagestionagua\vista\vistaVerServicios$2.class
 com\mycompany\sistemagestionagua\vista\VistaModificarUsuario$3.class
+com\mycompany\sistemagestionagua\vista\VistaAgregarPrecios.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarUsuario.class
 com\mycompany\sistemagestionagua\vista\VistaRuta$3.class
 com\mycompany\sistemagestionagua\vista\vistaModificarServicio.class
+com\mycompany\sistemagestionagua\vista\VistaPrincipal$4.class
 com\mycompany\sistemagestionagua\modelo\Servicio.class
 com\mycompany\sistemagestionagua\controlador\ControladorVerServicios.class
 com\mycompany\sistemagestionagua\vista\VistaPrincipal$1.class
