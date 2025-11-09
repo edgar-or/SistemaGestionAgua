@@ -51,6 +51,7 @@ public class ControladorUsuario {
         visVerUser.btnEliminar.addActionListener(e -> eliminarUser());
         visVerUser.btnModificar.addActionListener(e -> mostrarVistaModificar());
         visModificarUser.btnModificarUsuario.addActionListener(e -> modificarUsuario());
+        visModificarUser.btCerrar.addActionListener(e-> visModificarUser.dispose());
         visVerUser.btnCerrar.addActionListener(e -> visVerUser.dispose());
 
         // --- Desactivar buscadores ---

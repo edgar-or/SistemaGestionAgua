@@ -48,7 +48,7 @@ public class ControladorRuta {
 
     public void mostrarVista() {
 
-        visRuta.setSize(600, 400);
+        visRuta.setSize(800, 500);
         visRuta.setVisible(true);
 
         // 2️⃣ Centrar la vista
@@ -62,6 +62,7 @@ public class ControladorRuta {
 
         // 3️⃣ Mostrar y traer al frente
         visRuta.toFront();
+        mostrarRutasTabla(base.getRutas());
 
     }
 

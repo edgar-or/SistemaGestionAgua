@@ -27,39 +27,26 @@ import javax.swing.table.DefaultTableModel;
 public class ControladorPrincipal {
 
     VistaPrincipal vista;
-    ModeloPrincipal modelo;
-    VistaAgregarUsuario vistaAgregarUsuario;
     Base base;
-    vistaVerServicios verServicio;
-    VistaAgregarConsumo agregarconsumo;
     vistaVerUsuarios visVerUsers;
-    VistaModificarUsuario visModficarUser;
-    vistaAgregarServicio visAgregarServicio;
     ControladorUsuario controladorUsuario;
     ControladorServicio controladorServicio;
-    ControladorRuta controladorRuta; 
+    ControladorRuta controladorRuta;
+    vistaVerServicios visVerServices;
+    ControladorVerServicios controladorVerServices; 
 
     public ControladorPrincipal(VistaPrincipal vista) {
         this.vista = vista;
-        this.modelo = modelo;
+        
+        this.visVerServices = new vistaVerServicios();
         this.base = new Base();
         this.visVerUsers = new vistaVerUsuarios();
-        this.visModficarUser = new VistaModificarUsuario();
         this.controladorUsuario = new ControladorUsuario(vista, visVerUsers,base);
-        this.controladorServicio = new ControladorServicio(vista,visVerUsers,controladorUsuario,base);
+        this.controladorServicio = new ControladorServicio(vista, controladorUsuario, visVerUsers,base);
         this.controladorRuta = new ControladorRuta(base, vista); 
+        this.controladorVerServices = new ControladorVerServicios(vista,visVerServices, base);
 
-        this.verServicio = new vistaVerServicios();
-
-        this.visModficarUser = new VistaModificarUsuario();
-
-        this.agregarconsumo = new VistaAgregarConsumo();
-
-        this.visModficarUser = new VistaModificarUsuario();
-
-        this.verServicio = new vistaVerServicios();
-
-        this.vistaAgregarUsuario = new VistaAgregarUsuario();
+        
         onEvento();
         
         
@@ -79,6 +66,7 @@ public class ControladorPrincipal {
         vista.menuVerUsers.addActionListener(e-> controladorUsuario.mostrarVistaVerUsuarios());
         visVerUsers.btnAgregarServicio.addActionListener(e-> controladorServicio.mostrarAgregarServicio());
         vista.menuVerRutas.addActionListener(e-> controladorRuta.mostrarVista());
+        vista.menuVerServicios.addActionListener(e-> controladorVerServices.mostrarVista());
         
         
         

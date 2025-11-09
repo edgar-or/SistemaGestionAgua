@@ -8,6 +8,7 @@ import com.mycompany.sistemagestionagua.modelo.Base;
 import com.mycompany.sistemagestionagua.modelo.Servicio;
 import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
 import com.mycompany.sistemagestionagua.vista.vistaAgregarServicio;
+import com.mycompany.sistemagestionagua.vista.vistaVerServicios;
 import com.mycompany.sistemagestionagua.vista.vistaVerUsuarios;
 import java.awt.Dimension;
 import javax.swing.JInternalFrame;
@@ -25,10 +26,10 @@ public class ControladorServicio {
     private Base base;
     private ControladorUsuario controladorUsuario;
 
-    public ControladorServicio(VistaPrincipal vistaPrincipal, vistaVerUsuarios visUsuarios, ControladorUsuario controladorUsuario, Base base) {
+    public ControladorServicio(VistaPrincipal vistaPrincipal, ControladorUsuario controladorUsuario, vistaVerUsuarios visVerUser, Base base) {
         this.vistaPrincipal = vistaPrincipal;
         this.visAgregarServicio = new vistaAgregarServicio();
-        this.visVerUser = visUsuarios;
+        this.visVerUser = visVerUser;
         this.base = base;
         this.controladorUsuario = controladorUsuario;
 
@@ -56,8 +57,6 @@ public class ControladorServicio {
 
             visAgregarServicio.setSize(600, 400);
 
-         
-
             // 2. Centrar
             Dimension desktopSize = vistaPrincipal.escritorio.getSize();
             Dimension internal = visAgregarServicio.getSize();
@@ -83,17 +82,17 @@ public class ControladorServicio {
             String numCuenta = visAgregarServicio.txtNumCuenta.getText();
             String direccion = visAgregarServicio.txtDireccion.getText();
 
-            try {
-                base.agregarServicio(new Servicio(dui, numCuenta, direccion));
+            if (base.agregarServicio(new Servicio(dui, numCuenta, direccion)) != false) {
                 JOptionPane.showMessageDialog(vistaPrincipal, "Servicio agregado correctamente", "ANDA", JOptionPane.INFORMATION_MESSAGE);
                 visAgregarServicio.txtDireccion.setText("");
                 controladorUsuario.mostrarUsersTabla(base.getUsuario());
                 visAgregarServicio.dispose();
-            } catch (Exception ex) {
+            } else {
                 JOptionPane.showMessageDialog(vistaPrincipal, "El servicio NO se pudo agregar", "ANDA", JOptionPane.WARNING_MESSAGE);
-
             }
 
+        } else {
+            JOptionPane.showMessageDialog(vistaPrincipal, "Complete los campos", "ANDA", JOptionPane.WARNING_MESSAGE);
         }
 
     }

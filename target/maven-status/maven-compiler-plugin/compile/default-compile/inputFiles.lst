@@ -1,31 +1,8 @@
-<<<<<<< HEAD
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\controlador\ControladorPrincipal.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\controlador\ControladorUsuario.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\controlador\LoginControlador.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\Base.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\LoginModelo.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\ModeloPrincipal.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\ModeloRuta.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\Servicio.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\Usuario.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\SistemaGestionAgua.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\LoginVista.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaAgregarConsumo.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\vistaAgregarServicio.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaAgregarUsuario.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaConsultarConsumoAgua.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaConsultarUsurioIndividual.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaEliminarUsuario.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaModificarUsuario.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaPrincipal.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaRuta.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\vistaVerServicios.java
-C:\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\vistaVerUsuarios.java
-=======
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\controlador\ControladorPrincipal.java
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\controlador\ControladorRuta.java
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\controlador\ControladorServicio.java
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\controlador\ControladorUsuario.java
+C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\controlador\ControladorVerServicios.java
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\controlador\LoginControlador.java
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\Base.java
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\LoginModelo.java
@@ -46,4 +23,3 @@ C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagu
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaRuta.java
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\vistaVerServicios.java
 C:\projectsJava\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\vistaVerUsuarios.java
->>>>>>> 6adefd107949038a343e44fb6d095ae116bfb5f1

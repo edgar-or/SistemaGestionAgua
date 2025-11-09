@@ -256,14 +256,24 @@ public class Base {
     public String apellido(String a){
         for (Usuario usuario : usuarios) {
             if (usuario.getDui().equals(a)) {
-                return usuario.getNombre();
+                return usuario.getApellido();
 
             }
-            else{
-                return null;
-            }
+           
         }
         return null;
         
+    }
+    
+        public boolean eliminarServicio (String NumCuenta){
+        
+        for (Servicio servicio : servicios) {
+            if (servicio.getnumeroCuenta().equals(NumCuenta)) {
+                servicios.remove(servicio);
+                return true;
+            }
+            
+        }
+        return false;
     }
 }
