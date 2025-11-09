@@ -40,6 +40,28 @@ public class Servicio {
     public String getNumMedidor() {
         return numMedidor;
     }
+
+    public void setDuiPropietario(String duiPropietario) {
+        this.duiPropietario = duiPropietario;
+    }
+
+    public void setNumeroCuenta(String numeroCuenta) {
+        this.numeroCuenta = numeroCuenta;
+    }
+
+    public void setIdRuta(String idRuta) {
+        this.idRuta = idRuta;
+    }
+
+    public void setMetrosCubicos(int metrosCubicos) {
+        this.metrosCubicos = metrosCubicos;
+    }
+
+    public void setNumMedidor(String numMedidor) {
+        this.numMedidor = numMedidor;
+    }
+    
+    
     
     
     

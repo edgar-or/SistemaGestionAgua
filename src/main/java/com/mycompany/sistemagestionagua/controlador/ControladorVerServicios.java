@@ -21,19 +21,18 @@ import javax.swing.table.DefaultTableModel;
  * @author ayala
  */
 public class ControladorVerServicios {
-    
-    private VistaPrincipal vistaPrincipal; 
-    private vistaVerServicios visVerServicios; 
-    private Base base; 
+
+    private VistaPrincipal vistaPrincipal;
+    private vistaVerServicios visVerServicios;
+    private Base base;
     private vistaModificarServicio visModificarServicio;
 
     public ControladorVerServicios(VistaPrincipal visPrincipal, vistaVerServicios visVerServicios, Base base) {
         this.vistaPrincipal = visPrincipal;
         this.visVerServicios = visVerServicios;
-        this.visModificarServicio = new vistaModificarServicio(); 
+        this.visModificarServicio = new vistaModificarServicio();
         this.base = base;
-        
-        
+
         eventos();
         
         
@@ -46,18 +45,17 @@ public class ControladorVerServicios {
     
     
     private void eventos() {
-        visVerServicios.btnCerrar.addActionListener(e-> visVerServicios.dispose());
-        visVerServicios.btnEliminar.addActionListener(e-> eliminarServicio() );
-        visVerServicios.btnModificar.addActionListener(e-> mostrarModificar());
-        visModificarServicio.btnCerrar.addActionListener(e-> visModificarServicio.dispose());
-        
-        
+        visVerServicios.btnCerrar.addActionListener(e -> visVerServicios.dispose());
+        visVerServicios.btnEliminar.addActionListener(e -> eliminarServicio());
+        visVerServicios.btnModificar.addActionListener(e -> mostrarModificar());
+        visModificarServicio.btnCerrar.addActionListener(e -> visModificarServicio.dispose());
+        visModificarServicio.btnModificarSer.addActionListener(e-> modificarServicio());
 
     }
-    
-    public void mostrarVista(){
-        
-         visVerServicios.setSize(800, 600);
+
+    public void mostrarVista() {
+
+        visVerServicios.setSize(1000, 600);
         visVerServicios.setVisible(true);
 
         // 2️⃣ Centrar la vista
@@ -71,12 +69,12 @@ public class ControladorVerServicios {
 
         // 3️⃣ Mostrar y traer al frente
         visVerServicios.toFront();
-        
+
         mostrarServicesTabla(base.getServicios());
-        
+
     }
-    
-    private void mostrarModificar(){
+
+    private void mostrarModificar() {
         String seleccionado = getServicioSeleccionado();
 
         if (seleccionado != null) {
@@ -104,49 +102,66 @@ public class ControladorVerServicios {
             visModificarServicio.txtNumDui.setEnabled(false);
             visModificarServicio.txtNumCuenta.setText(base.datosServicios(seleccionado).getNumeroCuenta());
             visModificarServicio.txtNumCuenta.setEnabled(false);
-            visModificarServicio.txtMetrosCubicos.setText(String.valueOf(base.datosServicios(seleccionado).getMetrosCubicos()) );
+            visModificarServicio.txtMetrosCubicos.setText(String.valueOf(base.datosServicios(seleccionado).getMetrosCubicos()));
             visModificarServicio.txtNumMedidor.setText(base.datosServicios(seleccionado).getNumMedidor());
-            
-            
+
             llenarComboModificar(base.datosServicios(seleccionado).getIdRuta());
 
+        }
+
+    }
+
+    private void modificarServicio() {
+
+        String numCuenta = visModificarServicio.txtNumCuenta.getText();
+        ModeloRuta nuevaRuta = (ModeloRuta) visModificarServicio.comboRuta.getSelectedItem();
+        String nuevoNumMedidor = visModificarServicio.txtNumMedidor.getText();
+        String nuevoMetrosCubicos = visModificarServicio.txtMetrosCubicos.getText();
+
+        if (!numCuenta.isEmpty() || nuevoNumMedidor.isEmpty() || nuevoMetrosCubicos.isEmpty()) {
+            if (base.modificarServicio(numCuenta, nuevaRuta.getId(), nuevoNumMedidor, nuevoMetrosCubicos) != false) {
+                JOptionPane.showMessageDialog(vistaPrincipal, "Servicio modificado con exito ", "ANDA", JOptionPane.INFORMATION_MESSAGE);
+                mostrarServicesTabla(base.getServicios());
+                visModificarServicio.dispose();
+            } else {
+                JOptionPane.showMessageDialog(vistaPrincipal, "El servicio NO se pudo modificar", "ANDA", JOptionPane.WARNING_MESSAGE);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(vistaPrincipal, "Complete los campos", "ANDA", JOptionPane.WARNING_MESSAGE);
 
         }
-                
-        
+
     }
-    
-    
-     
+
     public void llenarComboModificar(String idRutaActual) {
-    // Objeto para almacenar la referencia al ModeloRuta que debe ser seleccionado
-    ModeloRuta rutaASeleccionar = null;
+        // Objeto para almacenar la referencia al ModeloRuta que debe ser seleccionado
+        ModeloRuta rutaASeleccionar = null;
 
-    // 1. Llenar el combo con todos los objetos ModeloRuta
-    for (ModeloRuta ruta : base.getRutas()) {
-        // Almacenamos el objeto completo, no solo el ID
-        visModificarServicio.comboRuta.addItem(ruta); 
-        
-        // 2. Comparar el ID de la ruta en la lista con el ID actual
-        if (ruta.getId().equals(idRutaActual)) {
-            // Cuando encontramos una coincidencia, guardamos el objeto completo
-            rutaASeleccionar = ruta;
+        // 1. Llenar el combo con todos los objetos ModeloRuta
+        for (ModeloRuta ruta : base.getRutas()) {
+            // Almacenamos el objeto completo, no solo el ID
+            visModificarServicio.comboRuta.addItem(ruta);
+
+            // 2. Comparar el ID de la ruta en la lista con el ID actual
+            if (ruta.getId().equals(idRutaActual)) {
+                // Cuando encontramos una coincidencia, guardamos el objeto completo
+                rutaASeleccionar = ruta;
+            }
+        }
+
+        // 3. Pre-seleccionar el elemento usando el objeto completo
+        if (rutaASeleccionar != null) {
+            // setSelectedItem necesita el objeto EXACTO para funcionar
+            visModificarServicio.comboRuta.setSelectedItem(rutaASeleccionar);
         }
     }
-    
-    // 3. Pre-seleccionar el elemento usando el objeto completo
-    if (rutaASeleccionar != null) {
-        // setSelectedItem necesita el objeto EXACTO para funcionar
-        visModificarServicio.comboRuta.setSelectedItem(rutaASeleccionar);
-    }
-}
 
-    
-    private void eliminarServicio(){
-        String seleccionado = getServicioSeleccionado(); 
-        
-        if (seleccionado!= null ) {
-            
+    private void eliminarServicio() {
+        String seleccionado = getServicioSeleccionado();
+
+        if (seleccionado != null) {
+
             int opcion = JOptionPane.showConfirmDialog(
                     visVerServicios,
                     "¿Está seguro que desea eliminar este servicio? ",
@@ -154,8 +169,8 @@ public class ControladorVerServicios {
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.WARNING_MESSAGE
             );
-            
-             if (opcion == JOptionPane.YES_OPTION) { // Si confirma
+
+            if (opcion == JOptionPane.YES_OPTION) { // Si confirma
 
                 boolean eliminado = base.eliminarServicio(seleccionado);
                 if (eliminado != false) {
@@ -171,16 +186,8 @@ public class ControladorVerServicios {
 
         }
 
-                
-            
-        }
-        
-    
+    }
 
-    
-    
-    
-    
     public void mostrarServicesTabla(ArrayList<Servicio> servicios) {
         DefaultTableModel modeloTabla = new DefaultTableModel() {
             @Override
@@ -189,26 +196,30 @@ public class ControladorVerServicios {
             }
         };
 
-        String titulos[] = {"N°", "N° Cuenta", "N° Dui Propietario","Nombre de propietario", "Apellido de propietario" ,"Id Ruta"};
+        String titulos[] = {"N°", "N° Cuenta", "N° Dui Propietario", "Nombre de propietario", "Apellido de propietario", "Id Ruta", "Metros cubicos iniciales", "N° medidor"};
         modeloTabla.setColumnIdentifiers(titulos);
 
         String resp = "";
 
         for (Servicio service : servicios) {
-            
-            String nombre  = base.nombrePorDui(service.getDuiPropietario());
+
+            String nombre = base.nombrePorDui(service.getDuiPropietario());
             String apellido = base.apellido(service.getDuiPropietario());
 
-
-            Object datos[] = {modeloTabla.getRowCount() + 1, service.getnumeroCuenta(), service.getDuiPropietario(),nombre, apellido, service.getIdRuta()};
+            Object datos[] = {modeloTabla.getRowCount() + 1, service.getnumeroCuenta(), service.getDuiPropietario(), nombre, apellido, service.getIdRuta(), service.getMetrosCubicos(), service.getNumMedidor()};
             modeloTabla.addRow(datos);
         }
         this.visVerServicios.tablaServicios.setModel(modeloTabla);
 
     }
+<<<<<<< HEAD
     
     
     public String getServicioSeleccionado() {
+=======
+
+    private String getServicioSeleccionado() {
+>>>>>>> 16682fd98d4b3c2ae20bde371f90e03c88127291
         int fila = visVerServicios.tablaServicios.getSelectedRow();
 
         if (fila == -1) {
@@ -222,9 +233,5 @@ public class ControladorVerServicios {
         return numCuenta;
 
     }
-    
-    
-    
-    
-    
+
 }
