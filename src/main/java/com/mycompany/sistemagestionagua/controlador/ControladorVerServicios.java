@@ -212,14 +212,14 @@ public class ControladorVerServicios {
         this.visVerServicios.tablaServicios.setModel(modeloTabla);
 
     }
-<<<<<<< HEAD
-    
-    
-    public String getServicioSeleccionado() {
-=======
 
-    private String getServicioSeleccionado() {
->>>>>>> 16682fd98d4b3c2ae20bde371f90e03c88127291
+    
+    
+    
+
+
+    public String getServicioSeleccionado() {
+
         int fila = visVerServicios.tablaServicios.getSelectedRow();
 
         if (fila == -1) {
