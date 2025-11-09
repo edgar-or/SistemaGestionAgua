@@ -5,9 +5,11 @@
 package com.mycompany.sistemagestionagua.controlador;
 
 import com.mycompany.sistemagestionagua.modelo.Base;
+import com.mycompany.sistemagestionagua.modelo.ModeloRuta;
 import com.mycompany.sistemagestionagua.modelo.Servicio;
 import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
 import com.mycompany.sistemagestionagua.vista.vistaAgregarServicio;
+import com.mycompany.sistemagestionagua.vista.vistaModificarServicio;
 import com.mycompany.sistemagestionagua.vista.vistaVerServicios;
 import com.mycompany.sistemagestionagua.vista.vistaVerUsuarios;
 import java.awt.Dimension;
@@ -23,12 +25,14 @@ public class ControladorServicio {
     private VistaPrincipal vistaPrincipal;
     private vistaAgregarServicio visAgregarServicio;
     private vistaVerUsuarios visVerUser;
+    private vistaModificarServicio visModificarServicio; 
     private Base base;
     private ControladorUsuario controladorUsuario;
 
     public ControladorServicio(VistaPrincipal vistaPrincipal, ControladorUsuario controladorUsuario, vistaVerUsuarios visVerUser, Base base) {
         this.vistaPrincipal = vistaPrincipal;
         this.visAgregarServicio = new vistaAgregarServicio();
+        this.visModificarServicio = new vistaModificarServicio(); 
         this.visVerUser = visVerUser;
         this.base = base;
         this.controladorUsuario = controladorUsuario;
@@ -71,20 +75,25 @@ public class ControladorServicio {
             visAgregarServicio.txtNumDui.setEnabled(false);
             visAgregarServicio.txtNumCuenta.setText(generarNumCuenta());
             visAgregarServicio.txtNumCuenta.setEnabled(false);
+            
+                        llenarCombo(); 
+
 
         }
 
     }
 
     public void agregarServicio() {
-        if (!visAgregarServicio.txtDireccion.getText().isEmpty()) {
+        if (!visAgregarServicio.txtNumMedidos.getText().isEmpty() || visAgregarServicio.txtMetrosCubicos.getText().isEmpty() ||  visAgregarServicio.comboRuta.getSelectedIndex() < 0) {
             String dui = visAgregarServicio.txtNumDui.getText();
             String numCuenta = visAgregarServicio.txtNumCuenta.getText();
-            String direccion = visAgregarServicio.txtDireccion.getText();
+            ModeloRuta ruta = (ModeloRuta) visAgregarServicio.comboRuta.getSelectedItem();
+            int mtrosCubicos = Integer.parseInt(visAgregarServicio.txtMetrosCubicos.getText());
+            String numMedidor = visAgregarServicio.txtNumMedidos.getText();
 
-            if (base.agregarServicio(new Servicio(dui, numCuenta, direccion)) != false) {
+
+            if (base.agregarServicio(new Servicio(dui, numCuenta, ruta.getId(), mtrosCubicos,numMedidor)) != false) {
                 JOptionPane.showMessageDialog(vistaPrincipal, "Servicio agregado correctamente", "ANDA", JOptionPane.INFORMATION_MESSAGE);
-                visAgregarServicio.txtDireccion.setText("");
                 controladorUsuario.mostrarUsersTabla(base.getUsuario());
                 visAgregarServicio.dispose();
             } else {
@@ -95,6 +104,13 @@ public class ControladorServicio {
             JOptionPane.showMessageDialog(vistaPrincipal, "Complete los campos", "ANDA", JOptionPane.WARNING_MESSAGE);
         }
 
+    }
+    
+    
+   
+    
+    private void modificarServicio(){
+        
     }
 
     private String getUsuarioSeleccionado() {
@@ -120,5 +136,16 @@ public class ControladorServicio {
         correlativo++;
         return año + "-" + numero;
     }
+    
+    
+    private void llenarCombo() {
+        visAgregarServicio.comboRuta.removeAllItems();
+        for (ModeloRuta ruta : base.getRutas()) {
+            visAgregarServicio.comboRuta.addItem(ruta);
+        }
+        
+    }
+    
+    
 
 }

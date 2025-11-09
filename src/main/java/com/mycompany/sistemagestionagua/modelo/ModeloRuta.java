@@ -67,4 +67,11 @@ public class ModeloRuta {
         this.descripcion = descripcion;
     }
 
+    @Override
+    public String toString() {
+        return this.id;
+    }
+    
+    
+
 }

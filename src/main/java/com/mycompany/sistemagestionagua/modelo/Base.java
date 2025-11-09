@@ -46,6 +46,8 @@ public class Base {
         return rutas;
     }
     
+   
+    
     
 
     public ArrayList<Usuario> buscarUsuario(String identificador, String busca) {
@@ -93,6 +95,14 @@ public class Base {
             }
         }
         return null;
+    }
+    public Servicio datosServicios(String numCuenta){
+        for (Servicio servi : servicios) {
+            if (numCuenta.equals(servi.getNumeroCuenta())) {
+                return servi; 
+            }
+        }
+        return null; 
     }
 
     public String buscarServicio(String buscar) {
@@ -276,4 +286,13 @@ public class Base {
         }
         return false;
     }
+        
+        public String rutaActual (String numCuenta){
+            for (Servicio servicio : servicios) {
+                if (numCuenta.equals(servicio.getNumeroCuenta())) {
+                    return servicio.getIdRuta();
+                }
+            }
+            return null; 
+        }
 }
