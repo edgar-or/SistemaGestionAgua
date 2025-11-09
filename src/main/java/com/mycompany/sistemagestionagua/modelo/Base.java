@@ -8,11 +8,13 @@ public class Base {
     ArrayList<Usuario> usuarios;
     ArrayList<Servicio> servicios;
     ArrayList<ModeloRuta> rutas; 
+    ArrayList<ModeloConsumo> consumos;
 
     public Base() {
         usuarios = new ArrayList<>();
         servicios = new ArrayList<>();
         rutas = new ArrayList<>();
+        consumos= new ArrayList<>();
         
     }
 
@@ -45,6 +47,8 @@ public class Base {
     public ArrayList<ModeloRuta> getRutas() {
         return rutas;
     }
+    
+   
     
     
 
@@ -93,6 +97,14 @@ public class Base {
             }
         }
         return null;
+    }
+    public Servicio datosServicios(String numCuenta){
+        for (Servicio servi : servicios) {
+            if (numCuenta.equals(servi.getNumeroCuenta())) {
+                return servi; 
+            }
+        }
+        return null; 
     }
 
     public String buscarServicio(String buscar) {
@@ -275,5 +287,22 @@ public class Base {
             
         }
         return false;
+    }
+        
+        public String rutaActual (String numCuenta){
+            for (Servicio servicio : servicios) {
+                if (numCuenta.equals(servicio.getNumeroCuenta())) {
+                    return servicio.getIdRuta();
+                }
+            }
+            return null; 
+        }
+         public boolean agregarConsumos(ModeloConsumo c) {
+        try {
+            consumos.add(c);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
     }
 }
