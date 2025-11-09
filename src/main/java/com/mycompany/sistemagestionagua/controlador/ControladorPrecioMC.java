@@ -34,18 +34,25 @@ public class ControladorPrecioMC implements ActionListener {
     }
 
     private void guardarPrecio() {
+
+        String txt = vista.txtPrecioMC.getText().trim();
+
+        if (txt.isEmpty()) {
+            JOptionPane.showMessageDialog(vista, "Complete los campos.");
+            return;
+        }
+
         try {
+            BigDecimal precio = new BigDecimal(txt);
 
-            BigDecimal precio = new BigDecimal(vista.txtPrecioMC.getText().trim());
-
-            // guarda el precio global del sistema
             PrecioMC.precioActual = precio;
 
             JOptionPane.showMessageDialog(vista, "Precio guardado correctamente");
             vista.dispose();
 
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(vista, "Debe ingresar un número válido");
+        } catch (NumberFormatException ex) {
+
+            JOptionPane.showMessageDialog(vista, "Datos invalidos.");
         }
     }
 }
