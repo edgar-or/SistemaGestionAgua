@@ -109,9 +109,7 @@ public class ControladorServicio {
     
    
     
-    private void modificarServicio(){
-        
-    }
+    
 
     private String getUsuarioSeleccionado() {
         int fila = visVerUser.tablaUsuarios.getSelectedRow();

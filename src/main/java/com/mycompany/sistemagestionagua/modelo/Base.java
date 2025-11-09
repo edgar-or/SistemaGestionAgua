@@ -2,6 +2,7 @@
 package com.mycompany.sistemagestionagua.modelo;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Base {
 
@@ -195,7 +196,24 @@ public class Base {
         }
         return temp;
 
+    
     }
+    
+    
+     public boolean modificarServicio(String numCuenta, String nuevoIdRuta, String nuevoNumMedidor, String NuevoMetrosCubicos) {
+        for (Servicio servi : servicios) {
+            if (servi.getNumeroCuenta().equals(numCuenta)) {
+                servi.setIdRuta(nuevoIdRuta); 
+                servi.setNumMedidor(nuevoNumMedidor);
+                servi.setMetrosCubicos(Integer.parseInt(NuevoMetrosCubicos));                        
+                return true; // Se modificó con éxito
+
+            }
+        }
+        return false;
+
+    }
+    
 
     public boolean modificarUsuario(String dui, String nuevoDui, String nuevoNombre, String nuevoApellido) {
         for (Usuario usuario : usuarios) {
