@@ -19,6 +19,10 @@ public class ControladorPrecioMC implements ActionListener {
         this.vista = vista;
         this.vista.btnAgregarPrecioMC.addActionListener(this);
         this.vista.btnCerrarPrecioMC.addActionListener(this);
+
+
+        this.vista.thPrecioMC.setEditable(false);
+        this.vista.thPrecioMC.setText(String.valueOf(PrecioMC.precioActual));
     }
 
     @Override
@@ -38,21 +42,19 @@ public class ControladorPrecioMC implements ActionListener {
         String txt = vista.txtPrecioMC.getText().trim();
 
         if (txt.isEmpty()) {
-            JOptionPane.showMessageDialog(vista, "Complete los campos.");
+            JOptionPane.showMessageDialog(vista, "Por favor complete el campo de precio.");
             return;
         }
 
         try {
             BigDecimal precio = new BigDecimal(txt);
-
             PrecioMC.precioActual = precio;
+            vista.thPrecioMC.setText(String.valueOf(precio));
 
-            JOptionPane.showMessageDialog(vista, "Precio guardado correctamente");
-            vista.dispose();
+            JOptionPane.showMessageDialog(vista, "Precio guardado correctamente.");
 
         } catch (NumberFormatException ex) {
-
-            JOptionPane.showMessageDialog(vista, "Datos invalidos.");
+            JOptionPane.showMessageDialog(vista, "Dato inválido. Debe ingresar un número.");
         }
     }
 }
