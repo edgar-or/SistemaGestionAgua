@@ -56,6 +56,7 @@ com\mycompany\sistemagestionagua\controlador\ControladorConsumo.class
 com\mycompany\sistemagestionagua\vista\vistaVerServicios$5.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarUsurioIndividual$3.class
 com\mycompany\sistemagestionagua\controlador\ControladorConsumo$1.class
+com\mycompany\sistemagestionagua\vista\VistaAgregarPrecios$2.class
 com\mycompany\sistemagestionagua\vista\vistaAgregarServicio.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarUsuario$2.class
 com\mycompany\sistemagestionagua\vista\VistaEliminarUsuario$1.class
