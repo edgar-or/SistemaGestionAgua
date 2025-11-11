@@ -213,9 +213,9 @@ public class ControladorVerServicios {
 
     }
     
+
     
-
-
+    
     public String getServicioSeleccionado() {
         int fila = visVerServicios.tablaServicios.getSelectedRow();
 
