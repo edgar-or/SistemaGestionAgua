@@ -13,7 +13,9 @@ import javax.swing.JOptionPane;
 
 public class ControladorPrecioMC implements ActionListener {
 
-    private final VistaAgregarPrecios vista;
+    private  VistaAgregarPrecios vista;
+
+   
 
     public ControladorPrecioMC(VistaAgregarPrecios vista) {
         this.vista = vista;
@@ -24,6 +26,8 @@ public class ControladorPrecioMC implements ActionListener {
         this.vista.thPrecioMC.setEditable(false);
         this.vista.thPrecioMC.setText(String.valueOf(PrecioMC.precioActual));
     }
+    
+    
 
     @Override
     public void actionPerformed(ActionEvent e) {

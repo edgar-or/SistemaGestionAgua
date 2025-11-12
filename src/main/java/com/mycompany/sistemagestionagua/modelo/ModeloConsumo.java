@@ -9,12 +9,14 @@ public class ModeloConsumo {
     
     private String numeroCuenta;
     private String mes;
+    private int numMes; 
     private int metrosCubicos;
 
-    public ModeloConsumo(String numeroCuenta, String Mes, int metrosCubicos) {
+    public ModeloConsumo(String numeroCuenta, String Mes, int numMes, int metrosCubicos) {
         this.numeroCuenta = numeroCuenta;
         this.mes = Mes;
         this.metrosCubicos = metrosCubicos;
+        this.numMes = numMes;
     }
 
     public String getNumeroCuenta() {
@@ -28,6 +30,11 @@ public class ModeloConsumo {
     public int getMetrosCubicos() {
         return metrosCubicos;
     }
+
+    public int getNumMes() {
+        return numMes;
+    }
+    
     
     
             
