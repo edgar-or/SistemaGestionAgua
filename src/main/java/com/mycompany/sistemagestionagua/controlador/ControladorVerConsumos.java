@@ -84,6 +84,7 @@ public class ControladorVerConsumos {
         String resp = "";
         
         int metrosConsumidos = 0; 
+        int lecturaAnterior = 0;
         
 
         for (ModeloConsumo cons : consumos) {
@@ -93,11 +94,13 @@ public class ControladorVerConsumos {
             String nombre = base.nombrePorDui(serv.getDuiPropietario());
             String apellido = base.apellido(serv.getDuiPropietario());
             
-            int lecturaAnterior = base.obtenerLecturaAnterior(cons.getNumMes()-1); 
             
             if (cons.getNumMes()-1 == 0) {
-                metrosConsumidos= cons.getMetrosCubicos() - serv.getMetrosCubicos(); 
+                lecturaAnterior = serv.getMetrosCubicos();
+                metrosConsumidos= cons.getMetrosCubicos() - lecturaAnterior; 
             }else{
+                lecturaAnterior = base.obtenerLecturaAnterior(cons.getNumMes()-1); 
+
                 metrosConsumidos = (cons.getMetrosCubicos()) - lecturaAnterior;
 
             }

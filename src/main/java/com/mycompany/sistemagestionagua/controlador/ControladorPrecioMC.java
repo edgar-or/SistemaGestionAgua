@@ -15,15 +15,10 @@ import javax.swing.JOptionPane;
 
 public class ControladorPrecioMC implements ActionListener {
 
-<<<<<<< HEAD
-    private  VistaAgregarPrecios vista;
 
-   
-=======
     private final VistaAgregarPrecios vista;
     private final VistaPrincipal vistaPrincipal;
     private boolean modoModificacion = false;
->>>>>>> 3aca78e2d64d9515b9dd4e7db7e4cc775b5bd0b0
 
     public ControladorPrecioMC(VistaAgregarPrecios vista, VistaPrincipal vistaPrincipal) {
         this.vista = vista;
