@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 
 public class ControladorPrecioMC implements ActionListener {
 
+
     private final VistaAgregarPrecios vista;
     private final VistaPrincipal vistaPrincipal;
     private boolean modoModificacion = false;
@@ -68,6 +69,8 @@ public class ControladorPrecioMC implements ActionListener {
         vista.revalidate();
         vista.repaint();
     }
+    
+    
 
     @Override
     public void actionPerformed(ActionEvent e) {

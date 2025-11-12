@@ -1,6 +1,7 @@
 package com.mycompany.sistemagestionagua.controlador;
 
 import com.mycompany.sistemagestionagua.modelo.Base;
+import com.mycompany.sistemagestionagua.modelo.ModeloConsumo;
 import com.mycompany.sistemagestionagua.modelo.ModeloPrincipal;
 import com.mycompany.sistemagestionagua.modelo.ModeloRuta;
 import com.mycompany.sistemagestionagua.modelo.Servicio;
@@ -35,6 +36,8 @@ public class ControladorPrincipal {
     vistaVerServicios visVerServices;
     ControladorVerServicios controladorVerServices; 
     ControladorConsumo controladorConsumo;
+    ControladorVerConsumos controladorVerConusmos; 
+    ModeloConsumo consumo; 
 
     public ControladorPrincipal(VistaPrincipal vista) {
         this.vista = vista;
@@ -46,6 +49,7 @@ public class ControladorPrincipal {
         this.controladorRuta = new ControladorRuta(base, vista); 
         this.controladorVerServices = new ControladorVerServicios(vista,visVerServices, base);
         this.controladorConsumo= new ControladorConsumo(vista, base,  visVerServices, controladorVerServices);
+        this.controladorVerConusmos = new ControladorVerConsumos(vista,consumo , base);
         
         onEvento();
         llenarDatos();
@@ -69,6 +73,7 @@ public class ControladorPrincipal {
         vista.menuVerRutas.addActionListener(e-> controladorRuta.mostrarVista());
         vista.menuVerServicios.addActionListener(e-> controladorVerServices.mostrarVista());
         visVerServices.btnAgrgarConsumo.addActionListener(e-> controladorConsumo.mostrarVista());
+        vista.menuVerConsumos.addActionListener(e-> controladorVerConusmos.mostrarVista());
         
   
 
