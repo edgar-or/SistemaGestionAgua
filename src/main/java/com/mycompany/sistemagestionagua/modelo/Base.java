@@ -98,9 +98,13 @@ public class Base {
                 }
                 
 
-            } else if (identificador.equalsIgnoreCase("cuenta") && consumo.getNumeroCuenta().equals(busca) ){
-                encontrado = consumo;
+            } else if (identificador.equalsIgnoreCase("cuenta")){
+                
+                if (consumo.getNumeroCuenta().trim().equals(busca)) {
+                    encontrado = consumo;
                 temp.add(encontrado);
+                }
+                
 
             } else if (identificador.equalsIgnoreCase("nombre") ) {
                 
