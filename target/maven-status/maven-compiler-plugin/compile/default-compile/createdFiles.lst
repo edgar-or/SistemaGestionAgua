@@ -55,6 +55,7 @@ com\mycompany\sistemagestionagua\vista\VistaAgregarPrecios.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarUsuario.class
 com\mycompany\sistemagestionagua\vista\VistaRuta$3.class
 com\mycompany\sistemagestionagua\vista\vistaModificarServicio.class
+com\mycompany\sistemagestionagua\vista\VistaPrincipal$4.class
 com\mycompany\sistemagestionagua\modelo\Servicio.class
 com\mycompany\sistemagestionagua\controlador\ControladorVerServicios.class
 com\mycompany\sistemagestionagua\vista\VistaPrincipal$1.class
