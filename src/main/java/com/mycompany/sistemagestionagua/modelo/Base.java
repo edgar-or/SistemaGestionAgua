@@ -405,4 +405,19 @@ public class Base {
              return 0; 
          }
          
+         public ModeloRuta encontrarRuta(String idRuta) {
+        ModeloRuta encontrado = null;
+
+        for (ModeloRuta ruta : rutas) {
+            if (idRuta.equals(ruta.getId())) {
+                encontrado = ruta;
+                break;
+
+            }
+
+        }
+        return encontrado;
+
+    }
+         
 }
