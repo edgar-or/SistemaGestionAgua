@@ -384,7 +384,11 @@ public class Base {
             return false;
         }
     }
+<<<<<<< HEAD
 
+=======
+         
+>>>>>>> a8c7da12dd36bf51433a2aeb06bb98681468d63e
          public int obtenerLecturaAnterior(int numMes){
              for (ModeloConsumo cons : consumos) {
                  if (numMes==cons.getNumMes()) {
@@ -410,14 +414,17 @@ public class Base {
     }
          
 
-    public int obtenerLecturaAnterior(int numMes) {
-        for (ModeloConsumo cons : consumos) {
-            if (numMes == cons.getNumMes()) {
-                return cons.getMetrosCubicos();
-            }
-        }
-        return 0;
-    }
+//    public int obtenerLecturaAnterior(int numMes) {
+//        for (ModeloConsumo cons : consumos) {
+//            if (numMes == cons.getNumMes()) {
+//                return cons.getMetrosCubicos();
+//            }
+//        }
+//        return 0;
+//    }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> a8c7da12dd36bf51433a2aeb06bb98681468d63e
 }
