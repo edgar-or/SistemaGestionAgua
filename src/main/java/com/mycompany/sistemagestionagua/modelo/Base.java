@@ -385,6 +385,7 @@ public ArrayList<ModeloConsumo> buscarConsumo(String identificador, String busca
             return false;
         }
     }
+<<<<<<< HEAD
     
     public int obtenerLecturaAnterior(int numMes) {
         for (ModeloConsumo cons : consumos) {
@@ -418,6 +419,20 @@ public ArrayList<ModeloConsumo> buscarConsumo(String identificador, String busca
                 cons.setCancelado(cancelado);
                 
                 return true; // Se modificó con éxito
+=======
+
+         public int obtenerLecturaAnterior(int numMes){
+             for (ModeloConsumo cons : consumos) {
+                 if (numMes==cons.getNumMes()) {
+                     return cons.getMetrosCubicos();
+                 }
+             }
+             return 0; 
+         }
+         
+         public ModeloRuta encontrarRuta(String idRuta) {
+        ModeloRuta encontrado = null;
+>>>>>>> 873a9dc28f0d2ef014b20f1fb5ae63a6acf83c3a
 
             }
         }
@@ -448,4 +463,9 @@ public ArrayList<ModeloConsumo> buscarConsumo(String identificador, String busca
 //        }
 //        return 0;
 //    }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 873a9dc28f0d2ef014b20f1fb5ae63a6acf83c3a
 }
