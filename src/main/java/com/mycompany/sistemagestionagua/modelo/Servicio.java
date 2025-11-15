@@ -16,6 +16,11 @@ public class Servicio {
         this.metrosCubicos = metrosCubicos; 
         this.numMedidor = numMedidor; 
     }
+
+    public Servicio() {
+    }
+    
+    
     
     public String getIdRuta() {
         return idRuta;

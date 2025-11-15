@@ -1,6 +1,7 @@
 
 package com.mycompany.sistemagestionagua.modelo;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -48,6 +49,12 @@ public class Base {
     public ArrayList<ModeloRuta> getRutas() {
         return rutas;
     }
+
+    public ArrayList<ModeloConsumo> getConsumos() {
+        return consumos;
+    }
+    
+    
     
    
     
@@ -75,6 +82,45 @@ public class Base {
 
         return temp;
     }
+    
+    
+    public ArrayList<ModeloConsumo> buscarConsumo(String identificador, String busca) {
+        ArrayList<ModeloConsumo> temp = new ArrayList<>();
+        ModeloConsumo encontrado = null;
+
+        for (ModeloConsumo consumo : consumos) {
+            if (identificador.equalsIgnoreCase("dui")) {
+                String numCuenta = encontrarServicio(busca).getNumeroCuenta(); 
+                
+                if (consumo.getNumeroCuenta().equals(numCuenta)) {
+                    encontrado = consumo;
+                temp.add(encontrado);
+                }
+                
+
+            } else if (identificador.equalsIgnoreCase("cuenta") && consumo.getNumeroCuenta().equals(busca) ){
+                encontrado = consumo;
+                temp.add(encontrado);
+
+            } else if (identificador.equalsIgnoreCase("nombre") ) {
+                
+                String dui = buscarPorNombre(busca);
+                
+                String serv = encontrarServicio(dui).getNumeroCuenta();
+                
+                if (serv.equals(consumo.getNumeroCuenta())) {
+                      encontrado = consumo;
+                temp.add(encontrado);
+                }
+              
+            }
+
+        }
+
+        return temp;
+    }
+    
+
 
 
     public ArrayList<String> bNumCuenta(String dui) {
@@ -127,6 +173,21 @@ public class Base {
 
         for (Servicio servicio : servicios) {
             if (dui.equals(servicio.getDuiPropietario())) {
+                encontrado = servicio;
+                break;
+
+            }
+
+        }
+        return encontrado;
+
+    }
+    
+    public Servicio encontrarServicioPorNumCuenta(String numCuenta) {
+        Servicio encontrado = null;
+
+        for (Servicio servicio : servicios) {
+            if (numCuenta.equals(servicio.getNumeroCuenta())) {
                 encontrado = servicio;
                 break;
 
@@ -315,6 +376,13 @@ public class Base {
             }
             return null; 
         }
+        
+        
+        
+        
+        
+        
+        
          public boolean agregarConsumos(ModeloConsumo c) {
         try {
             consumos.add(c);
@@ -323,4 +391,14 @@ public class Base {
             return false;
         }
     }
+         
+         public int obtenerLecturaAnterior(int numMes){
+             for (ModeloConsumo cons : consumos) {
+                 if (numMes==cons.getNumMes()) {
+                     return cons.getMetrosCubicos();
+                 }
+             }
+             return 0; 
+         }
+         
 }

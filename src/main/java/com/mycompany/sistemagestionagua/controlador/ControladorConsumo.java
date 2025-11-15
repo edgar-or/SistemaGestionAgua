@@ -45,12 +45,18 @@ public class ControladorConsumo {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String Consumo = vistaAgrgarConsumo.txtConsumo.getText();
+                String numCuenta = vistaAgrgarConsumo.txtNumeroCuenta.getText(); 
+                String mesSeleccionado = (String) vistaAgrgarConsumo.comboAgragarC.getSelectedItem();
+                int indiceSelec = vistaAgrgarConsumo.comboAgragarC.getSelectedIndex();
+                
+                int numMes = indiceSelec+1;
+                
 
                 if (Consumo.isEmpty()) {
                     JOptionPane.showMessageDialog(vistaPrincipal, "Complete los campos", "ANDA", JOptionPane.WARNING_MESSAGE);
 
                 } else {
-                    if (base.agregarConsumos(new ModeloConsumo("5", "Enero", Integer.parseInt(Consumo))) != false) {
+                    if (base.agregarConsumos(new ModeloConsumo(numCuenta, mesSeleccionado,numMes, Integer.parseInt(Consumo))) != false) {
                         JOptionPane.showMessageDialog(vistaPrincipal, "Consumo Guardado", "ANDA", JOptionPane.INFORMATION_MESSAGE);
                         vistaAgrgarConsumo.dispose();
                     } else {
@@ -96,7 +102,6 @@ public class ControladorConsumo {
     }
     
   public void  formaAgregarConsumo(){
-      //initComponents();
       String[] meses ={"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto",
           "Septiembre","Octubre","Noviembre","Diciembre"
       };
