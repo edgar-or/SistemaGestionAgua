@@ -1,11 +1,13 @@
 package com.mycompany.sistemagestionagua.controlador;
 
 import com.mycompany.sistemagestionagua.modelo.Base;
+import com.mycompany.sistemagestionagua.modelo.LoginModelo;
 import com.mycompany.sistemagestionagua.modelo.ModeloConsumo;
 import com.mycompany.sistemagestionagua.modelo.ModeloPrincipal;
 import com.mycompany.sistemagestionagua.modelo.ModeloRuta;
 import com.mycompany.sistemagestionagua.modelo.Servicio;
 import com.mycompany.sistemagestionagua.modelo.Usuario;
+import com.mycompany.sistemagestionagua.vista.LoginVista;
 import com.mycompany.sistemagestionagua.vista.VistaAgregarConsumo;
 import com.mycompany.sistemagestionagua.vista.VistaAgregarUsuario;
 import com.mycompany.sistemagestionagua.vista.VistaConsultarUsurioIndividual;
@@ -38,11 +40,12 @@ public class ControladorPrincipal {
     ControladorConsumo controladorConsumo;
     ControladorVerConsumos controladorVerConusmos; 
     ModeloConsumo consumo; 
+  
 
-    public ControladorPrincipal(VistaPrincipal vista) {
+    public ControladorPrincipal(VistaPrincipal vista, Base base) {
         this.vista = vista;
+        this.base = base; 
         this.visVerServices = new vistaVerServicios();
-        this.base = new Base();
         this.visVerUsers = new vistaVerUsuarios();
         this.controladorUsuario = new ControladorUsuario(vista, visVerUsers,base);
         this.controladorServicio = new ControladorServicio(vista, controladorUsuario, visVerUsers,base);
@@ -51,8 +54,10 @@ public class ControladorPrincipal {
         this.controladorConsumo= new ControladorConsumo(vista, base,  visVerServices, controladorVerServices);
         this.controladorVerConusmos = new ControladorVerConsumos(vista,consumo , base);
         
+        
+        
+        
         onEvento();
-        llenarDatos();
         
         
 
@@ -75,22 +80,16 @@ public class ControladorPrincipal {
         visVerServices.btnAgrgarConsumo.addActionListener(e-> controladorConsumo.mostrarVista());
         vista.menuVerConsumos.addActionListener(e-> controladorVerConusmos.mostrarVista());
         
+        
+        //cerrar sesion
+        
   
 
     } //no tocar
     
-    private void llenarDatos(){
-        base.agregar(new Usuario("Edgar", "Ayala", "12345678-1"));
-        base.agregar(new Usuario("Orladno", "Alvarez", "12345678-2"));
-        
-        base.agregarRuta(new ModeloRuta("1", "San Vicente", "San Vicente", "La Arenera", "Calle prinicpal a Lempa"));
-        base.agregarRuta(new ModeloRuta("2", "San Vicente", "San Vicente", "Los Jobos", "Calle prinicpal a Iglesia catolica"));
-        
-        base.agregarServicio(new Servicio("12345678-1", "2025-0001", "1", 3, "12"));
-        base.agregarServicio(new Servicio("12345678-2", "2025-0003", "2", 4, "13"));
-
-
-    }
+    
+    
+   
 }
 
 

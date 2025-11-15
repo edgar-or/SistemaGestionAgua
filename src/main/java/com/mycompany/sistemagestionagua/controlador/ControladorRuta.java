@@ -63,14 +63,16 @@ public class ControladorRuta {
         // 3️⃣ Mostrar y traer al frente
         visRuta.toFront();
         mostrarRutasTabla(base.getRutas());
+        formaAgregarDepartamentos();
+        activarEventoDepartamento();
 
     }
 
     public void agregarRuta() {
 
         if (visRuta.btnGudar.getText().equals("Guardar")) {
-            String depto = visRuta.txtDepto.getText();
-            String muni = visRuta.txtMunicipio.getText();
+            String depto = (String) visRuta.comboDepartamento.getSelectedItem();
+            String muni = (String) visRuta.comboMunicipio.getSelectedItem();
             String colonia = visRuta.txtColonia.getText();
             String descripcion = visRuta.txtDescripcion.getText();
 
@@ -85,8 +87,6 @@ public class ControladorRuta {
 
                 } else {
                     JOptionPane.showMessageDialog(vistaPrincipal, "Datos guardados", "ANDA", JOptionPane.INFORMATION_MESSAGE);
-                    visRuta.txtDepto.setText("");
-                    visRuta.txtMunicipio.setText("");
                     visRuta.txtColonia.setText("");
                     visRuta.txtDescripcion.setText("");
 
@@ -96,8 +96,8 @@ public class ControladorRuta {
             }
 
         } else if (visRuta.btnGudar.getText().equals("Modificar")) {
-            String depto1 = visRuta.txtDepto.getText();
-            String muni1 = visRuta.txtMunicipio.getText();
+            String depto1 = (String) visRuta.comboDepartamento.getSelectedItem();
+            String muni1 = (String) visRuta.comboMunicipio.getSelectedItem();
             String col1 = visRuta.txtColonia.getText();
             String desc1 = visRuta.txtDescripcion.getText();
 
@@ -107,10 +107,10 @@ public class ControladorRuta {
                 JOptionPane.showMessageDialog(vistaPrincipal, "Datos Modificados", "ANDA", JOptionPane.INFORMATION_MESSAGE);
                 mostrarRutasTabla(base.getRutas());
                 visRuta.btnGudar.setText("Guardar");
-                visRuta.txtDepto.setText("");
+                visRuta.comboDepartamento.getSelectedItem();
                 visRuta.txtColonia.setText("");
                 visRuta.txtDescripcion.setText("");
-                visRuta.txtMunicipio.setText("");
+                visRuta.comboMunicipio.getSelectedItem();
             } else {
                 JOptionPane.showMessageDialog(vistaPrincipal, "No se pudo modificar la ruta", "ANDA", JOptionPane.WARNING_MESSAGE);
             }
@@ -153,9 +153,9 @@ public class ControladorRuta {
         if (seleccionado != null) {
             for (ModeloRuta ruta : base.getRutas()) {
                 if (ruta.getId().equals(seleccionado)) {
-                    visRuta.txtDepto.setText(ruta.getDepartametno());
+                    visRuta.comboDepartamento.setSelectedItem(ruta.getDepartametno());
                     visRuta.txtColonia.setText(ruta.getColonia());
-                    visRuta.txtMunicipio.setText(ruta.getMunicipio());
+                    visRuta.comboMunicipio.setSelectedItem(ruta.getDepartametno());
                     visRuta.txtDescripcion.setText(ruta.getDescripcion());
 
                     visRuta.btnGudar.setText("Modificar");
@@ -205,4 +205,50 @@ public class ControladorRuta {
 
     }
 
+    public String formaAgregarDepartamentos() {
+        String[] departamentos = {"Cabañas", "San Vicente", "La Paz"
+        };
+        for (String departamento : departamentos) {
+            visRuta.comboDepartamento.addItem(departamento);
+
+        }
+        return null;
+    }
+
+    public void activarEventoDepartamento() {
+        visRuta.comboDepartamento.addActionListener(e -> {
+            String departamentoSeleccionado
+                    = visRuta.comboDepartamento.getSelectedItem().toString();
+
+            visRuta.comboMunicipio.removeAllItems(); // limpiar combo
+
+            if (departamentoSeleccionado.equalsIgnoreCase("Cabañas")) {
+                String[] municipios = {"Sensunte", "Victoria", "Dolores", "Guacotecti", "San Isidro", "Ilobasco", "Cinquera", "Jutiapa", "Tejutepeque"
+                };
+                for (String municipio : municipios) {
+                    visRuta.comboMunicipio.addItem(municipio);
+
+                }
+
+            } else if (departamentoSeleccionado.equalsIgnoreCase("San Vicente")) {
+                String[] municipios = {"Apastepeque", "Santa Clara", "Santo Domingo", "San Esteban Catarina", "San Ildefonso", "San Lorenzo", "San Sebastian", "Guadalupe", "San Vicente Centro",
+                    "San Calletanpo Istepeque", "Tecoluca", "Tepetitan", "Verapaz"
+                };
+                for (String municipio : municipios) {
+                    visRuta.comboMunicipio.addItem(municipio);
+
+                }
+            } else if (departamentoSeleccionado.equalsIgnoreCase("La Paz")) {
+                String[] municipios = {"Cuyultitan", "Olocuilta", "San Juan Talpa", "San Luis Talpa", "San Pedro Mashuat", "Tapalhuaca", "San Francisco Chinameca", "San Antonio Masahuat", "El Rosario",
+                    "Jerusalen", "Mercedes La Ceiba", "Paraiso de Osorio", "San Emigdio"
+                };
+                for (String municipio : municipios) {
+                    visRuta.comboMunicipio.addItem(municipio);
+
+                }
+          
+        }
+        });
+     }
+    
 }

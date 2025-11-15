@@ -28,7 +28,7 @@ public class ControladorConsumo {
         this.base = base;
         this.vistaAgrgarConsumo = new VistaAgregarConsumo();
         this.vistaVerServicios = vistaVerServicios;
-        this.controladorVerServicios =controladorVerServicios;
+        this.controladorVerServicios = controladorVerServicios;
 
         onEvento();
     }
@@ -45,18 +45,17 @@ public class ControladorConsumo {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String Consumo = vistaAgrgarConsumo.txtConsumo.getText();
-                String numCuenta = vistaAgrgarConsumo.txtNumeroCuenta.getText(); 
+                String numCuenta = vistaAgrgarConsumo.txtNumeroCuenta.getText();
                 String mesSeleccionado = (String) vistaAgrgarConsumo.comboAgragarC.getSelectedItem();
                 int indiceSelec = vistaAgrgarConsumo.comboAgragarC.getSelectedIndex();
-                
-                int numMes = indiceSelec+1;
-                
+
+                int numMes = indiceSelec + 1;
 
                 if (Consumo.isEmpty()) {
                     JOptionPane.showMessageDialog(vistaPrincipal, "Complete los campos", "ANDA", JOptionPane.WARNING_MESSAGE);
 
                 } else {
-                    if (base.agregarConsumos(new ModeloConsumo(numCuenta, mesSeleccionado,numMes, Integer.parseInt(Consumo))) != false) {
+                    if (base.agregarConsumos(new ModeloConsumo(numCuenta, mesSeleccionado, numMes, Integer.parseInt(Consumo))) != false) {
                         JOptionPane.showMessageDialog(vistaPrincipal, "Consumo Guardado", "ANDA", JOptionPane.INFORMATION_MESSAGE);
                         vistaAgrgarConsumo.dispose();
                     } else {
@@ -100,18 +99,15 @@ public class ControladorConsumo {
 
         }
     }
-    
-  public void  formaAgregarConsumo(){
-      String[] meses ={"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto",
-          "Septiembre","Octubre","Noviembre","Diciembre"
-      };
-      for (String mes : meses) {
-          vistaAgrgarConsumo.comboAgragarC.addItem(mes);
-          
-      }
-  }
-    
+
+    public void formaAgregarConsumo() {
+        String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto",
+            "Septiembre", "Octubre", "Noviembre", "Diciembre"
+        };
+        for (String mes : meses) {
+            vistaAgrgarConsumo.comboAgragarC.addItem(mes);
+
+        }
+    }
 
 }
-
-

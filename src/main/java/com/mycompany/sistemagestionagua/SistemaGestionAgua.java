@@ -53,6 +53,7 @@ public class SistemaGestionAgua {
 
                LoginModelo loginModelo = new LoginModelo(); 
                LoginVista loginVista = new LoginVista();
+               
                LoginControlador controladorLogin = new LoginControlador(loginVista, loginModelo); 
                controladorLogin.iniciar();
                

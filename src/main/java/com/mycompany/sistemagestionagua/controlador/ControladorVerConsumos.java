@@ -136,13 +136,13 @@ public class ControladorVerConsumos {
 
         }
         if (busca == null) {
-            JOptionPane.showMessageDialog(vistaPrincipal, "Ingrese una informacion de Usuario para buscar", "ANDA", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(vistaPrincipal, "Ingrese una informacion de consumo para buscar", "ANDA", JOptionPane.WARNING_MESSAGE);
             mostrarConsumosTabla(base.getConsumos());
             //detiene la ejecucion
             return;
-        } else if (base.buscarUsuario(identificador, busca).isEmpty()) {
+        } else if (base.buscarConsumo(identificador, busca).isEmpty()) {
             mostrarConsumosTabla(base.getConsumos());
-            JOptionPane.showMessageDialog(vistaPrincipal, "No se encontraron usuarios con la informacion ingresada", "ANDA", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(vistaPrincipal, "No se encontraron consumos con la informacion ingresada", "ANDA", JOptionPane.WARNING_MESSAGE);
             visVerConsumos.txtBuscar1.setText("");
             visVerConsumos.txtBuscar2.setText("");
             visVerConsumos.txtBuscar3.setText("");
