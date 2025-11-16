@@ -3,6 +3,11 @@ com\mycompany\sistemagestionagua\controlador\ControladorPrecioMC$1.class
 com\mycompany\sistemagestionagua\controlador\ControladorUsuario.class
 com\mycompany\sistemagestionagua\vista\VistaEliminarUsuario$2.class
 com\mycompany\sistemagestionagua\vista\vistaVerUsuarios.class
+<<<<<<< HEAD
+=======
+com\mycompany\sistemagestionagua\modelo\LoginModelo.class
+com\mycompany\sistemagestionagua\vista\VistaModificarConsumo$2.class
+>>>>>>> 91b37591f19c4c5c2ec58da7723c0e52a27d61ed
 com\mycompany\sistemagestionagua\vista\VistaAgregarConsumo$1.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarPrecios$1.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarUsurioIndividual$1.class
@@ -34,7 +39,13 @@ com\mycompany\sistemagestionagua\vista\vistaVerServicios$6.class
 com\mycompany\sistemagestionagua\vista\VistaModificarUsuario$3.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarPrecios.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarUsuario.class
+<<<<<<< HEAD
+=======
+com\mycompany\sistemagestionagua\vista\VistaRuta$3.class
+com\mycompany\sistemagestionagua\vista\VistaModificarConsumo.class
+>>>>>>> 91b37591f19c4c5c2ec58da7723c0e52a27d61ed
 com\mycompany\sistemagestionagua\vista\vistaModificarServicio.class
+com\mycompany\sistemagestionagua\vista\VistaPrincipal$4.class
 com\mycompany\sistemagestionagua\modelo\Servicio.class
 com\mycompany\sistemagestionagua\vista\VistaModificarPrecioMC$2.class
 com\mycompany\sistemagestionagua\controlador\ControladorVerServicios.class
@@ -48,6 +59,11 @@ com\mycompany\sistemagestionagua\vista\VistaNuevoPrecioMC$2.class
 com\mycompany\sistemagestionagua\vista\vistaAgregarServicio.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarUsuario$2.class
 com\mycompany\sistemagestionagua\controlador\ControladorVerConsumos$1.class
+<<<<<<< HEAD
+=======
+com\mycompany\sistemagestionagua\vista\VistaModificarConsumo$1.class
+com\mycompany\sistemagestionagua\vista\VistaPrincipal$3.class
+>>>>>>> 91b37591f19c4c5c2ec58da7723c0e52a27d61ed
 com\mycompany\sistemagestionagua\vista\VistaConsultarUsurioIndividual.class
 com\mycompany\sistemagestionagua\vista\VistaModificarPrecioMC$3.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarConsumoAgua$4.class

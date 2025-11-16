@@ -13,6 +13,7 @@ import com.mycompany.sistemagestionagua.vista.vistaVerServicios;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class ControladorConsumo {
@@ -28,7 +29,7 @@ public class ControladorConsumo {
         this.base = base;
         this.vistaAgrgarConsumo = new VistaAgregarConsumo();
         this.vistaVerServicios = vistaVerServicios;
-        this.controladorVerServicios =controladorVerServicios;
+        this.controladorVerServicios = controladorVerServicios;
 
         onEvento();
     }
@@ -45,18 +46,19 @@ public class ControladorConsumo {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String Consumo = vistaAgrgarConsumo.txtConsumo.getText();
-                String numCuenta = vistaAgrgarConsumo.txtNumeroCuenta.getText(); 
+                String numCuenta = vistaAgrgarConsumo.txtNumeroCuenta.getText();
                 String mesSeleccionado = (String) vistaAgrgarConsumo.comboAgragarC.getSelectedItem();
                 int indiceSelec = vistaAgrgarConsumo.comboAgragarC.getSelectedIndex();
-                
-                int numMes = indiceSelec+1;
-                
+
+                int numMes = indiceSelec + 1;
 
                 if (Consumo.isEmpty()) {
                     JOptionPane.showMessageDialog(vistaPrincipal, "Complete los campos", "ANDA", JOptionPane.WARNING_MESSAGE);
 
                 } else {
-                    if (base.agregarConsumos(new ModeloConsumo(numCuenta, mesSeleccionado,numMes, Integer.parseInt(Consumo))) != false) {
+                    String idConsumo = generarSiguienteIdConsumo();
+                    
+                    if (base.agregarConsumos(new ModeloConsumo(numCuenta,idConsumo, mesSeleccionado, numMes,  Integer.parseInt(Consumo), false)) != false) {
                         JOptionPane.showMessageDialog(vistaPrincipal, "Consumo Guardado", "ANDA", JOptionPane.INFORMATION_MESSAGE);
                         vistaAgrgarConsumo.dispose();
                     } else {
@@ -100,18 +102,23 @@ public class ControladorConsumo {
 
         }
     }
+
+    public void formaAgregarConsumo() {
+        String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto",
+            "Septiembre", "Octubre", "Noviembre", "Diciembre"
+        };
+        for (String mes : meses) {
+            vistaAgrgarConsumo.comboAgragarC.addItem(mes);
+
+        }
+    }
     
-  public void  formaAgregarConsumo(){
-      String[] meses ={"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto",
-          "Septiembre","Octubre","Noviembre","Diciembre"
-      };
-      for (String mes : meses) {
-          vistaAgrgarConsumo.comboAgragarC.addItem(mes);
-          
-      }
-  }
-    
+    private String generarSiguienteIdConsumo() {
+        ArrayList<ModeloConsumo> consumos = base.getConsumos();
+
+        int siguienteId = consumos.size() + 1;
+
+        return String.valueOf(siguienteId);
+    }
 
 }
-
-
