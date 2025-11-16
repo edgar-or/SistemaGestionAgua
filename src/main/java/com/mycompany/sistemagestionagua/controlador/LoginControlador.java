@@ -25,7 +25,7 @@ public class LoginControlador {
         this.loginModelo = modeloLogin;
         this.vista  = new  VistaPrincipal(); 
         this.base = new Base();
-        
+        //Para boton Enter
         this.loginVista.getRootPane().setDefaultButton(this.loginVista.btnLogin);
 
         this.loginVista.btnLogin.addActionListener(e -> {
