@@ -6,8 +6,10 @@ package com.mycompany.sistemagestionagua.controlador;
 
 import com.mycompany.sistemagestionagua.modelo.Base;
 import com.mycompany.sistemagestionagua.modelo.ModeloConsumo;
+import com.mycompany.sistemagestionagua.modelo.ModeloRuta;
 import com.mycompany.sistemagestionagua.modelo.PrecioMC;
 import com.mycompany.sistemagestionagua.modelo.Servicio;
+import com.mycompany.sistemagestionagua.vista.VistaModificarConsumo;
 import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
 import com.mycompany.sistemagestionagua.vista.VistaVerConsumos;
 import java.awt.Dimension;
@@ -22,34 +24,41 @@ import javax.swing.table.DefaultTableModel;
  * @author ayala
  */
 public class ControladorVerConsumos {
-    
-    private VistaVerConsumos visVerConsumos; 
-    private VistaPrincipal vistaPrincipal; 
-    private Base base; 
-    private ModeloConsumo consumo; 
-    private PrecioMC precio;
 
-    public ControladorVerConsumos(VistaPrincipal vistaPrincipal , ModeloConsumo consumo, Base base) {
+    private VistaVerConsumos visVerConsumos;
+    private VistaPrincipal vistaPrincipal;
+    private Base base;
+    private ModeloConsumo consumo;
+    private PrecioMC precio;
+    private VistaModificarConsumo visModificarConsumo;
+
+    public ControladorVerConsumos(VistaPrincipal vistaPrincipal, ModeloConsumo consumo, Base base) {
         this.visVerConsumos = new VistaVerConsumos();
         this.vistaPrincipal = vistaPrincipal;
         this.base = base;
-        this.consumo = consumo; 
-        
-        eventos(); 
+        this.consumo = consumo;
+        this.visModificarConsumo = new VistaModificarConsumo();
+
+        eventos();
     }
 
     private void eventos() {
-        visVerConsumos.btnCerrar.addActionListener(e-> visVerConsumos.dispose());
-        visVerConsumos.btnBuscar.addActionListener(e-> buscarConsumo());
+        visVerConsumos.btnCerrar.addActionListener(e -> visVerConsumos.dispose());
+        visVerConsumos.btnBuscar.addActionListener(e -> buscarConsumo());
+        visVerConsumos.btnPagar.addActionListener(e -> pagarCosumo(base.getConsumos()));
+        visVerConsumos.btnModificar.addActionListener(e -> mostrarVistaModificar());
         
-        
-          // --- Desactivar buscadores ---
+        visModificarConsumo.btnModificar.addActionListener(e -> modificarConsumo());
+
+        visModificarConsumo.btnCerrar.addActionListener(e -> visModificarConsumo.dispose());
+
+        // --- Desactivar buscadores ---
         eventoCampo(visVerConsumos.txtBuscar1, visVerConsumos.txtBuscar2, visVerConsumos.txtBuscar3);
         eventoCampo(visVerConsumos.txtBuscar2, visVerConsumos.txtBuscar1, visVerConsumos.txtBuscar3);
         eventoCampo(visVerConsumos.txtBuscar3, visVerConsumos.txtBuscar1, visVerConsumos.txtBuscar2);
     }
-    
-    public void mostrarVista(){
+
+    public void mostrarVista() {
         visVerConsumos.setSize(1000, 600);
         visVerConsumos.setVisible(true);
 
@@ -67,59 +76,162 @@ public class ControladorVerConsumos {
 
         mostrarConsumosTabla(base.getConsumos());
     }
-    
-   
 
     private void mostrarConsumosTabla(ArrayList<ModeloConsumo> consumos) {
-          DefaultTableModel modeloTabla = new DefaultTableModel() {
+        DefaultTableModel modeloTabla = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false; // <-- evita edición en todas las columnas
             }
         };
 
-        String titulos[] = {"N°", "N° Cuenta", "N° de DUI" ,"Nombre de propietario", "Mes Lectura", "Lectura anterior", "Lectura actual", "Metros consumidos", "Monto"};
+        String titulos[] = {"Id Consumo", "N° Cuenta", "N° de DUI", "Nombre de propietario", "Mes Lectura", "Lectura anterior", "Lectura actual", "Metros consumidos", "Monto", "Pago"};
         modeloTabla.setColumnIdentifiers(titulos);
 
         String resp = "";
-        
-        int metrosConsumidos = 0; 
+        String Pago = "";
+
+        int metrosConsumidos = 0;
         int lecturaAnterior = 0;
-        
 
         for (ModeloConsumo cons : consumos) {
-            
+
             Servicio serv = base.encontrarServicioPorNumCuenta(cons.getNumeroCuenta());
 
             String nombre = base.nombrePorDui(serv.getDuiPropietario());
             String apellido = base.apellido(serv.getDuiPropietario());
-            
-            
-            if (cons.getNumMes()-1 == 0) {
+
+            if (cons.isCancelado() == false) {
+                Pago = "Pendiente";
+            } else if (cons.isCancelado() == true) {
+                Pago = "Cancelado";
+            }
+
+            if (cons.getNumMes() - 1 == 0) {
                 lecturaAnterior = serv.getMetrosCubicos();
-                metrosConsumidos= cons.getMetrosCubicos() - lecturaAnterior; 
-            }else{
-                lecturaAnterior = base.obtenerLecturaAnterior(cons.getNumMes()-1); 
+                metrosConsumidos = cons.getMetrosCubicos() - lecturaAnterior;
+            } else {
+                lecturaAnterior = base.obtenerLecturaAnterior(cons.getNumMes() - 1);
 
                 metrosConsumidos = (cons.getMetrosCubicos()) - lecturaAnterior;
 
             }
+
             
             
             BigDecimal metros = BigDecimal.valueOf(metrosConsumidos);
             
-            BigDecimal precioo = precio.precioActual; 
+            BigDecimal precioo = obtenerPrecioPorRango(metrosConsumidos);
             
             BigDecimal monto =  metros.multiply(precioo);
 
-            Object datos[] = {modeloTabla.getRowCount() + 1, cons.getNumeroCuenta(), serv.getDuiPropietario() ,nombre + " " + apellido, cons.getMes(), lecturaAnterior, cons.getMetrosCubicos(),metrosConsumidos , monto  };
+
+            BigDecimal metros = BigDecimal.valueOf(metrosConsumidos);
+
+            BigDecimal precioo = precio.precioActual;
+
+            BigDecimal monto = metros.multiply(precioo);
+
+            Object datos[] = {cons.getIdConsumo(), cons.getNumeroCuenta(), serv.getDuiPropietario(), nombre + " " + apellido, cons.getMes(), lecturaAnterior, cons.getMetrosCubicos(), metrosConsumidos, monto, Pago};
             modeloTabla.addRow(datos);
         }
         this.visVerConsumos.tablaConsumos.setModel(modeloTabla);
 
     }
-    
-     private void buscarConsumo() {
+
+    private void pagarCosumo(ArrayList<ModeloConsumo> consumos) {
+        String seleccionado = getConsumoSeleccionado();
+
+        if (seleccionado != null) {
+            boolean encontrado = false;
+
+            for (ModeloConsumo cons : consumos) {
+                if (cons.getIdConsumo().equals(seleccionado)) {
+                    cons.setCancelado(true);
+                    encontrado = true;
+
+                    JOptionPane.showMessageDialog(vistaPrincipal,
+                            "Consumo cancelado con éxito",
+                            "ANDA",
+                            JOptionPane.INFORMATION_MESSAGE);
+
+                    mostrarConsumosTabla(base.getConsumos());
+                    break;
+                }
+            }
+
+            // Si después de recorrer todo NO lo encontró → error
+            if (!encontrado) {
+                JOptionPane.showMessageDialog(vistaPrincipal,
+                        "Error al cancelar el consumo",
+                        "ANDA",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }
+
+    public void mostrarVistaModificar() {
+
+        String seleccionado = getConsumoSeleccionado();
+        if (seleccionado != null) {
+            visModificarConsumo.setSize(600, 400);
+            visModificarConsumo.setVisible(true);
+
+            // 2️⃣ Centrar la vista
+            Dimension desktopSize = vistaPrincipal.escritorio.getSize();
+            Dimension internal = visModificarConsumo.getSize();
+            int x = (desktopSize.width - internal.width) / 2;
+            int y = (desktopSize.height - internal.height) / 2;
+            visModificarConsumo.setLocation(x, y);
+            vistaPrincipal.escritorio.remove(visModificarConsumo);
+            vistaPrincipal.escritorio.add(visModificarConsumo);
+
+            // 3️⃣ Mostrar y traer al frente
+            visModificarConsumo.toFront();
+
+            ModeloConsumo cons = base.encontrarConsumo(seleccionado);
+
+            visModificarConsumo.txtConsumo.setText(String.valueOf(cons.getMetrosCubicos()));
+            visModificarConsumo.txtNumeroCuenta.setText(cons.getNumeroCuenta());
+            visModificarConsumo.txtNumeroCuenta.setEnabled(false);
+            visModificarConsumo.txtIdConsumo.setText(cons.getIdConsumo());
+            visModificarConsumo.txtIdConsumo.setEditable(false);
+
+            llenarComboModificar(base.encontrarConsumo(seleccionado).getMes());
+
+            if (base.encontrarConsumo(seleccionado).isCancelado()) {
+                visModificarConsumo.btnCancelado.setSelected(true);
+            }
+
+        }
+
+    }
+
+   private void modificarConsumo() {
+    boolean pagado = visModificarConsumo.btnCancelado.isSelected();
+
+    String idConsumo = visModificarConsumo.txtIdConsumo.getText();
+    String mes = (String) visModificarConsumo.comboAgragarC.getSelectedItem();
+    String metros = visModificarConsumo.txtConsumo.getText();
+
+    boolean modificado = base.modificarConsumo(idConsumo, mes, metros, pagado);
+
+    if (modificado) {
+        JOptionPane.showMessageDialog(vistaPrincipal,
+                "Consumo modificado con éxito",
+                "ANDA",
+                JOptionPane.INFORMATION_MESSAGE);
+                visModificarConsumo.dispose();
+                mostrarConsumosTabla(base.getConsumos());
+    } else {
+        JOptionPane.showMessageDialog(vistaPrincipal,
+                "No se pudo modificar el consumo",
+                "ANDA",
+                JOptionPane.WARNING_MESSAGE);
+    }
+}
+
+    private void buscarConsumo() {
         String busca = null;
         String identificador = null;
         if (!visVerConsumos.txtBuscar1.getText().isEmpty()) {
@@ -153,9 +265,8 @@ public class ControladorVerConsumos {
         mostrarConsumosTabla(base.buscarConsumo(identificador, busca));
 
     }
-    
-    
-      //evento que desabilita los textfield de los buscadores 
+
+    //evento que desabilita los textfield de los buscadores 
     private void eventoCampo(JTextField activo, JTextField... otros) {
         activo.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
             @Override
@@ -187,8 +298,67 @@ public class ControladorVerConsumos {
         });
 
     }
+<<<<<<< HEAD
+    private BigDecimal obtenerPrecioPorRango(int metros) {
+
+        for (PrecioMC rango : PrecioMC.obtenerTodos()) {
+        if (rango.getHasta() == -1) { 
+            if (metros >= rango.getDesde()) {
+                return rango.getPrecio();
+            }
+        }
+
+        
+        if (metros >= rango.getDesde() && metros <= rango.getHasta()) {
+            return rango.getPrecio();
+        }
+    }
+
+       
+        JOptionPane.showMessageDialog(vistaPrincipal,
+        "No se encontró un rango válido para " + metros + " m³.\n" + "Verifique los rangos registrados.",
+        "Error en rangos", JOptionPane.ERROR_MESSAGE);
+
+        return BigDecimal.ZERO;
+    }
     
     
     
     
+
+
+    public String getConsumoSeleccionado() {
+        int fila = visVerConsumos.tablaConsumos.getSelectedRow();
+
+        if (fila == -1) {
+
+            JOptionPane.showMessageDialog(visVerConsumos, "Seleccione un consumo de la tabla");
+            return null;
+
+        }
+
+        String idConsumo = visVerConsumos.tablaConsumos.getValueAt(fila, 0).toString(); // Columna 0 = idConsumo
+        return idConsumo;
+
+    }
+
+    private void llenarComboModificar(String mesSelect) {
+
+        visModificarConsumo.comboAgragarC.removeAllItems(); // Limpia por si ya tenía valores
+
+        String[] meses = {
+            "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+        };
+
+        // Agregar los meses al combo
+        for (String mes : meses) {
+            visModificarConsumo.comboAgragarC.addItem(mes);
+        }
+
+        // Seleccionar el mes correcto
+        visModificarConsumo.comboAgragarC.setSelectedItem(mesSelect);
+    }
+
+
 }
