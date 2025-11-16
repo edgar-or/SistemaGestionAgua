@@ -108,7 +108,7 @@ public class ControladorVerConsumos {
             
             BigDecimal metros = BigDecimal.valueOf(metrosConsumidos);
             
-            BigDecimal precioo = precio.precioActual; 
+            BigDecimal precioo = obtenerPrecioPorRango(metrosConsumidos);
             
             BigDecimal monto =  metros.multiply(precioo);
 
@@ -186,6 +186,28 @@ public class ControladorVerConsumos {
             }
         });
 
+    }
+    private BigDecimal obtenerPrecioPorRango(int metros) {
+
+        for (PrecioMC rango : PrecioMC.obtenerTodos()) {
+        if (rango.getHasta() == -1) { 
+            if (metros >= rango.getDesde()) {
+                return rango.getPrecio();
+            }
+        }
+
+        
+        if (metros >= rango.getDesde() && metros <= rango.getHasta()) {
+            return rango.getPrecio();
+        }
+    }
+
+       
+        JOptionPane.showMessageDialog(vistaPrincipal,
+        "No se encontró un rango válido para " + metros + " m³.\n" + "Verifique los rangos registrados.",
+        "Error en rangos", JOptionPane.ERROR_MESSAGE);
+
+        return BigDecimal.ZERO;
     }
     
     
