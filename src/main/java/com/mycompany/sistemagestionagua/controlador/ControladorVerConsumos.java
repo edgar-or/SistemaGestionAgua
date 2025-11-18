@@ -79,64 +79,48 @@ public class ControladorVerConsumos {
 
     private void mostrarConsumosTabla(ArrayList<ModeloConsumo> consumos) {
         DefaultTableModel modeloTabla = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false; // <-- evita edición en todas las columnas
-            }
-        };
-
-        String titulos[] = {"Id Consumo", "N° Cuenta", "N° de DUI", "Nombre de propietario", "Mes Lectura", "Lectura anterior", "Lectura actual", "Metros consumidos", "Monto", "Pago"};
-        modeloTabla.setColumnIdentifiers(titulos);
-
-        String resp = "";
-        String Pago = "";
-
-        int metrosConsumidos = 0;
-        int lecturaAnterior = 0;
-
-        for (ModeloConsumo cons : consumos) {
-
-            Servicio serv = base.encontrarServicioPorNumCuenta(cons.getNumeroCuenta());
-
-            String nombre = base.nombrePorDui(serv.getDuiPropietario());
-            String apellido = base.apellido(serv.getDuiPropietario());
-
-            if (cons.isCancelado() == false) {
-                Pago = "Pendiente";
-            } else if (cons.isCancelado() == true) {
-                Pago = "Cancelado";
-            }
-
-            if (cons.getNumMes() - 1 == 0) {
-                lecturaAnterior = serv.getMetrosCubicos();
-                metrosConsumidos = cons.getMetrosCubicos() - lecturaAnterior;
-            } else {
-                lecturaAnterior = base.obtenerLecturaAnterior(cons.getNumMes() - 1);
-
-                metrosConsumidos = (cons.getMetrosCubicos()) - lecturaAnterior;
-
-            }
-<<<<<<< HEAD
-            
-            
-            BigDecimal metros = BigDecimal.valueOf(metrosConsumidos);
-            
-            BigDecimal precioo = obtenerPrecioPorRango(metrosConsumidos);
-            
-            BigDecimal monto =  metros.multiply(precioo);
-=======
->>>>>>> 91b37591f19c4c5c2ec58da7723c0e52a27d61ed
-
-            BigDecimal metros = BigDecimal.valueOf(metrosConsumidos);
-
-            BigDecimal precioo = precio.precioActual;
-
-            BigDecimal monto = metros.multiply(precioo);
-
-            Object datos[] = {cons.getIdConsumo(), cons.getNumeroCuenta(), serv.getDuiPropietario(), nombre + " " + apellido, cons.getMes(), lecturaAnterior, cons.getMetrosCubicos(), metrosConsumidos, monto, Pago};
-            modeloTabla.addRow(datos);
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
         }
-        this.visVerConsumos.tablaConsumos.setModel(modeloTabla);
+    };
+
+    String titulos[] = {"Id Consumo", "N° Cuenta", "N° de DUI", "Nombre de propietario", "Mes Lectura",
+        "Lectura anterior", "Lectura actual", "Metros consumidos", "Monto", "Pago"};
+    modeloTabla.setColumnIdentifiers(titulos);
+
+    for (ModeloConsumo cons : consumos) {
+
+        Servicio serv = base.encontrarServicioPorNumCuenta(cons.getNumeroCuenta());
+
+        String nombre = base.nombrePorDui(serv.getDuiPropietario());
+        String apellido = base.apellido(serv.getDuiPropietario());
+
+        String Pago = cons.isCancelado() ? "Cancelado" : "Pendiente";
+
+        int lecturaAnterior;
+
+        if (cons.getNumMes() - 1 == 0) {
+            lecturaAnterior = serv.getMetrosCubicos();
+        } else {
+            lecturaAnterior = base.obtenerLecturaAnterior(cons.getNumMes() - 1);
+        }
+
+        int metrosConsumidos = cons.getMetrosCubicos() - lecturaAnterior;
+
+        //Cálculo segun rangos
+        BigDecimal metros = BigDecimal.valueOf(metrosConsumidos);
+        BigDecimal precioRango = obtenerPrecioPorRango(metrosConsumidos);
+        BigDecimal monto = metros.multiply(precioRango);
+
+        Object datos[] = {cons.getIdConsumo(), cons.getNumeroCuenta(),serv.getDuiPropietario(),
+        nombre + " " + apellido, cons.getMes(), lecturaAnterior, cons.getMetrosCubicos(),metrosConsumidos, monto,
+        Pago};
+
+        modeloTabla.addRow(datos);
+    }
+
+    this.visVerConsumos.tablaConsumos.setModel(modeloTabla);
 
     }
 
@@ -299,7 +283,6 @@ public class ControladorVerConsumos {
         });
 
     }
-<<<<<<< HEAD
     private BigDecimal obtenerPrecioPorRango(int metros) {
 
         for (PrecioMC rango : PrecioMC.obtenerTodos()) {
@@ -326,7 +309,7 @@ public class ControladorVerConsumos {
     
     
     
-=======
+
 
     public String getConsumoSeleccionado() {
         int fila = visVerConsumos.tablaConsumos.getSelectedRow();
@@ -361,5 +344,5 @@ public class ControladorVerConsumos {
         visModificarConsumo.comboAgragarC.setSelectedItem(mesSelect);
     }
 
->>>>>>> 91b37591f19c4c5c2ec58da7723c0e52a27d61ed
+
 }

@@ -1,16 +1,11 @@
 package com.mycompany.sistemagestionagua.modelo;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.mycompany.sistemagestionagua.modelo;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
 
-/**
- *
- * @author MINEDUCYT
- */
 public class Base {
+    
     ArrayList<Usuario> usuarios;
     ArrayList<Servicio> servicios;
     ArrayList<ModeloRuta> rutas;
@@ -390,7 +385,6 @@ public ArrayList<ModeloConsumo> buscarConsumo(String identificador, String busca
             return false;
         }
     }
-<<<<<<< HEAD
     
     public int obtenerLecturaAnterior(int numMes) {
         for (ModeloConsumo cons : consumos) {
@@ -424,20 +418,6 @@ public ArrayList<ModeloConsumo> buscarConsumo(String identificador, String busca
                 cons.setCancelado(cancelado);
                 
                 return true; // Se modificó con éxito
-=======
-
-         public int obtenerLecturaAnterior(int numMes){
-             for (ModeloConsumo cons : consumos) {
-                 if (numMes==cons.getNumMes()) {
-                     return cons.getMetrosCubicos();
-                 }
-             }
-             return 0; 
-         }
-         
-         public ModeloRuta encontrarRuta(String idRuta) {
-        ModeloRuta encontrado = null;
->>>>>>> 873a9dc28f0d2ef014b20f1fb5ae63a6acf83c3a
 
             }
         }
@@ -468,9 +448,4 @@ public ArrayList<ModeloConsumo> buscarConsumo(String identificador, String busca
 //        }
 //        return 0;
 //    }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 873a9dc28f0d2ef014b20f1fb5ae63a6acf83c3a
 }
