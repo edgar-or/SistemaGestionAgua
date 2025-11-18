@@ -1,11 +1,16 @@
 package com.mycompany.sistemagestionagua.modelo;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.sistemagestionagua.modelo;
 
+/**
+ *
+ * @author MINEDUCYT
+ */
 public class Base {
-    
     ArrayList<Usuario> usuarios;
     ArrayList<Servicio> servicios;
     ArrayList<ModeloRuta> rutas;
