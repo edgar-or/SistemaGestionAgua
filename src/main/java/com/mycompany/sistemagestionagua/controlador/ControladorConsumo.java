@@ -13,6 +13,7 @@ import com.mycompany.sistemagestionagua.vista.vistaVerServicios;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class ControladorConsumo {
@@ -55,7 +56,9 @@ public class ControladorConsumo {
                     JOptionPane.showMessageDialog(vistaPrincipal, "Complete los campos", "ANDA", JOptionPane.WARNING_MESSAGE);
 
                 } else {
-                    if (base.agregarConsumos(new ModeloConsumo(numCuenta, mesSeleccionado, numMes, Integer.parseInt(Consumo))) != false) {
+                    String idConsumo = generarSiguienteIdConsumo();
+                    
+                    if (base.agregarConsumos(new ModeloConsumo(numCuenta,idConsumo, mesSeleccionado, numMes,  Integer.parseInt(Consumo), false)) != false) {
                         JOptionPane.showMessageDialog(vistaPrincipal, "Consumo Guardado", "ANDA", JOptionPane.INFORMATION_MESSAGE);
                         vistaAgrgarConsumo.dispose();
                     } else {
@@ -108,6 +111,14 @@ public class ControladorConsumo {
             vistaAgrgarConsumo.comboAgragarC.addItem(mes);
 
         }
+    }
+    
+    private String generarSiguienteIdConsumo() {
+        ArrayList<ModeloConsumo> consumos = base.getConsumos();
+
+        int siguienteId = consumos.size() + 1;
+
+        return String.valueOf(siguienteId);
     }
 
 }

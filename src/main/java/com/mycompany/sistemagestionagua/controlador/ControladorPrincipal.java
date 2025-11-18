@@ -40,6 +40,7 @@ public class ControladorPrincipal {
     ControladorConsumo controladorConsumo;
     ControladorVerConsumos controladorVerConusmos; 
     ModeloConsumo consumo; 
+    ControladorVerPagos controladorVerPagos;
   
 
     public ControladorPrincipal(VistaPrincipal vista, Base base) {
@@ -53,6 +54,7 @@ public class ControladorPrincipal {
         this.controladorVerServices = new ControladorVerServicios(vista,visVerServices, base);
         this.controladorConsumo= new ControladorConsumo(vista, base,  visVerServices, controladorVerServices);
         this.controladorVerConusmos = new ControladorVerConsumos(vista,consumo , base);
+        this.controladorVerPagos = new ControladorVerPagos(vista, base);
         
         
         
@@ -79,6 +81,8 @@ public class ControladorPrincipal {
         vista.menuVerServicios.addActionListener(e-> controladorVerServices.mostrarVista());
         visVerServices.btnAgrgarConsumo.addActionListener(e-> controladorConsumo.mostrarVista());
         vista.menuVerConsumos.addActionListener(e-> controladorVerConusmos.mostrarVista());
+        
+        vista.menuPagos.addActionListener(e-> controladorVerPagos.mostrarVista());
         
         
         //cerrar sesion
