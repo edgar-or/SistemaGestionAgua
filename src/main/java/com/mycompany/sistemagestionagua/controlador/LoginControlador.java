@@ -25,6 +25,8 @@ public class LoginControlador {
         this.loginModelo = modeloLogin;
         this.vista  = new  VistaPrincipal(); 
         this.base = new Base();
+        //Para boton Enter
+        this.loginVista.getRootPane().setDefaultButton(this.loginVista.btnLogin);
 
         this.loginVista.btnLogin.addActionListener(e -> {
             
@@ -76,6 +78,7 @@ public class LoginControlador {
     public void iniciar(){
         
         loginVista.setLocationRelativeTo(null);
+        loginVista.getRootPane().setDefaultButton(loginVista.btnLogin);
         loginVista.setVisible(true);
     }
     
@@ -87,6 +90,7 @@ public class LoginControlador {
        loginVista.txtContra.setText("");
        loginVista.txtUsuario.requestFocus();
     }
+    
      
      
 }
