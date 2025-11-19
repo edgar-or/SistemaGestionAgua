@@ -385,19 +385,6 @@ public ArrayList<ModeloConsumo> buscarConsumo(String identificador, String busca
             return false;
         }
     }
-<<<<<<< HEAD
-
-         public int obtenerLecturaAnterior(int numMes){
-             for (ModeloConsumo cons : consumos) {
-                 if (numMes==cons.getNumMes()) {
-                     return cons.getMetrosCubicos();
-                 }
-             }
-             return 0; 
-         }
-         
-         public ModeloRuta encontrarRuta(String idRuta) {
-=======
     
     public int obtenerLecturaAnterior(int numMes) {
         for (ModeloConsumo cons : consumos) {
@@ -439,7 +426,6 @@ public ArrayList<ModeloConsumo> buscarConsumo(String identificador, String busca
     }
     
     public ModeloRuta encontrarRuta(String idRuta) {
->>>>>>> ef6621c974a6ea82c74a8fe793897a37f1e720e3
         ModeloRuta encontrado = null;
         
         for (ModeloRuta ruta : rutas) {
@@ -462,9 +448,4 @@ public ArrayList<ModeloConsumo> buscarConsumo(String identificador, String busca
 //        }
 //        return 0;
 //    }
-<<<<<<< HEAD
-
-
-=======
->>>>>>> ef6621c974a6ea82c74a8fe793897a37f1e720e3
 }
