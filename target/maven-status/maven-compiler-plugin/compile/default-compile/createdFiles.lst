@@ -53,6 +53,7 @@ com\mycompany\sistemagestionagua\vista\VistaConsultarUsurioIndividual$3.class
 com\mycompany\sistemagestionagua\vista\VistaNuevoPrecioMC$2.class
 com\mycompany\sistemagestionagua\vista\vistaAgregarServicio.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarUsuario$2.class
+com\mycompany\sistemagestionagua\vista\VistaAgregarPrecios$5.class
 com\mycompany\sistemagestionagua\controlador\ControladorVerConsumos$1.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarUsurioIndividual.class
 com\mycompany\sistemagestionagua\vista\VistaModificarPrecioMC$3.class
