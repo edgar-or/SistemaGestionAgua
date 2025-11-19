@@ -165,6 +165,27 @@ public ArrayList<ModeloConsumo> buscarConsumo(String identificador, String busca
         return null;
     }
     
+   public ArrayList<Servicio> buscarServicioParaTabla(String identificador, String busca){
+       ArrayList<Servicio> temp = new ArrayList<>();
+       for (Servicio serv : servicios) {
+           if (identificador.equals("dui")) {
+               if (serv.getDuiPropietario().equals(busca)) {
+                   temp.add(serv);
+               }
+           }else if (identificador.equals("cuenta")) {
+               if (serv.getNumeroCuenta().equals(busca)) {
+                   temp.add(serv);
+               }
+           }else if (identificador.equals("nombre")) {
+               if (buscarServicio(busca).equals(serv.getDuiPropietario())) {
+                   temp.add(serv);
+               }
+           }
+       }
+       return temp; 
+   }
+    
+    
     public String buscarServicio(String buscar) {
         for (Usuario usuario : usuarios) {
             if (usuario.getNombre().toLowerCase().contains(buscar.toLowerCase())) {

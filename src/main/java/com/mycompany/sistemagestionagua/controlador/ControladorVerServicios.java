@@ -14,6 +14,7 @@ import com.mycompany.sistemagestionagua.vista.vistaVerServicios;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -50,6 +51,14 @@ public class ControladorVerServicios {
         visVerServicios.btnModificar.addActionListener(e -> mostrarModificar());
         visModificarServicio.btnCerrar.addActionListener(e -> visModificarServicio.dispose());
         visModificarServicio.btnModificarSer.addActionListener(e-> modificarServicio());
+        visVerServicios.btnBuscar.addActionListener(e->buscarServicio());
+        
+        
+        
+                // --- Desactivar buscadores ---
+        eventoCampo(visVerServicios.txtBuscar1, visVerServicios.txtBuscar2, visVerServicios.txtBuscar3);
+        eventoCampo(visVerServicios.txtBuscar2, visVerServicios.txtBuscar1, visVerServicios.txtBuscar3);
+        eventoCampo(visVerServicios.txtBuscar3, visVerServicios.txtBuscar1, visVerServicios.txtBuscar2);
 
     }
 
@@ -213,6 +222,43 @@ public class ControladorVerServicios {
 
     }
     
+    
+        private void buscarServicio() {
+        String busca = null;
+        String identificador = null;
+        if (!visVerServicios.txtBuscar1.getText().isEmpty()) {
+            identificador = "dui";
+            busca = visVerServicios.txtBuscar1.getText().trim();
+
+        } else if (!visVerServicios.txtBuscar2.getText().isEmpty()) {
+            identificador = "cuenta";
+            busca = visVerServicios.txtBuscar2.getText().trim();
+
+        } else if (!visVerServicios.txtBuscar3.getText().isEmpty()) {
+            identificador = "nombre";
+            busca = visVerServicios.txtBuscar3.getText().trim();
+
+        }
+        if (busca == null) {
+            JOptionPane.showMessageDialog(vistaPrincipal, "Ingrese una informacion de consumo para buscar", "ANDA", JOptionPane.WARNING_MESSAGE);
+            mostrarServicesTabla(base.getServicios());
+            //detiene la ejecucion
+            return;
+            
+        } else if (base.buscarServicioParaTabla(identificador, busca).isEmpty()) {
+            mostrarServicesTabla(base.buscarServicioParaTabla(identificador, busca));
+            JOptionPane.showMessageDialog(vistaPrincipal, "No se encontraron consumos con la informacion ingresada", "ANDA", JOptionPane.WARNING_MESSAGE);
+            visVerServicios.txtBuscar1.setText("");
+            visVerServicios.txtBuscar2.setText("");
+            visVerServicios.txtBuscar3.setText("");
+            //detiene la ejecucion
+            return;
+        }
+
+        mostrarServicesTabla(base.buscarServicioParaTabla(identificador, busca));
+
+    }
+    
 
     
     
@@ -230,5 +276,42 @@ public class ControladorVerServicios {
         return numCuenta;
 
     }
+    
+    
+    
+    //evento que desabilita los textfield de los buscadores 
+    private void eventoCampo(JTextField activo, JTextField... otros) {
+        activo.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                bloquear();
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                bloquear();
+            }
+
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                bloquear();
+            }
+
+            private void bloquear() {
+                if (!activo.getText().isEmpty()) {
+                    for (JTextField t : otros) {
+                        t.setEditable(false);
+                    }
+                } else {
+                    for (JTextField t : otros) {
+                        t.setEditable(true);
+                    }
+                }
+            }
+        });
+
+    }
+    
+    
 
 }
