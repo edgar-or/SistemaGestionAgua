@@ -140,6 +140,20 @@ public class ControladorPrecioMC implements ActionListener {
             int desde = Integer.parseInt(vistaNuevo.txtRango1.getText().trim());
             int hasta = Integer.parseInt(vistaNuevo.txtRango2.getText().trim());
             BigDecimal precio = new BigDecimal(vistaNuevo.txtPreciosMC.getText().trim());
+            
+            // VALIDACIÓN: Impedir precio igual a tarifa mínima en rangos posteriores
+            if (PrecioMC.total() > 0) {
+                BigDecimal tarifaMinima = PrecioMC.obtener(0).getPrecio();
+
+            if (precio.compareTo(tarifaMinima) == 0) {
+                JOptionPane.showMessageDialog(vistaNuevo, "El precio ingresado no puede ser igual a la tarifa minima.\n" +
+                "La tarifa minima solo aplica al primer rango.",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+                return;
+                }
+            }
+
 
             if (desde < 0 || hasta < 0) {
                 JOptionPane.showMessageDialog(vistaNuevo, "Los rangos no pueden ser negativos.", "Error", JOptionPane.ERROR_MESSAGE);
