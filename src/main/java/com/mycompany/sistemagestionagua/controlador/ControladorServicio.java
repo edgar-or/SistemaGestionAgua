@@ -59,7 +59,7 @@ public class ControladorServicio {
                 }
             }
 
-            visAgregarServicio.setSize(600, 400);
+            visAgregarServicio.toFront();
 
             // 2. Centrar
             Dimension desktopSize = vistaPrincipal.escritorio.getSize();

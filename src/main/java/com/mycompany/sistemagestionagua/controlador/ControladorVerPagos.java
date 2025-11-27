@@ -42,6 +42,7 @@ public class ControladorVerPagos {
 
     public void mostrarVista() {
         visPagos.setSize(1000, 600);
+        visPagos.toFront();
         visPagos.setVisible(true);
 
         Dimension desktopSize = vistaPrincipal.escritorio.getSize();
