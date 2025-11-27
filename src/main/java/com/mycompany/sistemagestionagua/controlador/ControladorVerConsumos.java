@@ -6,14 +6,15 @@ package com.mycompany.sistemagestionagua.controlador;
 
 import com.mycompany.sistemagestionagua.modelo.Base;
 import com.mycompany.sistemagestionagua.modelo.ModeloConsumo;
-import com.mycompany.sistemagestionagua.modelo.ModeloRuta;
 import com.mycompany.sistemagestionagua.modelo.PrecioMC;
 import com.mycompany.sistemagestionagua.modelo.Servicio;
 import com.mycompany.sistemagestionagua.vista.VistaModificarConsumo;
 import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
 import com.mycompany.sistemagestionagua.vista.VistaVerConsumos;
+import com.mycompany.sistemagestionagua.vista.verDetalleConsumo;
 import java.awt.Dimension;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -29,8 +30,9 @@ public class ControladorVerConsumos {
     private VistaPrincipal vistaPrincipal;
     private Base base;
     private ModeloConsumo consumo;
-    private PrecioMC precio;
     private VistaModificarConsumo visModificarConsumo;
+    private ControladorVerDetalle controladorVerDetalle;
+    private verDetalleConsumo visVerDetalle;
 
     public ControladorVerConsumos(VistaPrincipal vistaPrincipal, ModeloConsumo consumo, Base base) {
         this.visVerConsumos = new VistaVerConsumos();
@@ -38,6 +40,8 @@ public class ControladorVerConsumos {
         this.base = base;
         this.consumo = consumo;
         this.visModificarConsumo = new VistaModificarConsumo();
+        this.controladorVerDetalle = new ControladorVerDetalle(vistaPrincipal, base);
+        this.visVerDetalle = new verDetalleConsumo();
 
         eventos();
     }
@@ -47,6 +51,8 @@ public class ControladorVerConsumos {
         visVerConsumos.btnBuscar.addActionListener(e -> buscarConsumo());
         visVerConsumos.btnPagar.addActionListener(e -> pagarCosumo(base.getConsumos()));
         visVerConsumos.btnModificar.addActionListener(e -> mostrarVistaModificar());
+
+        visVerDetalle.btnCerrar.addActionListener(e-> visVerDetalle.dispose());
         
         visModificarConsumo.btnModificar.addActionListener(e -> modificarConsumo());
 
@@ -56,6 +62,9 @@ public class ControladorVerConsumos {
         eventoCampo(visVerConsumos.txtBuscar1, visVerConsumos.txtBuscar2, visVerConsumos.txtBuscar3);
         eventoCampo(visVerConsumos.txtBuscar2, visVerConsumos.txtBuscar1, visVerConsumos.txtBuscar3);
         eventoCampo(visVerConsumos.txtBuscar3, visVerConsumos.txtBuscar1, visVerConsumos.txtBuscar2);
+        
+        
+
     }
 
     public void mostrarVista() {
@@ -79,69 +88,114 @@ public class ControladorVerConsumos {
 
     private void mostrarConsumosTabla(ArrayList<ModeloConsumo> consumos) {
         DefaultTableModel modeloTabla = new DefaultTableModel() {
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        String titulos[] = {"Id Consumo", "N° Cuenta", "N° de DUI", "Nombre de propietario", "Mes Lectura",
+            "Lectura anterior", "Lectura actual", "Metros consumidos", "Monto", "Pago"};
+        modeloTabla.setColumnIdentifiers(titulos);
+
+        for (ModeloConsumo cons : consumos) {
+
+            Servicio serv = base.encontrarServicioPorNumCuenta(cons.getNumeroCuenta());
+
+            String nombre = "";
+            String apellido = "";
+            if (serv != null) {
+                nombre = base.nombrePorDui(serv.getDuiPropietario());
+                apellido = base.apellido(serv.getDuiPropietario());
+            }
+
+            String Pago = cons.isCancelado() ? "Cancelado" : "Pendiente";
+
+            int lecturaAnterior;
+
+            if (cons.getNumMes() - 1 == 0) {
+                lecturaAnterior = (serv != null) ? serv.getMetrosCubicos() : 0;
+            } else {
+                lecturaAnterior = base.obtenerLecturaAnterior(cons.getNumMes() - 1);
+            }
+
+            int metrosConsumidos = cons.getMetrosCubicos() - lecturaAnterior;
+
+            // Cálculo del monto: ahora usando tarifa mínima cuando corresponda
+            BigDecimal monto = calcularMontoConTarifaMinima(metrosConsumidos);
+
+            Object datos[] = {
+                cons.getIdConsumo(),
+                cons.getNumeroCuenta(),
+                (serv != null) ? serv.getDuiPropietario() : "",
+                nombre + " " + apellido,
+                cons.getMes(),
+                lecturaAnterior,
+                cons.getMetrosCubicos(),
+                metrosConsumidos,
+                monto,
+                Pago
+            };
+
+            modeloTabla.addRow(datos);
         }
-    };
 
-    String titulos[] = {"Id Consumo", "N° Cuenta", "N° de DUI", "Nombre de propietario", "Mes Lectura",
-        "Lectura anterior", "Lectura actual", "Metros consumidos", "Monto", "Pago"};
-    modeloTabla.setColumnIdentifiers(titulos);
-
-    for (ModeloConsumo cons : consumos) {
-
-        Servicio serv = base.encontrarServicioPorNumCuenta(cons.getNumeroCuenta());
-
-        String nombre = base.nombrePorDui(serv.getDuiPropietario());
-        String apellido = base.apellido(serv.getDuiPropietario());
-
-        String Pago = cons.isCancelado() ? "Cancelado" : "Pendiente";
-
-        int lecturaAnterior;
-
-        if (cons.getNumMes() - 1 == 0) {
-            lecturaAnterior = serv.getMetrosCubicos();
-        } else {
-            lecturaAnterior = base.obtenerLecturaAnterior(cons.getNumMes() - 1);
-        }
-
-        int metrosConsumidos = cons.getMetrosCubicos() - lecturaAnterior;
-
-        //Cálculo segun rangos
-        BigDecimal metros = BigDecimal.valueOf(metrosConsumidos);
-        BigDecimal precioRango = obtenerPrecioPorRango(metrosConsumidos);
-        BigDecimal monto = metros.multiply(precioRango);
-
-        Object datos[] = {cons.getIdConsumo(), cons.getNumeroCuenta(),serv.getDuiPropietario(),
-        nombre + " " + apellido, cons.getMes(), lecturaAnterior, cons.getMetrosCubicos(),metrosConsumidos, monto,
-        Pago};
-
-        modeloTabla.addRow(datos);
-    }
-
-    this.visVerConsumos.tablaConsumos.setModel(modeloTabla);
-
+        this.visVerConsumos.tablaConsumos.setModel(modeloTabla);
     }
 
     private void pagarCosumo(ArrayList<ModeloConsumo> consumos) {
         String seleccionado = getConsumoSeleccionado();
+        
+        String ServicioSeleccionado = getServicioSeleccionado(); 
 
         if (seleccionado != null) {
             boolean encontrado = false;
 
             for (ModeloConsumo cons : consumos) {
                 if (cons.getIdConsumo().equals(seleccionado)) {
-                    cons.setCancelado(true);
                     encontrado = true;
 
-                    JOptionPane.showMessageDialog(vistaPrincipal,
-                            "Consumo cancelado con éxito",
-                            "ANDA",
-                            JOptionPane.INFORMATION_MESSAGE);
+                    visVerDetalle.setSize(600, 400);
+                    visVerDetalle.setVisible(true);
 
-                    mostrarConsumosTabla(base.getConsumos());
-                    break;
+                    // 2️⃣ Centrar la vista
+                    Dimension desktopSize = vistaPrincipal.escritorio.getSize();
+                    Dimension internal = visVerDetalle.getSize();
+                    int x = (desktopSize.width - internal.width) / 2;
+                    int y = (desktopSize.height - internal.height) / 2;
+                    visVerDetalle.setLocation(x, y);
+                    vistaPrincipal.escritorio.remove(visVerDetalle);
+                    vistaPrincipal.escritorio.add(visVerDetalle);
+
+                    // 3️⃣ Mostrar y traer al frente
+                    visVerDetalle.toFront();
+                    
+                    int lecturaAnterior= 0; 
+
+                    if (cons.getNumMes() - 1 == 0) {
+                        lecturaAnterior = (cons != null) ? cons.getMetrosCubicos() : 0;
+                    } else {
+                        lecturaAnterior = base.obtenerLecturaAnterior(cons.getNumMes() - 1);
+                    }
+
+                    int metrosConsumidos = cons.getMetrosCubicos() - lecturaAnterior;
+                    
+                    
+
+                    visVerDetalle.labelNumCuenta.setText(seleccionado);
+                    visVerDetalle.labelMes.setText(cons.getMes());
+                    visVerDetalle.labelConsumoMes.setText(String.valueOf(metrosConsumidos));
+                    visVerDetalle.labelDui.setText(base.datosServicios(ServicioSeleccionado).getDuiPropietario());
+                    visVerDetalle.labelLecturaActual.setText(String.valueOf(cons.getMetrosCubicos()));
+                    visVerDetalle.labelLecturaAnterior.setText(String.valueOf(lecturaAnterior));
+                    visVerDetalle.labelCosto.setText(  "$ " + obtenerPrecioPorRango(metrosConsumidos)
+                .setScale(2, RoundingMode.HALF_UP)
+                .toPlainString());
+
+
+                    
+                    
+
                 }
             }
 
@@ -192,29 +246,29 @@ public class ControladorVerConsumos {
 
     }
 
-   private void modificarConsumo() {
-    boolean pagado = visModificarConsumo.btnCancelado.isSelected();
+    private void modificarConsumo() {
+        boolean pagado = visModificarConsumo.btnCancelado.isSelected();
 
-    String idConsumo = visModificarConsumo.txtIdConsumo.getText();
-    String mes = (String) visModificarConsumo.comboAgragarC.getSelectedItem();
-    String metros = visModificarConsumo.txtConsumo.getText();
+        String idConsumo = visModificarConsumo.txtIdConsumo.getText();
+        String mes = (String) visModificarConsumo.comboAgragarC.getSelectedItem();
+        String metros = visModificarConsumo.txtConsumo.getText();
 
-    boolean modificado = base.modificarConsumo(idConsumo, mes, metros, pagado);
+        boolean modificado = base.modificarConsumo(idConsumo, mes, metros, pagado);
 
-    if (modificado) {
-        JOptionPane.showMessageDialog(vistaPrincipal,
-                "Consumo modificado con éxito",
-                "ANDA",
-                JOptionPane.INFORMATION_MESSAGE);
-                visModificarConsumo.dispose();
-                mostrarConsumosTabla(base.getConsumos());
-    } else {
-        JOptionPane.showMessageDialog(vistaPrincipal,
-                "No se pudo modificar el consumo",
-                "ANDA",
-                JOptionPane.WARNING_MESSAGE);
+        if (modificado) {
+            JOptionPane.showMessageDialog(vistaPrincipal,
+                    "Consumo modificado con éxito",
+                    "ANDA",
+                    JOptionPane.INFORMATION_MESSAGE);
+            visModificarConsumo.dispose();
+            mostrarConsumosTabla(base.getConsumos());
+        } else {
+            JOptionPane.showMessageDialog(vistaPrincipal,
+                    "No se pudo modificar el consumo",
+                    "ANDA",
+                    JOptionPane.WARNING_MESSAGE);
+        }
     }
-}
 
     private void buscarConsumo() {
         String busca = null;
@@ -283,33 +337,59 @@ public class ControladorVerConsumos {
         });
 
     }
+
     private BigDecimal obtenerPrecioPorRango(int metros) {
 
         for (PrecioMC rango : PrecioMC.obtenerTodos()) {
-        if (rango.getHasta() == -1) { 
-            if (metros >= rango.getDesde()) {
+            if (rango.getHasta() == -1) {
+                if (metros >= rango.getDesde()) {
+                    return rango.getPrecio();
+                }
+            }
+
+            if (metros >= rango.getDesde() && metros <= rango.getHasta()) {
                 return rango.getPrecio();
             }
         }
 
-        
-        if (metros >= rango.getDesde() && metros <= rango.getHasta()) {
-            return rango.getPrecio();
-        }
-    }
-
-       
         JOptionPane.showMessageDialog(vistaPrincipal,
-        "No se encontró un rango válido para " + metros + " m³.\n" + "Verifique los rangos registrados.",
-        "Error en rangos", JOptionPane.ERROR_MESSAGE);
+                "No se encontró un rango válido para " + metros + " m³.\n" + "Verifique los rangos registrados.",
+                "Error en rangos", JOptionPane.ERROR_MESSAGE);
 
         return BigDecimal.ZERO;
     }
-    
-    
-    
-    
 
+    private BigDecimal calcularMontoConTarifaMinima(int metrosConsumidos) {
+
+        // --- Buscar el primer rango (tarifa mínima) ---
+        PrecioMC rangoMin = null;
+
+        for (PrecioMC r : PrecioMC.obtenerTodos()) {
+            if (r.getDesde() == 0) {
+                if (rangoMin == null || r.getHasta() < rangoMin.getHasta()) {
+                    rangoMin = r;
+                }
+            }
+        }
+
+        if (rangoMin == null) {
+            JOptionPane.showMessageDialog(vistaPrincipal,
+                    "No se encontró un rango con 'desde = 0'.",
+                    "Error en tarifas",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return BigDecimal.ZERO;
+        }
+
+        // A) Si está dentro del primer rango -> tarifa fija
+        if (metrosConsumidos <= rangoMin.getHasta()) {
+            return rangoMin.getPrecio();
+        }
+
+        // B) Si lo supera -> calcular multiplicando según rangos
+        BigDecimal precioUnitario = obtenerPrecioPorRango(metrosConsumidos);
+        return precioUnitario.multiply(BigDecimal.valueOf(metrosConsumidos));
+    }
 
     public String getConsumoSeleccionado() {
         int fila = visVerConsumos.tablaConsumos.getSelectedRow();
@@ -323,6 +403,22 @@ public class ControladorVerConsumos {
 
         String idConsumo = visVerConsumos.tablaConsumos.getValueAt(fila, 0).toString(); // Columna 0 = idConsumo
         return idConsumo;
+
+    }
+    
+    
+       public String getServicioSeleccionado() {
+        int fila = visVerConsumos.tablaConsumos.getSelectedRow();
+
+        if (fila == -1) {
+
+            JOptionPane.showMessageDialog(visVerConsumos, "Seleccione un consumo de la tabla");
+            return null;
+
+        }
+
+        String numCuenta = visVerConsumos.tablaConsumos.getValueAt(fila, 1).toString(); // Columna 0 = idConsumo
+        return numCuenta;
 
     }
 
@@ -342,7 +438,9 @@ public class ControladorVerConsumos {
 
         // Seleccionar el mes correcto
         visModificarConsumo.comboAgragarC.setSelectedItem(mesSelect);
+        
+        
     }
-
-
+   
+    
 }
