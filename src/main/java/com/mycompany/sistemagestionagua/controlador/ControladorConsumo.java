@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -85,7 +85,7 @@ public class ControladorConsumo {
                 }
             }
 
-            vistaAgrgarConsumo.setSize(600, 400);
+            vistaAgrgarConsumo.toFront();
 
             // 2. Centrar
             Dimension desktopSize = vistaPrincipal.escritorio.getSize();

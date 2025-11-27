@@ -23,48 +23,46 @@ public class LoginControlador {
     public LoginControlador(LoginVista vistaLogin, LoginModelo modeloLogin) {
         this.loginVista = vistaLogin;
         this.loginModelo = modeloLogin;
-        this.vista  = new  VistaPrincipal(); 
+        this.vista  = null; 
         this.base = new Base();
         //Para boton Enter
         this.loginVista.getRootPane().setDefaultButton(this.loginVista.btnLogin);
 
-        this.loginVista.btnLogin.addActionListener(e -> {
-            
-            String usuario = vistaLogin.txtUsuario.getText();
-            String password = new String(vistaLogin.txtContra.getPassword());
+        this.loginVista.btnLogin.addActionListener(e -> login() );
+ 
+    }
+    
+     private void login() {
 
-            if (usuario.isEmpty() || password.isEmpty()) {
-                mostrarError("El usuario y la contraseña no pueden estar vacíos.");
-                return; 
-            }
+        String usuario = loginVista.txtUsuario.getText();
+        String password = new String(loginVista.txtContra.getPassword());
 
-            modeloLogin.setUsuario(usuario);
-            modeloLogin.setPassword(password);
+        if (usuario.isEmpty() || password.isEmpty()) {
+            mostrarError("El usuario y la contraseña no pueden estar vacíos.");
+            return; 
+        }
 
-            boolean esValido = modeloLogin.validarCredenciales();
+        loginModelo.setUsuario(usuario);
+        loginModelo.setPassword(password);
 
-            if (esValido) {
-               
-                
-               vista.setVisible(true);
-                
-                base.cargarDatosIniciales();
+        boolean esValido = loginModelo.validarCredenciales();
 
-                ControladorPrincipal controladorPrincipal = new ControladorPrincipal(vista, base); 
-                controladorPrincipal.iniciar();
-                
-                
-                
-                
-                cerrar(); 
-            } else {
-                mostrarError("Usuario o contraseña incorrectos.");
-            }
-        });
-        
-        vista.btnCerrarSesion.addActionListener(e-> cerrarSesion());
-        
-        
+        if (esValido) {
+
+            vista = new VistaPrincipal(); 
+
+            base.cargarDatosIniciales();
+
+            controladorPrincipal = new ControladorPrincipal(vista, base);
+            controladorPrincipal.iniciar();
+
+            // Registrar listener DESPUÉS de crear la vista
+            vista.btnCerrarSesion.addActionListener(e -> cerrarSesion());
+
+            cerrar(); 
+        } else {
+            mostrarError("Usuario o contraseña incorrectos.");
+        }
     }
 
     private void mostrarError(String mensaje) {
@@ -84,6 +82,7 @@ public class LoginControlador {
     
      private void cerrarSesion(){
         vista.dispose();
+        vista = null; 
         iniciar();
         
         loginVista.txtUsuario.setText("");
