@@ -1,4 +1,4 @@
- /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -45,31 +45,37 @@ public class ControladorConsumo {
         vistaAgrgarConsumo.btnAgrgarConsumo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String Consumo = vistaAgrgarConsumo.txtConsumo.getText();
-                String numCuenta = vistaAgrgarConsumo.txtNumeroCuenta.getText();
+
+                String consumo = vistaAgrgarConsumo.txtConsumo.getText().trim();
+                String numCuenta = vistaAgrgarConsumo.txtNumeroCuenta.getText().trim();
                 String mesSeleccionado = (String) vistaAgrgarConsumo.comboAgragarC.getSelectedItem();
                 int indiceSelec = vistaAgrgarConsumo.comboAgragarC.getSelectedIndex();
-
                 int numMes = indiceSelec + 1;
 
-                if (Consumo.isEmpty()) {
-                    JOptionPane.showMessageDialog(vistaPrincipal, "Complete los campos", "ANDA", JOptionPane.WARNING_MESSAGE);
-
-                } else {
-                    String idConsumo = generarSiguienteIdConsumo();
-                    
-                    if (base.agregarConsumos(new ModeloConsumo(numCuenta,idConsumo, mesSeleccionado, numMes,  Integer.parseInt(Consumo), false)) != false) {
-                        JOptionPane.showMessageDialog(vistaPrincipal, "Consumo Guardado", "ANDA", JOptionPane.INFORMATION_MESSAGE);
-                        vistaAgrgarConsumo.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(vistaPrincipal, "Datos NO Guardados", "ANDA", JOptionPane.WARNING_MESSAGE);
-
-                    }
-
+                // VALIDAR VACÍOS
+                if (consumo.isEmpty() || numCuenta.isEmpty()) {
+                    JOptionPane.showMessageDialog(vistaPrincipal, "Complete todos los campos", "ANDA", JOptionPane.WARNING_MESSAGE);
+                    return;
                 }
 
-            }
+                // VALIDAR SOLO NÚMEROS
+                if (!consumo.matches("\\d+")) {
+                    JOptionPane.showMessageDialog(vistaPrincipal, "El consumo debe ser numeros", "ANDA", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
+                String idConsumo = generarSiguienteIdConsumo();
+
+                if (base.agregarConsumos(new ModeloConsumo(numCuenta, idConsumo, mesSeleccionado, numMes,
+                        Integer.parseInt(consumo), false))) {
+
+                    JOptionPane.showMessageDialog(vistaPrincipal, "Consumo Guardado", "ANDA", JOptionPane.INFORMATION_MESSAGE);
+                    vistaAgrgarConsumo.dispose();
+
+                } else {
+                    JOptionPane.showMessageDialog(vistaPrincipal, "Datos NO Guardados", "ANDA", JOptionPane.WARNING_MESSAGE);
+                }
+            }
         });
 
     }
@@ -112,7 +118,7 @@ public class ControladorConsumo {
 
         }
     }
-    
+
     private String generarSiguienteIdConsumo() {
         ArrayList<ModeloConsumo> consumos = base.getConsumos();
 
