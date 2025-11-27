@@ -14,6 +14,7 @@ import java.awt.Dimension;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -38,10 +39,19 @@ public class ControladorVerPagos {
     private void eventos() {
         visPagos.btnCerrar.addActionListener(e -> visPagos.dispose());
         visPagos.btnPagar.addActionListener(e -> pagarCosumo(base.getConsumos()));
+        visPagos.btnBuscar.addActionListener(E -> buscarPago());
+        
+           // --- Desactivar buscadores ---
+           
+        eventoCampo(visPagos.txtBuscar1, visPagos.txtBuscar2, visPagos.txtBuscar3);
+        eventoCampo(visPagos.txtBuscar2, visPagos.txtBuscar1, visPagos.txtBuscar3);
+        eventoCampo(visPagos.txtBuscar3, visPagos.txtBuscar1, visPagos.txtBuscar2);
+        
     }
 
     public void mostrarVista() {
         visPagos.setSize(1000, 600);
+        visPagos.toFront();
         visPagos.setVisible(true);
 
         Dimension desktopSize = vistaPrincipal.escritorio.getSize();
@@ -240,5 +250,78 @@ public class ControladorVerPagos {
 
         return precioUnitario.multiply(BigDecimal.valueOf(metrosConsumidos));
     }
+    
+    
+     //evento que desabilita los textfield de los buscadores 
+    private void eventoCampo(JTextField activo, JTextField... otros) {
+        activo.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                bloquear();
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                bloquear();
+            }
+
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                bloquear();
+            }
+
+            private void bloquear() {
+                if (!activo.getText().isEmpty()) {
+                    for (JTextField t : otros) {
+                        t.setEditable(false);
+                    }
+                } else {
+                    for (JTextField t : otros) {
+                        t.setEditable(true);
+                    }
+                }
+            }
+        });
+
+    }
+   private void buscarPago() {
+        String busca = null;
+        String identificador = null;
+        if (!visPagos.txtBuscar1.getText().isEmpty()) {
+            identificador = "dui";
+            busca = visPagos.txtBuscar1.getText().trim();
+
+        } else if (!visPagos.txtBuscar2.getText().isEmpty()) {
+            identificador = "cuenta";
+            busca = visPagos.txtBuscar2.getText().trim();
+
+        } else if (!visPagos.txtBuscar3.getText().isEmpty()) {
+            identificador = "nombre";
+            busca = visPagos.txtBuscar3.getText().trim();
+
+        }
+        if (busca == null) {
+            JOptionPane.showMessageDialog(vistaPrincipal, "Ingrese una informacion de consumo para buscar", "ANDA", JOptionPane.WARNING_MESSAGE);
+            mostrarConsumosTabla(base.getConsumos());
+            //detiene la ejecucion
+            return;
+            
+        } else if (base.buscarConsumo(identificador, busca).isEmpty()) {
+            mostrarConsumosTabla(base.buscarConsumo(identificador, busca));
+            JOptionPane.showMessageDialog(vistaPrincipal, "No se encontraron consumos con la informacion ingresada", "ANDA", JOptionPane.WARNING_MESSAGE);
+            visPagos.txtBuscar1.setText("");
+            visPagos.txtBuscar2.setText("");
+            visPagos.txtBuscar3.setText("");
+            mostrarConsumosTabla(base.getConsumos());
+
+            
+            //detiene la ejecucion
+            return;
+        }
+        
+                mostrarConsumosTabla(base.buscarConsumo(identificador, busca));
+
+
+   }
 
 }

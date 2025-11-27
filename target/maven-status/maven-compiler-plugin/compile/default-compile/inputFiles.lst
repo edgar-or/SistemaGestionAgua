@@ -22,6 +22,7 @@ C:\Users\estud\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\m
 C:\Users\estud\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\controlador\LoginControlador.java
 C:\Users\estud\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\ModeloConsumo.java
 C:\Users\estud\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaModificarUsuario.java
+C:\Users\estud\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\controlador\ControladorVerDetalle.java
 C:\Users\estud\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\controlador\ControladorUsuario.java
 C:\Users\estud\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaConsultarUsurioIndividual.java
 C:\Users\estud\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\Base.java
@@ -29,6 +30,7 @@ C:\Users\estud\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\m
 C:\Users\estud\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\modelo\Servicio.java
 C:\Users\estud\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\vistaVerServicios.java
 C:\Users\estud\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\controlador\ControladorServicio.java
+C:\Users\estud\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\verDetalleConsumo.java
 C:\Users\estud\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\VistaAgregarPrecios.java
 C:\Users\estud\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\controlador\ControladorPrincipal.java
 C:\Users\estud\Documents\NetBeansProjects\SistemaGestionAgua\src\main\java\com\mycompany\sistemagestionagua\vista\vistaModificarServicio.java

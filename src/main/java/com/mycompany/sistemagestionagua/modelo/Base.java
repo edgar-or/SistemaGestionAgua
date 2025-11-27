@@ -148,9 +148,9 @@ public ArrayList<ModeloConsumo> buscarConsumo(String identificador, String busca
     
     public String buscarServicioPorNumCuenta(String buscar) {
         for (Servicio servicio : servicios) {
-            if (servicio.equals(buscar)) {
+            //modificque el getNumeroCuenta de este filtro
+            if (servicio.getNumeroCuenta().equals(buscar)) {
                 return servicio.getDuiPropietario();
-                
             }
         }
         return null;
@@ -165,6 +165,26 @@ public ArrayList<ModeloConsumo> buscarConsumo(String identificador, String busca
         return null;
     }
     
+   public ArrayList<Servicio> buscarServicioParaTabla(String identificador, String busca){
+       ArrayList<Servicio> temp = new ArrayList<>();
+       for (Servicio serv : servicios) {
+           if (identificador.equals("dui")) {
+               if (serv.getDuiPropietario().equals(busca)) {
+                   temp.add(serv);
+               }
+           }else if (identificador.equals("cuenta")) {
+               if (serv.getNumeroCuenta().equals(busca)) {
+                   temp.add(serv);
+               }
+           }else if (identificador.equals("nombre")) {
+               if (buscarServicio(busca).equals(serv.getDuiPropietario())) {
+                   temp.add(serv);
+               }
+           }
+       }
+       return temp; 
+   }
+
 //   public ArrayList<Servicio> buscarServicioParaTabla(String identificador, String busca){
 //       ArrayList<Servicio> temp = new ArrayList<>();
 //       for (Servicio serv : servicios) {

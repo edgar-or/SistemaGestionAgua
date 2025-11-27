@@ -103,10 +103,12 @@ public class ControladorUsuario {
 
     public void mostrarVistaAgregar() {
         mostrarVista(visAgregarUser);
+        visAgregarUser.toFront();
     }
 
     public void mostrarVistaVerUsuarios() {
         mostrarVista(visVerUser);
+        visVerUser.toFront();
         mostrarUsersTabla(base.getUsuario());
     }
 
@@ -143,7 +145,7 @@ public class ControladorUsuario {
 
     private void mostrarVista(JInternalFrame frame) {
 
-        frame.setSize(600, 400);
+        frame.toFront();
         frame.setVisible(true);
 
         Dimension desktopSize = vistaPrincipal.escritorio.getSize();
@@ -273,8 +275,6 @@ public class ControladorUsuario {
     private void mostrarVistaModificar() {
         String seleccionado = getUsuarioSeleccionado();
         if (seleccionado != null) {
-
-            visModificarUser.setSize(600, 400);
 
                    // 1. Agregar primero al escritorio
                    vistaPrincipal.escritorio.add(visModificarUser);
