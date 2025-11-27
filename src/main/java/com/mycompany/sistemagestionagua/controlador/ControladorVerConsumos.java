@@ -252,6 +252,13 @@ public class ControladorVerConsumos {
         String idConsumo = visModificarConsumo.txtIdConsumo.getText();
         String mes = (String) visModificarConsumo.comboAgragarC.getSelectedItem();
         String metros = visModificarConsumo.txtConsumo.getText();
+        
+        if (!esNumero(metros)) {
+             JOptionPane.showMessageDialog(vistaPrincipal,
+                    "Digite numeros",
+                    "ANDA",
+                    JOptionPane.WARNING_MESSAGE);
+        }
 
         boolean modificado = base.modificarConsumo(idConsumo, mes, metros, pagado);
 
@@ -435,6 +442,17 @@ public class ControladorVerConsumos {
         
         
     }
+    public boolean esNumero(String texto) {
+    if (texto == null || texto.isEmpty()) {
+        return false;
+    }
+    for (char c : texto.toCharArray()) {
+        if (!Character.isDigit(c)) {
+            return false;
+        }
+    }
+    return true;
+}
    
     
 }
