@@ -69,6 +69,7 @@ public class ControladorVerConsumos {
 
     public void mostrarVista() {
         visVerConsumos.setSize(1000, 600);
+        visVerConsumos.toFront();
         visVerConsumos.setVisible(true);
 
         // 2️⃣ Centrar la vista
@@ -213,7 +214,6 @@ public class ControladorVerConsumos {
 
         String seleccionado = getConsumoSeleccionado();
         if (seleccionado != null) {
-            visModificarConsumo.setSize(600, 400);
             visModificarConsumo.setVisible(true);
 
             // 2️⃣ Centrar la vista
@@ -373,14 +373,8 @@ public class ControladorVerConsumos {
         }
 
         if (rangoMin == null) {
-            JOptionPane.showMessageDialog(vistaPrincipal,
-                    "No se encontró un rango con 'desde = 0'.",
-                    "Error en tarifas",
-                    JOptionPane.ERROR_MESSAGE
-            );
             return BigDecimal.ZERO;
         }
-
         // A) Si está dentro del primer rango -> tarifa fija
         if (metrosConsumidos <= rangoMin.getHasta()) {
             return rangoMin.getPrecio();

@@ -64,7 +64,7 @@ public class ControladorVerServicios {
 
     public void mostrarVista() {
 
-        visVerServicios.setSize(1000, 600);
+        visVerServicios.toFront();
         visVerServicios.setVisible(true);
 
         // 2️⃣ Centrar la vista
@@ -95,7 +95,6 @@ public class ControladorVerServicios {
                 }
             }
 
-            visModificarServicio.setSize(600, 400);
 
             // 2. Centrar
             Dimension desktopSize = vistaPrincipal.escritorio.getSize();
