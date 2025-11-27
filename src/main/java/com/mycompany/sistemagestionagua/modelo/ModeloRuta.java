@@ -69,7 +69,7 @@ public class ModeloRuta {
 
     @Override
     public String toString() {
-        return this.id;
+        return id + " - " + colonia;
     }
     
     

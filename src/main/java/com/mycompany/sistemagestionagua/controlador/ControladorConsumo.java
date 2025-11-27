@@ -6,6 +6,7 @@ package com.mycompany.sistemagestionagua.controlador;
 
 import com.mycompany.sistemagestionagua.modelo.Base;
 import com.mycompany.sistemagestionagua.modelo.ModeloConsumo;
+import com.mycompany.sistemagestionagua.modelo.PrecioMC;
 import com.mycompany.sistemagestionagua.modelo.Usuario;
 import com.mycompany.sistemagestionagua.vista.VistaAgregarConsumo;
 import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
@@ -48,6 +49,7 @@ public class ControladorConsumo {
                 String Consumo = vistaAgrgarConsumo.txtConsumo.getText();
                 String numCuenta = vistaAgrgarConsumo.txtNumeroCuenta.getText();
                 String mesSeleccionado = (String) vistaAgrgarConsumo.comboAgragarC.getSelectedItem();
+                int añoSeleccionado = (int) vistaAgrgarConsumo.comboAgregarAño.getSelectedItem();
                 int indiceSelec = vistaAgrgarConsumo.comboAgragarC.getSelectedIndex();
 
                 int numMes = indiceSelec + 1;
@@ -58,7 +60,7 @@ public class ControladorConsumo {
                 } else {
                     String idConsumo = generarSiguienteIdConsumo();
                     
-                    if (base.agregarConsumos(new ModeloConsumo(numCuenta,idConsumo, mesSeleccionado, numMes,  Integer.parseInt(Consumo), false)) != false) {
+                    if (base.agregarConsumos(new ModeloConsumo(numCuenta,idConsumo, mesSeleccionado, numMes, añoSeleccionado,  Integer.parseInt(Consumo), false)) != false) {
                         JOptionPane.showMessageDialog(vistaPrincipal, "Consumo Guardado", "ANDA", JOptionPane.INFORMATION_MESSAGE);
                         vistaAgrgarConsumo.dispose();
                     } else {
@@ -99,6 +101,8 @@ public class ControladorConsumo {
             vistaAgrgarConsumo.txtNumeroCuenta.setText(seleccionado);
             vistaAgrgarConsumo.txtNumeroCuenta.setEnabled(false);
             formaAgregarConsumo();
+            agregarAñoConsumo();
+            
 
         }
     }
@@ -109,6 +113,15 @@ public class ControladorConsumo {
         };
         for (String mes : meses) {
             vistaAgrgarConsumo.comboAgragarC.addItem(mes);
+
+        }
+    }
+    
+    public void agregarAñoConsumo() {
+        int[] años = {2025, 2026, 2027, 2028, 2029, 2030
+        };
+        for (int año : años) {
+            vistaAgrgarConsumo.comboAgregarAño.addItem(año);
 
         }
     }
