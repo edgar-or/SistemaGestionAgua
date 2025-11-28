@@ -75,9 +75,7 @@ public class ControladorVerPagos {
         mostrarConsumosTabla(listaPendientes(base.getConsumos()));
     }
 
-    // ───────────────────────────────────────────────────────────────
-    //      TABLA DE PAGOS — AHORA USA TARIFA MÍNIMA
-    // ───────────────────────────────────────────────────────────────
+  
     private void mostrarConsumosTabla(ArrayList<ModeloConsumo> consumos) {
 
         DefaultTableModel modeloTabla = new DefaultTableModel() {
