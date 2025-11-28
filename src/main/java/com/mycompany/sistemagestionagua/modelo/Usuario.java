@@ -24,6 +24,7 @@ public class Usuario {
     public static boolean validarDUI(String dui) {
         return dui != null && dui.matches("^\\d{8}-\\d$");
     }
+   
 
     public String getNombre() {
         return nombre;

@@ -10,15 +10,17 @@ public class ModeloConsumo {
     private String numeroCuenta;
     private String idConsumo; 
     private String mes;
-    private int numMes; 
+    private int numMes;
+    private int año; 
     private int metrosCubicos;
     private boolean cancelado; 
 
-    public ModeloConsumo(String numeroCuenta, String idConsumo, String Mes, int numMes, int metrosCubicos, boolean cancelado) {
+    public ModeloConsumo(String numeroCuenta, String idConsumo, String Mes, int numMes, int año, int metrosCubicos, boolean cancelado) {
         this.numeroCuenta = numeroCuenta;
         this.mes = Mes;
         this.metrosCubicos = metrosCubicos;
         this.numMes = numMes;
+        this.año = año; 
         this.cancelado = cancelado; 
         this.idConsumo = idConsumo; 
     }
@@ -70,6 +72,16 @@ public class ModeloConsumo {
     public void setMetrosCubicos(int metrosCubicos) {
         this.metrosCubicos = metrosCubicos;
     }
+
+    public int getAño() {
+        return año;
+    }
+
+    public void setAño(int año) {
+        this.año = año;
+    }
+    
+    
     
     
     

@@ -68,8 +68,8 @@ public class Base {
         agregarServicio(new Servicio("12345678-1", "2025-0001", "1", 3, "12"));
         agregarServicio(new Servicio("12345678-2", "2025-0003", "2", 4, "13"));
         
-        agregarConsumos(new ModeloConsumo("2025-0001", "1", "Enero", 1, 20, false));
-        agregarConsumos(new ModeloConsumo("2025-0001", "2", "Febrero", 2, 30, false));
+        agregarConsumos(new ModeloConsumo("2025-0001", "1", "Enero", 1, 2025 , 20, false));
+        agregarConsumos(new ModeloConsumo("2025-0001", "2", "Febrero", 2, 2025, 30, false));
 
         // marcar como cargado
         datosInicialesCargados = true;

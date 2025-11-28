@@ -51,7 +51,7 @@ public class ControladorUsuario {
         visVerUser.btnEliminar.addActionListener(e -> eliminarUser());
         visVerUser.btnModificar.addActionListener(e -> mostrarVistaModificar());
         visModificarUser.btnModificarUsuario.addActionListener(e -> modificarUsuario());
-        visModificarUser.btCerrar.addActionListener(e-> visModificarUser.dispose());
+        visModificarUser.btCerrar.addActionListener(e -> visModificarUser.dispose());
         visVerUser.btnCerrar.addActionListener(e -> visVerUser.dispose());
 
         // --- Desactivar buscadores ---
@@ -61,44 +61,71 @@ public class ControladorUsuario {
 
     }
 
-    private void agregarUsuario() {
-        String dui = visAgregarUser.txtduiUsuario.getText();
-        String nombre = visAgregarUser.txtNombreAgreUsuario.getText();
-        String apellido = visAgregarUser.txtApellidoAgreUsuario.getText();
+   private void agregarUsuario() {
 
-        if (dui.isEmpty() || nombre.isEmpty() || apellido.isEmpty()) {
-            JOptionPane.showMessageDialog(vistaPrincipal, "Complete los campos", "ANDA", JOptionPane.WARNING_MESSAGE);
+    String dui = visAgregarUser.txtduiUsuario.getText();
+    String nombre = visAgregarUser.txtNombreAgreUsuario.getText();
+    String apellido = visAgregarUser.txtApellidoAgreUsuario.getText();
 
-        } else {
-            // Validar el formato del DUI ANTES de crear el objeto
-            if (!Usuario.validarDUI(dui)) {
-                JOptionPane.showMessageDialog(vistaPrincipal, "Formato de DUI inválido.\nEjemplo: 12345678-9", "ANDA", JOptionPane.WARNING_MESSAGE);
-                visAgregarUser.txtduiUsuario.requestFocus();
-                return;
-            }
-
-            try {
-
-                if (base.agregar(new Usuario(nombre, apellido, dui))) {
-                    JOptionPane.showMessageDialog(vistaPrincipal, "Datos guardados", "ANDA", JOptionPane.INFORMATION_MESSAGE);
-                    limpiarCampos();
-
-                } else {
-                    JOptionPane.showMessageDialog(vistaPrincipal, "No se pudieron guardar los datos", "ANDA", JOptionPane.WARNING_MESSAGE);
-                    limpiarCampos();
-
-                }
-
-            } catch (Exception ex) {
-
-            }
-        }
+    // 1️⃣ Validar campos vacíos
+    if (dui.isEmpty() || nombre.isEmpty() || apellido.isEmpty()) {
+        JOptionPane.showMessageDialog(vistaPrincipal, "Complete los campos", "ANDA", JOptionPane.WARNING_MESSAGE);
+        return;
     }
+
+    // 2️⃣ Validar que NOMBRE solo tenga letras
+    if (!soloLetras(nombre)) {
+        JOptionPane.showMessageDialog(vistaPrincipal,
+                "El nombre solo debe contener letras",
+                "ANDA",
+                JOptionPane.WARNING_MESSAGE);
+        visAgregarUser.txtNombreAgreUsuario.requestFocus();
+        return;
+    }
+
+    // 3️⃣ Validar que APELLIDO solo tenga letras
+    if (!soloLetras(apellido)) {
+        JOptionPane.showMessageDialog(vistaPrincipal,
+                "El apellido solo debe contener letras",
+                "ANDA",
+                JOptionPane.WARNING_MESSAGE);
+        visAgregarUser.txtApellidoAgreUsuario.requestFocus();
+        return;
+    }
+
+    // 4️⃣ Validar DUI
+    if (!Usuario.validarDUI(dui)) {
+        JOptionPane.showMessageDialog(vistaPrincipal,
+                "Formato de DUI inválido.\nEjemplo: 12345678-9",
+                "ANDA",
+                JOptionPane.WARNING_MESSAGE);
+        visAgregarUser.txtduiUsuario.requestFocus();
+        return;
+    }
+
+    // 5️⃣ Guardar datos
+    try {
+        if (base.agregar(new Usuario(nombre, apellido, dui))) {
+            JOptionPane.showMessageDialog(vistaPrincipal, "Datos guardados", "ANDA", JOptionPane.INFORMATION_MESSAGE);
+            limpiarCampos();
+        } else {
+            JOptionPane.showMessageDialog(vistaPrincipal, "No se pudieron guardar los datos", "ANDA", JOptionPane.WARNING_MESSAGE);
+            limpiarCampos();
+        }
+    } catch (Exception ex) {
+        ex.printStackTrace();
+    }
+}
+
 
     private void limpiarCampos() {
         visAgregarUser.txtduiUsuario.setText("");
         visAgregarUser.txtNombreAgreUsuario.setText("");
         visAgregarUser.txtApellidoAgreUsuario.setText("");
+    }
+
+    public static boolean soloLetras(String texto) {
+        return texto.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$");
     }
 
     public void mostrarVistaAgregar() {
@@ -276,16 +303,16 @@ public class ControladorUsuario {
         String seleccionado = getUsuarioSeleccionado();
         if (seleccionado != null) {
 
-                   // 1. Agregar primero al escritorio
-                   vistaPrincipal.escritorio.add(visModificarUser);
+            // 1. Agregar primero al escritorio
+            vistaPrincipal.escritorio.add(visModificarUser);
 
-                   // 2. Centrar
-                   Dimension desktopSize = vistaPrincipal.escritorio.getSize();
-                  Dimension internal = visModificarUser.getSize();
-                   int x = (desktopSize.width - internal.width) / 2;
-                   int y = (desktopSize.height - internal.height) / 2;
-                   visModificarUser.setLocation(x, y);
-                           visModificarUser.setVisible(true);
+            // 2. Centrar
+            Dimension desktopSize = vistaPrincipal.escritorio.getSize();
+            Dimension internal = visModificarUser.getSize();
+            int x = (desktopSize.width - internal.width) / 2;
+            int y = (desktopSize.height - internal.height) / 2;
+            visModificarUser.setLocation(x, y);
+            visModificarUser.setVisible(true);
 
             //cargar datos de usuario
             ArrayList<Usuario> usuarios = base.buscarUsuario("dui", seleccionado);
@@ -303,21 +330,54 @@ public class ControladorUsuario {
     private void modificarUsuario() {
 
         String seleccionado = getUsuarioSeleccionado();
+        
+     
 
         String nuevoNombre = visModificarUser.txtNombreAgreUsuario.getText();
         String nuevoApellido = visModificarUser.txtApellidoAgreUsuario.getText();
         String nuevoDui = visModificarUser.txtduiUsuario.getText();
+        
+            if (!soloLetras(nuevoNombre)) {
+        JOptionPane.showMessageDialog(vistaPrincipal,
+                "El nombre solo debe contener letras",
+                "ANDA",
+                JOptionPane.WARNING_MESSAGE);
+        visAgregarUser.txtNombreAgreUsuario.requestFocus();
+        return;
+    }
+
+    // 3️⃣ Validar que APELLIDO solo tenga letras
+    if (!soloLetras(nuevoApellido)) {
+        JOptionPane.showMessageDialog(vistaPrincipal,
+                "El apellido solo debe contener letras",
+                "ANDA",
+                JOptionPane.WARNING_MESSAGE);
+        visAgregarUser.txtApellidoAgreUsuario.requestFocus();
+        return;
+    }
+    
+     // 4️⃣ Validar DUI
+    if (!Usuario.validarDUI(nuevoDui)) {
+        JOptionPane.showMessageDialog(vistaPrincipal,
+                "Formato de DUI inválido.\nEjemplo: 12345678-9",
+                "ANDA",
+                JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+        
+        
 
         if (base.modificarUsuario(seleccionado, nuevoDui, nuevoNombre, nuevoApellido)) {
             JOptionPane.showMessageDialog(vistaPrincipal, "Usuario modificado con éxito", "ANDA", JOptionPane.INFORMATION_MESSAGE);
             visModificarUser.dispose();
 
             mostrarUsersTabla(base.getUsuario());
+            
 
         } else {
             JOptionPane.showMessageDialog(vistaPrincipal, "El usuario NO se pudo modificar", "ANDA", JOptionPane.WARNING_MESSAGE);
         }
 
     }
-
+   
 }
