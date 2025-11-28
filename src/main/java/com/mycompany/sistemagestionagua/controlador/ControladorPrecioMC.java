@@ -53,29 +53,28 @@ public class ControladorPrecioMC implements ActionListener {
                 vista.btnEliminarRyP.setEnabled(filaSeleccionada);
             }
         });
-
-        inicializarVista();
+        mostrarVista();
         cargarTablaDesdeModelo();
     }
-
-    private void inicializarVista() {
-        if (vista.getParent() == null) {
-            vistaPrincipal.escritorio.add(vista);
-        }
-        centrarInternalFrame(vista);
-        vista.setVisible(true);
+     public void mostrarVista() {
+      
         vista.toFront();
+        vista.setVisible(true);
 
-        vista.btnModificarRyP.setEnabled(false);
-        vista.btnEliminarRyP.setEnabled(false);
+        // 2️⃣ Centrar la vista
+        Dimension desktopSize = vistaPrincipal.escritorio.getSize();
+        Dimension internal = vista.getSize();
+        int x = (desktopSize.width - internal.width) / 2;
+        int y = (desktopSize.height - internal.height) / 2;
+        vista.setLocation(x, y);
+        vistaPrincipal.escritorio.remove(vista);
+        vistaPrincipal.escritorio.add(vista);
+
+        // 3️⃣ Mostrar y traer al frente
+        vista.toFront();
     }
 
-    private void centrarInternalFrame(JInternalFrame frame) {
-        Dimension ds = vistaPrincipal.escritorio.getSize();
-        Dimension is = frame.getSize();
-        frame.setLocation((ds.width - is.width) / 2, (ds.height - is.height) / 2);
-    }
-
+    
     private void cargarTablaDesdeModelo() {
         tableModel.setRowCount(0);
 
@@ -105,8 +104,18 @@ public class ControladorPrecioMC implements ActionListener {
         if (vistaNuevo == null || vistaNuevo.isClosed()) {
 
             vistaNuevo = new VistaNuevoPrecioMC();
+            vistaPrincipal.JpanelBG.add(vistaNuevo);
+            vistaNuevo.toFront();
+            Dimension desktopSize = vistaPrincipal.escritorio.getSize();
+            Dimension internal = vistaNuevo.getSize();
+            int x = (desktopSize.width - internal.width) / 2;
+            int y = (desktopSize.height - internal.height) / 2;
+            vistaNuevo.setLocation(x, y);
+            vistaPrincipal.escritorio.remove(vistaNuevo);
             vistaPrincipal.escritorio.add(vistaNuevo);
-            centrarInternalFrame(vistaNuevo);
+
+        
+            
 
             //COMPORTAMIENTO PARA TARIFA MINIMA (primer rango
             if (PrecioMC.total() == 0) {
@@ -129,9 +138,9 @@ public class ControladorPrecioMC implements ActionListener {
                 }
             });
         }
-
+       
         vistaNuevo.setVisible(true);
-        vistaNuevo.toFront();
+        
     }
 
     // AGREGAR NUEVO RANGO
@@ -199,8 +208,17 @@ public class ControladorPrecioMC implements ActionListener {
         if (vistaModificar == null || vistaModificar.isClosed()) {
 
             vistaModificar = new VistaModificarPrecioMC();
+            vistaPrincipal.JpanelBG.add(vistaModificar);
+            vistaModificar.toFront();
+            Dimension desktopSize = vistaPrincipal.escritorio.getSize();
+            Dimension internal = vistaModificar.getSize();
+            int x = (desktopSize.width - internal.width) / 2;
+            int y = (desktopSize.height - internal.height) / 2;
+            vistaModificar.setLocation(x, y);
+            vistaPrincipal.escritorio.remove(vistaModificar);
             vistaPrincipal.escritorio.add(vistaModificar);
-            centrarInternalFrame(vistaModificar);
+
+            
 
             vistaModificar.btnCerrarModRyP.addActionListener(e -> vistaModificar.dispose());
 
@@ -224,9 +242,10 @@ public class ControladorPrecioMC implements ActionListener {
         } else {
             vistaModificar.txtModRango1.setEnabled(true);
         }
-
+        
+        
         vistaModificar.setVisible(true);
-        vistaModificar.toFront();
+        
     }
 
     // MODIFICAR REGISTRO

@@ -57,7 +57,7 @@ public class ControladorVerPagos {
     }
 
     public void mostrarVista() {
-        visPagos.setSize(1000, 600);
+        
         visPagos.toFront();
         visPagos.setVisible(true);
 
@@ -311,11 +311,6 @@ public class ControladorVerPagos {
         }
 
         if (rangoMin == null) {
-            JOptionPane.showMessageDialog(null,
-                    "No existe un rango inicial con 'desde = 0'.",
-                    "Error en tarifa mínima",
-                    JOptionPane.ERROR_MESSAGE
-            );
             return BigDecimal.ZERO;
         }
 

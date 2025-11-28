@@ -48,7 +48,6 @@ public class ControladorRuta {
 
     public void mostrarVista() {
 
-        visRuta.setSize(800, 500);
         visRuta.setVisible(true);
 
         // 2️⃣ Centrar la vista

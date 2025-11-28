@@ -56,9 +56,9 @@ public class ControladorVerServicios {
         
         
                 // --- Desactivar buscadores ---
-        eventoCampo(visVerServicios.txtBuscar1, visVerServicios.txtBuscar2, visVerServicios.txtBuscar3);
-        eventoCampo(visVerServicios.txtBuscar2, visVerServicios.txtBuscar1, visVerServicios.txtBuscar3);
-        eventoCampo(visVerServicios.txtBuscar3, visVerServicios.txtBuscar1, visVerServicios.txtBuscar2);
+        eventoCampo(visVerServicios.txtBuscar1, visVerServicios.txtBuscar2, visVerServicios.txtBuscar2);
+        eventoCampo(visVerServicios.txtBuscar2, visVerServicios.txtBuscar1, visVerServicios.txtBuscar2);
+        eventoCampo(visVerServicios.txtBuscar2, visVerServicios.txtBuscar1, visVerServicios.txtBuscar2);
 
     }
 
@@ -233,9 +233,9 @@ public class ControladorVerServicios {
             identificador = "cuenta";
             busca = visVerServicios.txtBuscar2.getText().trim();
 
-        } else if (!visVerServicios.txtBuscar3.getText().isEmpty()) {
+        } else if (!visVerServicios.txtBuscar2.getText().isEmpty()) {
             identificador = "nombre";
-            busca = visVerServicios.txtBuscar3.getText().trim();
+            busca = visVerServicios.txtBuscar2.getText().trim();
 
         }
         if (busca == null) {
@@ -249,7 +249,7 @@ public class ControladorVerServicios {
             JOptionPane.showMessageDialog(vistaPrincipal, "No se encontraron consumos con la informacion ingresada", "ANDA", JOptionPane.WARNING_MESSAGE);
             visVerServicios.txtBuscar1.setText("");
             visVerServicios.txtBuscar2.setText("");
-            visVerServicios.txtBuscar3.setText("");
+            visVerServicios.txtBuscar2.setText("");
             //detiene la ejecucion
             return;
         }
