@@ -29,13 +29,13 @@ public class ControladorVerPagos {
     private VistaPrincipal vistaPrincipal;
     private Base base;
     private PrecioMC precio;
-    private verDetalleConsumo visVerDetalle; 
+    private verDetalleConsumo visVerDetalle;
 
     public ControladorVerPagos(VistaPrincipal vistaPrincipal, Base base) {
         this.vistaPrincipal = vistaPrincipal;
         this.visPagos = new VistaPagos();
         this.base = base;
-        this.visVerDetalle = new verDetalleConsumo(); 
+        this.visVerDetalle = new verDetalleConsumo();
 
         eventos();
     }
@@ -43,17 +43,16 @@ public class ControladorVerPagos {
     private void eventos() {
         visPagos.btnCerrar.addActionListener(e -> visPagos.dispose());
         visPagos.btnPagar.addActionListener(e -> pagarCosumo(base.getConsumos()));
-        
-        visVerDetalle.btnCerrar.addActionListener(e-> visVerDetalle.dispose());
-        visVerDetalle.btnRegistrarPago.addActionListener(e-> registrarPago());
+
+        visVerDetalle.btnCerrar.addActionListener(e -> visVerDetalle.dispose());
+        visVerDetalle.btnRegistrarPago.addActionListener(e -> registrarPago());
         visPagos.btnBuscar.addActionListener(E -> buscarPago());
-        
-           // --- Desactivar buscadores ---
-           
+
+        // --- Desactivar buscadores ---
         eventoCampo(visPagos.txtBuscar1, visPagos.txtBuscar2, visPagos.txtBuscar3);
         eventoCampo(visPagos.txtBuscar2, visPagos.txtBuscar1, visPagos.txtBuscar3);
         eventoCampo(visPagos.txtBuscar3, visPagos.txtBuscar1, visPagos.txtBuscar2);
-        
+
     }
 
     public void mostrarVista() {
@@ -94,8 +93,13 @@ public class ControladorVerPagos {
         };
 
         modeloTabla.setColumnIdentifiers(titulos);
+        
+        
+
 
         for (ModeloConsumo cons : consumos) {
+            
+            Servicio servicio = base.datosServicios(cons.getNumeroCuenta());
 
             Servicio serv = base.encontrarServicioPorNumCuenta(cons.getNumeroCuenta());
             String nombre = base.nombrePorDui(serv.getDuiPropietario());
@@ -103,13 +107,35 @@ public class ControladorVerPagos {
             String pagoStr = cons.isCancelado() ? "Cancelado" : "Pendiente";
 
             // Obtener lectura anterior
-            int lecturaAnterior;
-            if (cons.getNumMes() - 1 == 0) {
-                lecturaAnterior = serv.getMetrosCubicos();
-            } else {
-                lecturaAnterior = base.obtenerLecturaAnterior(cons.getNumMes() - 1);
+            int lecturaAnterior = 0;
+
+// 1️⃣ Leer la lectura inicial desde el servicio (sin fecha)
+            int lecturaInicial = servicio.getMetrosCubicos();
+
+// 2️⃣ Obtener primer registro de consumo (primer mes con fecha)
+            ModeloConsumo primer = consumos.get(0);
+            int mesPrimero = primer.getNumMes();
+            int añoPrimero = primer.getAño();
+
+// 3️⃣ Datos del consumo actual
+            int mes = cons.getNumMes();
+            int año = cons.getAño();
+
+// 4️⃣ Si estamos en el PRIMER consumo registrado con fecha
+            if (mes == mesPrimero && año == añoPrimero) {
+                lecturaAnterior = lecturaInicial;
+            } // 5️⃣ Si estamos en el mismo año del PRIMER consumo pero en un mes posterior
+            else if (año == añoPrimero && mes > mesPrimero) {
+                lecturaAnterior = base.obtenerLecturaAnterior(mes - 1, año, cons.getNumeroCuenta());
+            } // 6️⃣ Si estamos en enero, pero NO es el primer año → buscar diciembre del año anterior
+            else if (mes == 1) {
+                lecturaAnterior = base.obtenerLecturaAnterior(12, año - 1, cons.getNumeroCuenta());
+            } // 7️⃣ Caso general → buscar mes anterior del mismo año
+            else {
+                lecturaAnterior = base.obtenerLecturaAnterior(mes - 1, año, cons.getNumeroCuenta());
             }
 
+// 8️⃣ Cálculo del consumo
             int metrosConsumidos = cons.getMetrosCubicos() - lecturaAnterior;
 
             // ───────────────────────────────────
@@ -148,7 +174,9 @@ public class ControladorVerPagos {
 
     private void pagarCosumo(ArrayList<ModeloConsumo> consumos) {
         String seleccionado = getConsumoSeleccionado();
-        String ServicioSeleccionado = getServicioSeleccionado(); 
+        String ServicioSeleccionado = getServicioSeleccionado();
+
+        Servicio servicio = base.datosServicios(ServicioSeleccionado);
 
         if (seleccionado != null) {
             boolean encontrado = false;
@@ -156,8 +184,8 @@ public class ControladorVerPagos {
             for (ModeloConsumo cons : consumos) {
                 if (cons.getIdConsumo().equals(seleccionado)) {
                     encontrado = true;
-                    
-                     visVerDetalle.setSize(600, 400);
+
+                    visVerDetalle.setSize(600, 400);
                     visVerDetalle.setVisible(true);
 
                     // 2️⃣ Centrar la vista
@@ -171,17 +199,38 @@ public class ControladorVerPagos {
 
                     // 3️⃣ Mostrar y traer al frente
                     visVerDetalle.toFront();
-                    
+
                     visVerDetalle.txtPago.setText("");
 
                     int lecturaAnterior = 0;
 
-                    if (cons.getNumMes() - 1 == 0) {
-                        lecturaAnterior = (cons != null) ? cons.getMetrosCubicos() : 0;
-                    } else {
-                        lecturaAnterior = base.obtenerLecturaAnterior(cons.getNumMes() - 1);
+// 1️⃣ Leer la lectura inicial desde el servicio (sin fecha)
+                    int lecturaInicial = servicio.getMetrosCubicos();
+
+// 2️⃣ Obtener primer registro de consumo (primer mes con fecha)
+                    ModeloConsumo primer = consumos.get(0);
+                    int mesPrimero = primer.getNumMes();
+                    int añoPrimero = primer.getAño();
+
+// 3️⃣ Datos del consumo actual
+                    int mes = cons.getNumMes();
+                    int año = cons.getAño();
+
+// 4️⃣ Si estamos en el PRIMER consumo registrado con fecha
+                    if (mes == mesPrimero && año == añoPrimero) {
+                        lecturaAnterior = lecturaInicial;
+                    } // 5️⃣ Si estamos en el mismo año del PRIMER consumo pero en un mes posterior
+                    else if (año == añoPrimero && mes > mesPrimero) {
+                        lecturaAnterior = base.obtenerLecturaAnterior(mes - 1, año, cons.getNumeroCuenta());
+                    } // 6️⃣ Si estamos en enero, pero NO es el primer año → buscar diciembre del año anterior
+                    else if (mes == 1) {
+                        lecturaAnterior = base.obtenerLecturaAnterior(12, año - 1, cons.getNumeroCuenta());
+                    } // 7️⃣ Caso general → buscar mes anterior del mismo año
+                    else {
+                        lecturaAnterior = base.obtenerLecturaAnterior(mes - 1, año, cons.getNumeroCuenta());
                     }
 
+// 8️⃣ Cálculo del consumo
                     int metrosConsumidos = cons.getMetrosCubicos() - lecturaAnterior;
 
                     visVerDetalle.labelNumCuenta.setText(seleccionado);
@@ -195,13 +244,12 @@ public class ControladorVerPagos {
                             .setScale(2, RoundingMode.HALF_UP)
                             .toPlainString());
 
-                  
+                }
+            }
         }
     }
-        }
-    }
-    
-     private void registrarPago() {
+
+    private void registrarPago() {
 
         if (!visVerDetalle.txtPago.getText().isEmpty()) {
             String costoTexto = visVerDetalle.labelCosto.getText()
@@ -252,7 +300,7 @@ public class ControladorVerPagos {
 
         return visPagos.tablaConsumos.getValueAt(fila, 0).toString();
     }
-    
+
     public String getServicioSeleccionado() {
         int fila = visPagos.tablaConsumos.getSelectedRow();
 
@@ -329,9 +377,8 @@ public class ControladorVerPagos {
 
         return precioUnitario.multiply(BigDecimal.valueOf(metrosConsumidos));
     }
-    
-    
-     //evento que desabilita los textfield de los buscadores 
+
+    //evento que desabilita los textfield de los buscadores 
     private void eventoCampo(JTextField activo, JTextField... otros) {
         activo.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
             @Override
@@ -363,7 +410,8 @@ public class ControladorVerPagos {
         });
 
     }
-   private void buscarPago() {
+
+    private void buscarPago() {
         String busca = null;
         String identificador = null;
         if (!visPagos.txtBuscar1.getText().isEmpty()) {
@@ -384,7 +432,7 @@ public class ControladorVerPagos {
             mostrarConsumosTabla(base.getConsumos());
             //detiene la ejecucion
             return;
-            
+
         } else if (base.buscarConsumo(identificador, busca).isEmpty()) {
             mostrarConsumosTabla(base.buscarConsumo(identificador, busca));
             JOptionPane.showMessageDialog(vistaPrincipal, "No se encontraron consumos con la informacion ingresada", "ANDA", JOptionPane.WARNING_MESSAGE);
@@ -393,14 +441,12 @@ public class ControladorVerPagos {
             visPagos.txtBuscar3.setText("");
             mostrarConsumosTabla(base.getConsumos());
 
-            
             //detiene la ejecucion
             return;
         }
-        
-                mostrarConsumosTabla(base.buscarConsumo(identificador, busca));
 
+        mostrarConsumosTabla(base.buscarConsumo(identificador, busca));
 
-   }
+    }
 
 }
