@@ -13,9 +13,11 @@ import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
 import com.mycompany.sistemagestionagua.vista.VistaVerConsumos;
 import com.mycompany.sistemagestionagua.vista.verDetalleConsumo;
 import java.awt.Dimension;
+import java.awt.List;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Comparator;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -111,14 +113,58 @@ public class ControladorVerConsumos {
 
             String Pago = cons.isCancelado() ? "Cancelado" : "Pendiente";
 
-            int lecturaAnterior;
+            
+            ArrayList<ModeloConsumo> consumosServicio = new ArrayList<>();
 
-            if (cons.getNumMes() - 1 == 0) {
-                lecturaAnterior = (serv != null) ? serv.getMetrosCubicos() : 0;
-            } else {
-                lecturaAnterior = base.obtenerLecturaAnterior(cons.getNumMes() - 1);
+            for (ModeloConsumo c : consumos) {
+                if (c.getNumeroCuenta().equals(cons.getNumeroCuenta())) {
+                    consumosServicio.add(c);
+                }
             }
 
+            int lecturaAnterior = 0;
+
+// 1️⃣ Lectura inicial del servicio (sin fecha)
+            int lecturaInicial = serv.getMetrosCubicos();
+
+// 2️⃣ Primer consumo con fecha
+            ModeloConsumo primer = consumosServicio.get(0);
+            int mesPrimero = primer.getNumMes();
+            int añoPrimero = primer.getAño();
+
+// 3️⃣ Datos del consumo actual
+            int mes = cons.getNumMes();
+            int año = cons.getAño();
+
+// Variable para guardar la lectura que venga de BD
+            Integer lecturaBD = null;
+
+// 4️⃣ Si estamos en el primer consumo registrado → usar lectura inicial
+            if (mes == mesPrimero && año == añoPrimero) {
+
+                lecturaAnterior = lecturaInicial;
+
+            } // 5️⃣ Si estamos en el mismo año inicial y mes posterior
+            else if (año == añoPrimero && mes > mesPrimero) {
+
+                lecturaBD = base.obtenerLecturaAnterior(mes - 1, año, cons.getNumeroCuenta());
+                lecturaAnterior = (lecturaBD == null) ? lecturaInicial : lecturaBD;
+
+            } // 6️⃣ Si estamos en enero pero NO es el primer año
+            else if (mes == 1) {
+
+                lecturaBD = base.obtenerLecturaAnterior(12, año - 1, cons.getNumeroCuenta());
+                lecturaAnterior = (lecturaBD == null) ? lecturaInicial : lecturaBD;
+
+            } // 7️⃣ Mes normal
+            else {
+
+                lecturaBD = base.obtenerLecturaAnterior(mes - 1, año, cons.getNumeroCuenta());
+                lecturaAnterior = (lecturaBD == null) ? lecturaInicial : lecturaBD;
+
+            }
+
+// 8️⃣ Cálculo del consumo real
             int metrosConsumidos = cons.getMetrosCubicos() - lecturaAnterior;
 
             // Cálculo del monto: ahora usando tarifa mínima cuando corresponda
@@ -149,6 +195,8 @@ public class ControladorVerConsumos {
 
         String ServicioSeleccionado = getServicioSeleccionado();
 
+        Servicio servicio = base.datosServicios(ServicioSeleccionado);
+
         if (seleccionado != null) {
             boolean encontrado = false;
 
@@ -169,17 +217,38 @@ public class ControladorVerConsumos {
 
                     // 3️⃣ Mostrar y traer al frente
                     visVerDetalle.toFront();
-                    
+
                     visVerDetalle.txtPago.setText("");
 
                     int lecturaAnterior = 0;
 
-                    if (cons.getNumMes() - 1 == 0) {
-                        lecturaAnterior = (cons != null) ? cons.getMetrosCubicos() : 0;
-                    } else {
-                        lecturaAnterior = base.obtenerLecturaAnterior(cons.getNumMes() - 1);
+// 1️⃣ Leer la lectura inicial desde el servicio (sin fecha)
+                    int lecturaInicial = servicio.getMetrosCubicos();
+
+// 2️⃣ Obtener primer registro de consumo (primer mes con fecha)
+                    ModeloConsumo primer = consumos.get(0);
+                    int mesPrimero = primer.getNumMes();
+                    int añoPrimero = primer.getAño();
+
+// 3️⃣ Datos del consumo actual
+                    int mes = cons.getNumMes();
+                    int año = cons.getAño();
+
+// 4️⃣ Si estamos en el PRIMER consumo registrado con fecha
+                    if (mes == mesPrimero && año == añoPrimero) {
+                        lecturaAnterior = lecturaInicial;
+                    } // 5️⃣ Si estamos en el mismo año del PRIMER consumo pero en un mes posterior
+                    else if (año == añoPrimero && mes > mesPrimero) {
+                        lecturaAnterior = base.obtenerLecturaAnterior(mes - 1, año, cons.getNumeroCuenta());
+                    } // 6️⃣ Si estamos en enero, pero NO es el primer año → buscar diciembre del año anterior
+                    else if (mes == 1) {
+                        lecturaAnterior = base.obtenerLecturaAnterior(12, año - 1, cons.getNumeroCuenta());
+                    } // 7️⃣ Caso general → buscar mes anterior del mismo año
+                    else {
+                        lecturaAnterior = base.obtenerLecturaAnterior(mes - 1, año, cons.getNumeroCuenta());
                     }
 
+// 8️⃣ Cálculo del consumo
                     int metrosConsumidos = cons.getMetrosCubicos() - lecturaAnterior;
 
                     visVerDetalle.labelNumCuenta.setText(seleccionado);

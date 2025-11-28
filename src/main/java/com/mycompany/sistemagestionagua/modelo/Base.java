@@ -134,6 +134,25 @@ public ArrayList<ModeloConsumo> buscarConsumo(String identificador, String busca
 
     return temp;
 }
+
+    public ModeloConsumo obtenerUltimoConsumo(String numCuenta) {
+    ModeloConsumo ultimo = null;
+
+    for (ModeloConsumo cons : consumos) {
+        if (cons.getNumeroCuenta().equals(numCuenta)) {
+
+            if (ultimo == null) {
+                ultimo = cons;
+            } else {
+                // Si este consumo es más reciente que el 'ultimo'
+                if (cons.getAño() > ultimo.getAño() || (cons.getAño() == ultimo.getAño() && cons.getNumMes() > ultimo.getNumMes())) {
+                    ultimo = cons;
+                }
+            }
+        }
+    }
+    return ultimo;
+}
     
     public ArrayList<String> bNumCuenta(String dui) {
         ArrayList<String> temp = new ArrayList<>();
@@ -426,14 +445,18 @@ public ArrayList<ModeloConsumo> buscarConsumo(String identificador, String busca
         }
     }
     
-    public int obtenerLecturaAnterior(int numMes) {
-        for (ModeloConsumo cons : consumos) {
-            if (numMes == cons.getNumMes()) {
-                return cons.getMetrosCubicos();
-            }
+public Integer obtenerLecturaAnterior(int numMes, int año, String numeroCuenta) {
+
+    for (ModeloConsumo cons : consumos) {
+        if (cons.getNumeroCuenta().equals(numeroCuenta) &&
+            cons.getNumMes() == numMes &&
+            cons.getAño() == año) {
+            return cons.getMetrosCubicos();
         }
-        return 0;        
     }
+
+    return null;
+}
     
     public ModeloConsumo encontrarConsumo(String idConsumo) {
         ModeloConsumo encontrado = null;

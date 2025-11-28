@@ -1,4 +1,4 @@
- /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -56,17 +56,45 @@ public class ControladorConsumo {
 
                 if (Consumo.isEmpty()) {
                     JOptionPane.showMessageDialog(vistaPrincipal, "Complete los campos", "ANDA", JOptionPane.WARNING_MESSAGE);
+                    return;
 
-                } else {
-                    String idConsumo = generarSiguienteIdConsumo();
-                    
-                    if (base.agregarConsumos(new ModeloConsumo(numCuenta,idConsumo, mesSeleccionado, numMes, añoSeleccionado,  Integer.parseInt(Consumo), false)) != false) {
-                        JOptionPane.showMessageDialog(vistaPrincipal, "Consumo Guardado", "ANDA", JOptionPane.INFORMATION_MESSAGE);
-                        vistaAgrgarConsumo.dispose();
+                }
+
+                // 1️⃣ Obtener último consumo registrado
+                ModeloConsumo ultimo = base.obtenerUltimoConsumo(numCuenta);
+
+                if (ultimo != null) {
+                    int mesUltimo = ultimo.getNumMes();
+                    int añoUltimo = ultimo.getAño();
+
+                    // 2️⃣ Calcular la fecha siguiente correcta
+                    int mesEsperado;
+                    int añoEsperado;
+
+                    if (mesUltimo == 12) {
+                        mesEsperado = 1;
+                        añoEsperado = añoUltimo + 1;
                     } else {
-                        JOptionPane.showMessageDialog(vistaPrincipal, "Datos NO Guardados", "ANDA", JOptionPane.WARNING_MESSAGE);
-
+                        mesEsperado = mesUltimo + 1;
+                        añoEsperado = añoUltimo;
                     }
+
+                    // 3️⃣ Validación para impedir fechas incorrectas
+                    if (numMes != mesEsperado || añoSeleccionado != añoEsperado) {
+                        JOptionPane.showMessageDialog(vistaPrincipal, "Mes o año no coninciden con el siguiente del ultimo conusmo registrado", "ANDA", JOptionPane.WARNING_MESSAGE);
+
+                        return;
+                    }
+                }
+
+                // 4️⃣ Si pasa la validación, guardar consumo
+                String idConsumo = generarSiguienteIdConsumo();
+
+                if (base.agregarConsumos(new ModeloConsumo(numCuenta, idConsumo, mesSeleccionado, numMes, añoSeleccionado, Integer.parseInt(Consumo), false)) != false) {
+                    JOptionPane.showMessageDialog(vistaPrincipal, "Consumo Guardado", "ANDA", JOptionPane.INFORMATION_MESSAGE);
+                    vistaAgrgarConsumo.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(vistaPrincipal, "Datos NO Guardados", "ANDA", JOptionPane.WARNING_MESSAGE);
 
                 }
 
@@ -90,7 +118,7 @@ public class ControladorConsumo {
             vistaAgrgarConsumo.toFront();
 
             // 2. Centrar
-            Dimension desktopSize = vistaPrincipal.JpanelBG.getSize();
+            Dimension desktopSize = vistaPrincipal.escritorio.getSize();
             Dimension internal = vistaAgrgarConsumo.getSize();
             int x = (desktopSize.width - internal.width) / 2;
             int y = (desktopSize.height - internal.height) / 2;
@@ -102,7 +130,6 @@ public class ControladorConsumo {
             vistaAgrgarConsumo.txtNumeroCuenta.setEnabled(false);
             formaAgregarConsumo();
             agregarAñoConsumo();
-            
 
         }
     }
@@ -116,7 +143,7 @@ public class ControladorConsumo {
 
         }
     }
-    
+
     public void agregarAñoConsumo() {
         int[] años = {2025, 2026, 2027, 2028, 2029, 2030
         };
@@ -125,7 +152,7 @@ public class ControladorConsumo {
 
         }
     }
-    
+
     private String generarSiguienteIdConsumo() {
         ArrayList<ModeloConsumo> consumos = base.getConsumos();
 
