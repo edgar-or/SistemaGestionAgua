@@ -18,6 +18,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -56,6 +58,7 @@ public class ControladorVerConsumos {
 
         visVerDetalle.btnRegistrarPago.addActionListener(e -> registrarPago());
         visVerDetalle.btnCerrar.addActionListener(e -> visVerDetalle.dispose());
+        visVerDetalle.btnFinalizarPago.addActionListener(e-> finalizarPago());
 
         visModificarConsumo.btnModificar.addActionListener(e -> modificarConsumo());
 
@@ -69,7 +72,7 @@ public class ControladorVerConsumos {
     }
 
     public void mostrarVista() {
-      
+
         visVerConsumos.toFront();
         visVerConsumos.setVisible(true);
 
@@ -113,7 +116,6 @@ public class ControladorVerConsumos {
 
             String Pago = cons.isCancelado() ? "Cancelado" : "Pendiente";
 
-            
             ArrayList<ModeloConsumo> consumosServicio = new ArrayList<>();
 
             for (ModeloConsumo c : consumos) {
@@ -250,6 +252,8 @@ public class ControladorVerConsumos {
 
 // 8️⃣ Cálculo del consumo
                     int metrosConsumidos = cons.getMetrosCubicos() - lecturaAnterior;
+                    BigDecimal monto = calcularMontoConTarifaMinima(metrosConsumidos);
+
 
                     visVerDetalle.labelNumCuenta.setText(seleccionado);
                     visVerDetalle.labelMes.setText(cons.getMes());
@@ -258,7 +262,7 @@ public class ControladorVerConsumos {
                     visVerDetalle.labelLecturaActual.setText(String.valueOf(cons.getMetrosCubicos()) + " m\u00B3");
                     visVerDetalle.labelLecturaAnterior.setText(String.valueOf(lecturaAnterior) + " m\u00B3");
                     visVerDetalle.labelAñoLectura.setText(String.valueOf(cons.getAño()));
-                    visVerDetalle.labelCosto.setText("$ " + obtenerPrecioPorRango(metrosConsumidos)
+                    visVerDetalle.labelCosto.setText("$ " + monto
                             .setScale(2, RoundingMode.HALF_UP)
                             .toPlainString());
 
@@ -314,6 +318,26 @@ public class ControladorVerConsumos {
                     JOptionPane.WARNING_MESSAGE);
             visVerDetalle.labelCambio.setText("N/A");
         }
+    }
+
+    public void finalizarPago() {
+        String pago = visVerDetalle.labelCambio.getText() ; 
+        
+        if (!pago.equals("N/A")) {
+            ModeloConsumo cons =  base.encontrarConsumo(getConsumoSeleccionado()); 
+            cons.setCancelado(true);
+            mostrarConsumosTabla(base.getConsumos());
+            JOptionPane.showMessageDialog(vistaPrincipal,
+                        "Consumo cancelado",
+                        "ANDA",
+                        JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(vistaPrincipal,
+                        "Error al cancelar el consumo",
+                        "ANDA",
+                        JOptionPane.WARNING_MESSAGE);
+        }
+                
     }
 
     public void mostrarVistaModificar() {
