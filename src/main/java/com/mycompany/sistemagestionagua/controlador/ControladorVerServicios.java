@@ -35,30 +35,31 @@ public class ControladorVerServicios {
         this.base = base;
 
         eventos();
-        
-        
+
     }
 
     public ControladorVerServicios() {
     }
-    
-    
-    
-    
+
     private void eventos() {
         visVerServicios.btnCerrar.addActionListener(e -> visVerServicios.dispose());
         visVerServicios.btnEliminar.addActionListener(e -> eliminarServicio());
         visVerServicios.btnModificar.addActionListener(e -> mostrarModificar());
         visModificarServicio.btnCerrar.addActionListener(e -> visModificarServicio.dispose());
+
+        visModificarServicio.btnModificarSer.addActionListener(e -> modificarServicio());
+        visVerServicios.btnBuscar.addActionListener(e -> buscarServicio());
+
+        // --- Desactivar buscadores ---
+        eventoCampo(visVerServicios.txtBuscar1, visVerServicios.txtBuscar2, visVerServicios.txtBuscar3);
+        eventoCampo(visVerServicios.txtBuscar2, visVerServicios.txtBuscar1, visVerServicios.txtBuscar3);
+        eventoCampo(visVerServicios.txtBuscar3, visVerServicios.txtBuscar1, visVerServicios.txtBuscar2);
+
         visModificarServicio.btnModificarSer.addActionListener(e-> modificarServicio());
         visVerServicios.btnBuscar.addActionListener(e->buscarServicio());
         
         
-        
-                // --- Desactivar buscadores ---
-        eventoCampo(visVerServicios.txtBuscar1, visVerServicios.txtBuscar2, visVerServicios.txtBuscar2);
-        eventoCampo(visVerServicios.txtBuscar2, visVerServicios.txtBuscar1, visVerServicios.txtBuscar2);
-        eventoCampo(visVerServicios.txtBuscar2, visVerServicios.txtBuscar1, visVerServicios.txtBuscar2);
+
 
     }
 
@@ -95,7 +96,6 @@ public class ControladorVerServicios {
                 }
             }
 
-
             // 2. Centrar
             Dimension desktopSize = vistaPrincipal.escritorio.getSize();
             Dimension internal = visModificarServicio.getSize();
@@ -121,26 +121,35 @@ public class ControladorVerServicios {
 
     private void modificarServicio() {
 
-        String numCuenta = visModificarServicio.txtNumCuenta.getText();
-        ModeloRuta nuevaRuta = (ModeloRuta) visModificarServicio.comboRuta.getSelectedItem();
-        String nuevoNumMedidor = visModificarServicio.txtNumMedidor.getText();
-        String nuevoMetrosCubicos = visModificarServicio.txtMetrosCubicos.getText();
+    String numCuenta = visModificarServicio.txtNumCuenta.getText().trim();
+    ModeloRuta nuevaRuta = (ModeloRuta) visModificarServicio.comboRuta.getSelectedItem();
+    String nuevoNumMedidor = visModificarServicio.txtNumMedidor.getText().trim();
+    String nuevoMetrosCubicos = visModificarServicio.txtMetrosCubicos.getText().trim();
 
-        if (!numCuenta.isEmpty() || nuevoNumMedidor.isEmpty() || nuevoMetrosCubicos.isEmpty()) {
-            if (base.modificarServicio(numCuenta, nuevaRuta.getId(), nuevoNumMedidor, nuevoMetrosCubicos) != false) {
-                JOptionPane.showMessageDialog(vistaPrincipal, "Servicio modificado con exito ", "ANDA", JOptionPane.INFORMATION_MESSAGE);
-                mostrarServicesTabla(base.getServicios());
-                visModificarServicio.dispose();
-            } else {
-                JOptionPane.showMessageDialog(vistaPrincipal, "El servicio NO se pudo modificar", "ANDA", JOptionPane.WARNING_MESSAGE);
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(vistaPrincipal, "Complete los campos", "ANDA", JOptionPane.WARNING_MESSAGE);
-
-        }
-
+    // VALIDAR CAMPOS VACÍOS
+    if (numCuenta.isEmpty() || nuevoNumMedidor.isEmpty() || nuevoMetrosCubicos.isEmpty()) {
+        JOptionPane.showMessageDialog(vistaPrincipal, "Complete todos los campos", "ANDA", JOptionPane.WARNING_MESSAGE);
+        return;
     }
+
+    // VALIDAR SOLO NÚMEROS
+    if (!nuevoNumMedidor.matches("\\d+") || !nuevoMetrosCubicos.matches("\\d+")) {
+        JOptionPane.showMessageDialog(vistaPrincipal, "Número de cuenta y  medidor de metros cúbicos deben ser numeros", "ANDA", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // MODIFICAR
+    if (base.modificarServicio(numCuenta, nuevaRuta.getId(), nuevoNumMedidor, nuevoMetrosCubicos)) {
+
+        JOptionPane.showMessageDialog(vistaPrincipal, "Servicio modificado con éxito", "ANDA", JOptionPane.INFORMATION_MESSAGE);
+        mostrarServicesTabla(base.getServicios());
+        visModificarServicio.dispose();
+
+    } else {
+        JOptionPane.showMessageDialog(vistaPrincipal, "El servicio NO se pudo modificar", "ANDA", JOptionPane.WARNING_MESSAGE);
+    }
+}
+
 
     public void llenarComboModificar(String idRutaActual) {
         // Objeto para almacenar la referencia al ModeloRuta que debe ser seleccionado
@@ -220,11 +229,13 @@ public class ControladorVerServicios {
         this.visVerServicios.tablaServicios.setModel(modeloTabla);
 
     }
-    
-    
-        private void buscarServicio() {
+
+    private void buscarServicio() {
+
         String busca = null;
         String identificador = null;
+
+        // DETERMINAR QUÉ CAMPO SE USA
         if (!visVerServicios.txtBuscar1.getText().isEmpty()) {
             identificador = "dui";
             busca = visVerServicios.txtBuscar1.getText().trim();
@@ -233,34 +244,56 @@ public class ControladorVerServicios {
             identificador = "cuenta";
             busca = visVerServicios.txtBuscar2.getText().trim();
 
-        } else if (!visVerServicios.txtBuscar2.getText().isEmpty()) {
+        } else if (!visVerServicios.txtBuscar3.getText().isEmpty()) {
             identificador = "nombre";
+
+
             busca = visVerServicios.txtBuscar2.getText().trim();
 
+
         }
+
+        // NO SE INGRESÓ NADA
         if (busca == null) {
-            JOptionPane.showMessageDialog(vistaPrincipal, "Ingrese una informacion de consumo para buscar", "ANDA", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(vistaPrincipal,
+                    "Ingrese una información para buscar",
+                    "ANDA",
+                    JOptionPane.WARNING_MESSAGE);
             mostrarServicesTabla(base.getServicios());
-            //detiene la ejecucion
             return;
-            
-        } else if (base.buscarServicioParaTabla(identificador, busca).isEmpty()) {
+        }
+
+       
+
+       
+
+        // BUSCAR
+        if (base.buscarServicioParaTabla(identificador, busca).isEmpty()) {
+
             mostrarServicesTabla(base.buscarServicioParaTabla(identificador, busca));
-            JOptionPane.showMessageDialog(vistaPrincipal, "No se encontraron consumos con la informacion ingresada", "ANDA", JOptionPane.WARNING_MESSAGE);
+
+            JOptionPane.showMessageDialog(vistaPrincipal,
+                    "No se encontraron consumos con la información ingresada",
+                    "ANDA",
+                    JOptionPane.WARNING_MESSAGE);
+
+            // LIMPIAR CAMPOS
             visVerServicios.txtBuscar1.setText("");
             visVerServicios.txtBuscar2.setText("");
+
+            visVerServicios.txtBuscar3.setText("");
+
+
             visVerServicios.txtBuscar2.setText("");
             //detiene la ejecucion
+
             return;
         }
 
+        // MOSTRAR RESULTADOS
         mostrarServicesTabla(base.buscarServicioParaTabla(identificador, busca));
-
     }
-    
 
-    
-    
     public String getServicioSeleccionado() {
         int fila = visVerServicios.tablaServicios.getSelectedRow();
 
@@ -275,9 +308,7 @@ public class ControladorVerServicios {
         return numCuenta;
 
     }
-    
-    
-    
+
     //evento que desabilita los textfield de los buscadores 
     private void eventoCampo(JTextField activo, JTextField... otros) {
         activo.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
@@ -310,7 +341,5 @@ public class ControladorVerServicios {
         });
 
     }
-    
-    
 
 }

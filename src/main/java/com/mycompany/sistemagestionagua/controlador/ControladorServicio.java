@@ -83,30 +83,59 @@ public class ControladorServicio {
 
     }
 
+    
     public void agregarServicio() {
-        if (!visAgregarServicio.txtNumMedidos.getText().isEmpty() || visAgregarServicio.txtMetrosCubicos.getText().isEmpty() ||  visAgregarServicio.comboRuta.getSelectedIndex() < 0) {
+
+    // VALIDAR CAMPOS VACÍOS 
+    if (!visAgregarServicio.txtNumMedidos.getText().isEmpty()
+            && !visAgregarServicio.txtMetrosCubicos.getText().isEmpty()
+            && !visAgregarServicio.txtNumCuenta.getText().isEmpty()
+            && visAgregarServicio.comboRuta.getSelectedIndex() >= 0) {
+
+        // VALIDAR QUE LOS CAMPOS SEAN NUMÉRICOS
+        if (!visAgregarServicio.txtNumMedidos.getText().matches("\\d+")) {
+            JOptionPane.showMessageDialog(vistaPrincipal,
+                    "Metros cúbicos debe ingresar números", "ANDA", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (!visAgregarServicio.txtMetrosCubicos.getText().matches("\\d+")) {
+            JOptionPane.showMessageDialog(vistaPrincipal,
+                    "Número de medidor debe ingresar numeros", "ANDA", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
             String dui = visAgregarServicio.txtNumDui.getText();
             String numCuenta = visAgregarServicio.txtNumCuenta.getText();
             ModeloRuta ruta = (ModeloRuta) visAgregarServicio.comboRuta.getSelectedItem();
-            int mtrosCubicos = Integer.parseInt(visAgregarServicio.txtMetrosCubicos.getText());
+            int metrosCubicos = Integer.parseInt(visAgregarServicio.txtMetrosCubicos.getText());
             String numMedidor = visAgregarServicio.txtNumMedidos.getText();
 
+            if (base.agregarServicio(new Servicio(dui, numCuenta, ruta.getId(), metrosCubicos, numMedidor))) {
 
-            if (base.agregarServicio(new Servicio(dui, numCuenta, ruta.getId(), mtrosCubicos,numMedidor)) != false) {
-                JOptionPane.showMessageDialog(vistaPrincipal, "Servicio agregado correctamente", "ANDA", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(vistaPrincipal,
+                        "Servicio agregado correctamente", "ANDA", JOptionPane.INFORMATION_MESSAGE);
+
                 controladorUsuario.mostrarUsersTabla(base.getUsuario());
                 visAgregarServicio.dispose();
+
             } else {
-                JOptionPane.showMessageDialog(vistaPrincipal, "El servicio NO se pudo agregar", "ANDA", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(vistaPrincipal,
+                        "El servicio NO se pudo agregar", "ANDA", JOptionPane.WARNING_MESSAGE);
             }
 
-        } else {
-            JOptionPane.showMessageDialog(vistaPrincipal, "Complete los campos", "ANDA", JOptionPane.WARNING_MESSAGE);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(vistaPrincipal,
+                    "Error en formato numérico", "ANDA", JOptionPane.ERROR_MESSAGE);
         }
 
+    } else {
+        JOptionPane.showMessageDialog(vistaPrincipal,
+                "Complete todos los campos correctamente", "ANDA", JOptionPane.WARNING_MESSAGE);
     }
-    
-    
+}
+
    
     
     

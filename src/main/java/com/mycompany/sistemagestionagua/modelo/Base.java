@@ -135,6 +135,16 @@ public ArrayList<ModeloConsumo> buscarConsumo(String identificador, String busca
     return temp;
 }
 
+public boolean existeServicio(String dui){
+    
+    for (Servicio serv : servicios) {
+        if (serv.getDuiPropietario().equals(dui)) {
+            return true; 
+        }
+    }
+    return false; 
+}
+
     public ModeloConsumo obtenerUltimoConsumo(String numCuenta) {
     ModeloConsumo ultimo = null;
 

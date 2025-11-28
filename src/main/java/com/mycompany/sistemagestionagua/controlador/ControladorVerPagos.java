@@ -46,6 +46,7 @@ public class ControladorVerPagos {
 
         visVerDetalle.btnCerrar.addActionListener(e -> visVerDetalle.dispose());
         visVerDetalle.btnRegistrarPago.addActionListener(e -> registrarPago());
+        visVerDetalle.btnFinalizarPago.addActionListener(e-> finalizarPago());
         visPagos.btnBuscar.addActionListener(E -> buscarPago());
 
         // --- Desactivar buscadores ---
@@ -74,9 +75,7 @@ public class ControladorVerPagos {
         mostrarConsumosTabla(listaPendientes(base.getConsumos()));
     }
 
-    // ───────────────────────────────────────────────────────────────
-    //      TABLA DE PAGOS — AHORA USA TARIFA MÍNIMA
-    // ───────────────────────────────────────────────────────────────
+  
     private void mostrarConsumosTabla(ArrayList<ModeloConsumo> consumos) {
 
         DefaultTableModel modeloTabla = new DefaultTableModel() {
@@ -100,6 +99,9 @@ public class ControladorVerPagos {
         for (ModeloConsumo cons : consumos) {
             
             Servicio servicio = base.datosServicios(cons.getNumeroCuenta());
+             if (servicio == null) {
+                continue;
+            }
 
             Servicio serv = base.encontrarServicioPorNumCuenta(cons.getNumeroCuenta());
             String nombre = base.nombrePorDui(serv.getDuiPropietario());
@@ -166,7 +168,10 @@ public class ControladorVerPagos {
         ArrayList<ModeloConsumo> pendientes = new ArrayList<>();
         for (ModeloConsumo consumo : consumos) {
             if (!consumo.isCancelado()) {
-                pendientes.add(consumo);
+                if (consumo.getNumeroCuenta()!=null) {
+                     pendientes.add(consumo);
+                }
+               
             }
         }
         return pendientes;
@@ -185,7 +190,7 @@ public class ControladorVerPagos {
                 if (cons.getIdConsumo().equals(seleccionado)) {
                     encontrado = true;
 
-                    visVerDetalle.setSize(600, 400);
+
 
                     
                     visVerDetalle.setVisible(true);
@@ -234,6 +239,7 @@ public class ControladorVerPagos {
 
 // 8️⃣ Cálculo del consumo
                     int metrosConsumidos = cons.getMetrosCubicos() - lecturaAnterior;
+                    BigDecimal monto = calcularMontoConTarifaMinima(metrosConsumidos);
 
                     visVerDetalle.labelNumCuenta.setText(seleccionado);
                     visVerDetalle.labelMes.setText(cons.getMes());
@@ -242,7 +248,7 @@ public class ControladorVerPagos {
                     visVerDetalle.labelLecturaActual.setText(String.valueOf(cons.getMetrosCubicos()) + " m\u00B3");
                     visVerDetalle.labelLecturaAnterior.setText(String.valueOf(lecturaAnterior) + " m\u00B3");
                     visVerDetalle.labelAñoLectura.setText(String.valueOf(cons.getAño()));
-                    visVerDetalle.labelCosto.setText("$ " + obtenerPrecioPorRango(metrosConsumidos)
+                    visVerDetalle.labelCosto.setText("$ " + monto
                             .setScale(2, RoundingMode.HALF_UP)
                             .toPlainString());
 
@@ -290,6 +296,25 @@ public class ControladorVerPagos {
                     JOptionPane.WARNING_MESSAGE);
             visVerDetalle.labelCambio.setText("N/A");
         }
+    }
+      public void finalizarPago() {
+        String pago = visVerDetalle.labelCambio.getText() ; 
+        
+        if (!pago.equals("N/A")) {
+            ModeloConsumo cons =  base.encontrarConsumo(getConsumoSeleccionado()); 
+            cons.setCancelado(true);
+            mostrarConsumosTabla(base.getConsumos());
+            JOptionPane.showMessageDialog(vistaPrincipal,
+                        "Consumo cancelado",
+                        "ANDA",
+                        JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(vistaPrincipal,
+                        "Error al cancelar el consumo",
+                        "ANDA",
+                        JOptionPane.WARNING_MESSAGE);
+        }
+                
     }
 
     public String getConsumoSeleccionado() {
