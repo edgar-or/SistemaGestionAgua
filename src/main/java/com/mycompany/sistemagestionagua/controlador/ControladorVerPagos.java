@@ -99,6 +99,9 @@ public class ControladorVerPagos {
         for (ModeloConsumo cons : consumos) {
             
             Servicio servicio = base.datosServicios(cons.getNumeroCuenta());
+             if (servicio == null) {
+                continue;
+            }
 
             Servicio serv = base.encontrarServicioPorNumCuenta(cons.getNumeroCuenta());
             String nombre = base.nombrePorDui(serv.getDuiPropietario());
@@ -165,7 +168,10 @@ public class ControladorVerPagos {
         ArrayList<ModeloConsumo> pendientes = new ArrayList<>();
         for (ModeloConsumo consumo : consumos) {
             if (!consumo.isCancelado()) {
-                pendientes.add(consumo);
+                if (consumo.getNumeroCuenta()!=null) {
+                     pendientes.add(consumo);
+                }
+               
             }
         }
         return pendientes;

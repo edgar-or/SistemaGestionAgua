@@ -106,6 +106,10 @@ public class ControladorVerConsumos {
         for (ModeloConsumo cons : consumos) {
 
             Servicio serv = base.encontrarServicioPorNumCuenta(cons.getNumeroCuenta());
+            
+            if (serv == null) {
+                continue;
+            }
 
             String nombre = "";
             String apellido = "";
