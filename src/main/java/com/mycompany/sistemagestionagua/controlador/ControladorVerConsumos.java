@@ -99,8 +99,8 @@ public class ControladorVerConsumos {
             }
         };
 
-        String titulos[] = {"Id Consumo", "N° Cuenta", "N° de DUI", "Nombre de propietario", "Mes Lectura", "Año lectura",
-            "Lectura anterior", "Lectura actual", "Metros consumidos", "Monto", "Pago"};
+        String titulos[] = {"Id Consumo", "N° Cuenta", "DUI", "Nombre", "Mes Lectura", "Año lectura",
+            "Lectura Anterior", "Lectura Actual", "Metros Consumidos", "Monto", "Pago"};
         modeloTabla.setColumnIdentifiers(titulos);
 
         for (ModeloConsumo cons : consumos) {

@@ -213,7 +213,8 @@ public class ControladorVerServicios {
             }
         };
 
-        String titulos[] = {"N°", "N° Cuenta", "N° Dui Propietario", "Nombre de propietario", "Apellido de propietario", "Id Ruta", "Metros cubicos iniciales", "N° medidor"};
+        String titulos[] = {"N°", "N° Cuenta", "N° Dui", "Nombre"
+                + "", "Apellido", "Id Ruta", "Metros Cubicos iniciales", "N° medidor"};
         modeloTabla.setColumnIdentifiers(titulos);
 
         String resp = "";

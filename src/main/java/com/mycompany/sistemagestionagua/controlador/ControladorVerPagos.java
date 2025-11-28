@@ -86,9 +86,9 @@ public class ControladorVerPagos {
         };
 
         String titulos[] = {
-            "Id Consumo", "N° Cuenta", "N° de DUI", "Nombre de propietario",
+            "Id Consumo", "N° Cuenta", "N° de DUI", "Nombre",
             "Mes Lectura", "Lectura anterior", "Lectura actual",
-            "Metros consumidos", "Monto", "Pago"
+            "Metros Consumidos", "Monto", "Pago"
         };
 
         modeloTabla.setColumnIdentifiers(titulos);
