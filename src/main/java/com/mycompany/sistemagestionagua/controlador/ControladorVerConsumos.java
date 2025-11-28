@@ -52,7 +52,7 @@ public class ControladorVerConsumos {
         visVerConsumos.btnPagar.addActionListener(e -> pagarCosumo(base.getConsumos()));
         visVerConsumos.btnModificar.addActionListener(e -> mostrarVistaModificar());
 
-        visVerDetalle.btnRegistrarPago.addActionListener(e-> registrarPago());
+        visVerDetalle.btnRegistrarPago.addActionListener(e -> registrarPago());
         visVerDetalle.btnCerrar.addActionListener(e -> visVerDetalle.dispose());
 
         visModificarConsumo.btnModificar.addActionListener(e -> modificarConsumo());
@@ -170,6 +170,8 @@ public class ControladorVerConsumos {
 
                     // 3️⃣ Mostrar y traer al frente
                     visVerDetalle.toFront();
+                    
+                    visVerDetalle.txtPago.setText("");
 
                     int lecturaAnterior = 0;
 
@@ -206,28 +208,43 @@ public class ControladorVerConsumos {
     }
 
     private void registrarPago() {
-        String costoTexto = visVerDetalle.labelCosto.getText()
-                        .replace("$", "")
-                        .replace(" ", "")
-                        .trim();
-        double aPagar = Double.parseDouble(costoTexto);
-        
-        double pago = Double.parseDouble(visVerDetalle.txtPago.getText());
-        
 
         if (!visVerDetalle.txtPago.getText().isEmpty()) {
-            if (pago > aPagar) {
-                double cambio = pago - aPagar;
-                visVerDetalle.labelCambio.setText(String.valueOf(cambio));
-            } else if (pago == aPagar) {
-                visVerDetalle.labelCambio.setText(String.valueOf(0));
-            }else{
-                 JOptionPane.showMessageDialog(vistaPrincipal,
-                        "Pago no sufuciente",
+            String costoTexto = visVerDetalle.labelCosto.getText()
+                    .replace("$", "")
+                    .replace(" ", "")
+                    .trim();
+            double aPagar = Double.parseDouble(costoTexto);
+
+            double pago = Double.parseDouble(visVerDetalle.txtPago.getText());
+
+            if (aPagar != 0) {
+                if (pago > aPagar) {
+                    double cambio = pago - aPagar;
+                    visVerDetalle.labelCambio.setText(String.valueOf(cambio));
+                } else if (pago == aPagar) {
+                    visVerDetalle.labelCambio.setText(String.valueOf(0));
+                } else {
+                    JOptionPane.showMessageDialog(vistaPrincipal,
+                            "Pago no sufuciente",
+                            "ANDA",
+                            JOptionPane.WARNING_MESSAGE);
+                    visVerDetalle.labelCambio.setText("N/A");
+                }
+            } else {
+                JOptionPane.showMessageDialog(vistaPrincipal,
+                        "error en tarifa",
                         "ANDA",
                         JOptionPane.WARNING_MESSAGE);
-                 visVerDetalle.labelCambio.setText("N/A");
+                visVerDetalle.labelCambio.setText("N/A");
             }
+
+        } else {
+            JOptionPane.showMessageDialog(vistaPrincipal,
+                    "Ingrese un valor en pago",
+                    "ANDA",
+                    JOptionPane.WARNING_MESSAGE);
+            visVerDetalle.labelCambio.setText("N/A");
         }
     }
 
@@ -258,6 +275,7 @@ public class ControladorVerConsumos {
             visModificarConsumo.txtIdConsumo.setEditable(false);
 
             llenarComboModificar(base.encontrarConsumo(seleccionado).getMes());
+            llenarComboAñoModificar(base.encontrarConsumo(seleccionado).getAño());
 
             if (base.encontrarConsumo(seleccionado).isCancelado()) {
                 visModificarConsumo.btnCancelado.setSelected(true);
@@ -273,9 +291,9 @@ public class ControladorVerConsumos {
         String idConsumo = visModificarConsumo.txtIdConsumo.getText();
         String mes = (String) visModificarConsumo.comboAgragarC.getSelectedItem();
         String metros = visModificarConsumo.txtConsumo.getText();
-        
+
         if (!esNumero(metros)) {
-             JOptionPane.showMessageDialog(vistaPrincipal,
+            JOptionPane.showMessageDialog(vistaPrincipal,
                     "Digite numeros",
                     "ANDA",
                     JOptionPane.WARNING_MESSAGE);
@@ -462,17 +480,30 @@ public class ControladorVerConsumos {
 
     }
 
-    public boolean esNumero(String texto) {
-    if (texto == null || texto.isEmpty()) {
-        return false;
+    public void llenarComboAñoModificar(int añoSelect) {
+
+        visModificarConsumo.comboAgregarAño.removeAllItems();
+
+        int[] años = {2025, 2026, 2027, 2028, 2029, 2030
+        };
+        for (int año : años) {
+            visModificarConsumo.comboAgregarAño.addItem(año);
+
+        }
+
+        visModificarConsumo.comboAgregarAño.setSelectedItem(añoSelect);
     }
-    for (char c : texto.toCharArray()) {
-        if (!Character.isDigit(c)) {
+
+    public boolean esNumero(String texto) {
+        if (texto == null || texto.isEmpty()) {
             return false;
         }
+        for (char c : texto.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
     }
-    return true;
-}
-   
-    
+
 }
