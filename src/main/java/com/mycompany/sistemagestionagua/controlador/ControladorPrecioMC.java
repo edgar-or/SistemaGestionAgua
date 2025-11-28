@@ -104,7 +104,7 @@ public class ControladorPrecioMC implements ActionListener {
         if (vistaNuevo == null || vistaNuevo.isClosed()) {
 
             vistaNuevo = new VistaNuevoPrecioMC();
-            vistaPrincipal.JpanelBG.add(vistaNuevo);
+            vistaPrincipal.escritorio.add(vistaNuevo);
             vistaNuevo.toFront();
             Dimension desktopSize = vistaPrincipal.escritorio.getSize();
             Dimension internal = vistaNuevo.getSize();
@@ -208,7 +208,7 @@ public class ControladorPrecioMC implements ActionListener {
         if (vistaModificar == null || vistaModificar.isClosed()) {
 
             vistaModificar = new VistaModificarPrecioMC();
-            vistaPrincipal.JpanelBG.add(vistaModificar);
+            vistaPrincipal.escritorio.add(vistaModificar);
             vistaModificar.toFront();
             Dimension desktopSize = vistaPrincipal.escritorio.getSize();
             Dimension internal = vistaModificar.getSize();

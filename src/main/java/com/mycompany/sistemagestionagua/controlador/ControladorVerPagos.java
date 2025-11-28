@@ -186,6 +186,8 @@ public class ControladorVerPagos {
                     encontrado = true;
 
                     visVerDetalle.setSize(600, 400);
+
+                    
                     visVerDetalle.setVisible(true);
 
                     // 2️⃣ Centrar la vista
