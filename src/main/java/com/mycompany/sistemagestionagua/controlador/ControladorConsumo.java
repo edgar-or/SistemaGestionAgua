@@ -88,7 +88,7 @@ public class ControladorConsumo {
             vistaAgrgarConsumo.toFront();
 
             // 2. Centrar
-            Dimension desktopSize = vistaPrincipal.escritorio.getSize();
+            Dimension desktopSize = vistaPrincipal.JpanelBG.getSize();
             Dimension internal = vistaAgrgarConsumo.getSize();
             int x = (desktopSize.width - internal.width) / 2;
             int y = (desktopSize.height - internal.height) / 2;

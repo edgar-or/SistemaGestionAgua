@@ -68,7 +68,7 @@ public class ControladorVerConsumos {
     }
 
     public void mostrarVista() {
-        visVerConsumos.setSize(1000, 600);
+      
         visVerConsumos.toFront();
         visVerConsumos.setVisible(true);
 
@@ -156,7 +156,6 @@ public class ControladorVerConsumos {
                 if (cons.getIdConsumo().equals(seleccionado)) {
                     encontrado = true;
 
-                    visVerDetalle.setSize(600, 400);
                     visVerDetalle.setVisible(true);
 
                     // 2️⃣ Centrar la vista

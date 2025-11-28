@@ -10,7 +10,6 @@ import com.mycompany.sistemagestionagua.modelo.Usuario;
 import com.mycompany.sistemagestionagua.vista.LoginVista;
 import com.mycompany.sistemagestionagua.vista.VistaAgregarConsumo;
 import com.mycompany.sistemagestionagua.vista.VistaAgregarUsuario;
-import com.mycompany.sistemagestionagua.vista.VistaConsultarUsurioIndividual;
 import com.mycompany.sistemagestionagua.vista.VistaEliminarUsuario;
 import com.mycompany.sistemagestionagua.vista.VistaModificarUsuario;
 import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
