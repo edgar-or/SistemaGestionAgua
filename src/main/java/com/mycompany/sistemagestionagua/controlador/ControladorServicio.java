@@ -86,7 +86,7 @@ public class ControladorServicio {
     
     public void agregarServicio() {
 
-    // VALIDAR CAMPOS VACÍOS (LÓGICA CORRECTA)
+    // VALIDAR CAMPOS VACÍOS 
     if (!visAgregarServicio.txtNumMedidos.getText().isEmpty()
             && !visAgregarServicio.txtMetrosCubicos.getText().isEmpty()
             && !visAgregarServicio.txtNumCuenta.getText().isEmpty()

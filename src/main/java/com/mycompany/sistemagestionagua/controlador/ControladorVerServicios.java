@@ -59,11 +59,6 @@ public class ControladorVerServicios {
         visVerServicios.btnBuscar.addActionListener(e->buscarServicio());
         
         
-        
-                // --- Desactivar buscadores ---
-        eventoCampo(visVerServicios.txtBuscar1, visVerServicios.txtBuscar2, visVerServicios.txtBuscar2);
-        eventoCampo(visVerServicios.txtBuscar2, visVerServicios.txtBuscar1, visVerServicios.txtBuscar2);
-        eventoCampo(visVerServicios.txtBuscar2, visVerServicios.txtBuscar1, visVerServicios.txtBuscar2);
 
 
     }
@@ -138,7 +133,7 @@ public class ControladorVerServicios {
     }
 
     // VALIDAR SOLO NÚMEROS
-    if (!numCuenta.matches("\\d+") || !nuevoNumMedidor.matches("\\d+") || !nuevoMetrosCubicos.matches("\\d+")) {
+    if (!nuevoNumMedidor.matches("\\d+") || !nuevoMetrosCubicos.matches("\\d+")) {
         JOptionPane.showMessageDialog(vistaPrincipal, "Número de cuenta y  medidor de metros cúbicos deben ser numeros", "ANDA", JOptionPane.ERROR_MESSAGE);
         return;
     }
@@ -249,10 +244,9 @@ public class ControladorVerServicios {
             identificador = "cuenta";
             busca = visVerServicios.txtBuscar2.getText().trim();
 
-        } else if (!visVerServicios.txtBuscar2.getText().isEmpty()) {
+        } else if (!visVerServicios.txtBuscar3.getText().isEmpty()) {
             identificador = "nombre";
 
-            busca = visVerServicios.txtBuscar3.getText().trim();
 
             busca = visVerServicios.txtBuscar2.getText().trim();
 
@@ -269,29 +263,9 @@ public class ControladorVerServicios {
             return;
         }
 
-        // VALIDACIÓN DE SOLO NÚMEROS (DUI y CUENTA)
-        if (identificador.equals("dui") || identificador.equals("cuenta")) {
+       
 
-            if (!busca.matches("\\d+")) {
-                JOptionPane.showMessageDialog(vistaPrincipal,
-                        "Este campo solo acepta números",
-                        "ANDA",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-        }
-
-        // VALIDACIÓN SOLO LETRAS (NOMBRE)
-        if (identificador.equals("nombre")) {
-
-            if (!busca.matches("[a-zA-ZáéíóúÁÉÍÓÚ ]+")) {
-                JOptionPane.showMessageDialog(vistaPrincipal,
-                        "El nombre solo debe contener letras",
-                        "ANDA",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-        }
+       
 
         // BUSCAR
         if (base.buscarServicioParaTabla(identificador, busca).isEmpty()) {
