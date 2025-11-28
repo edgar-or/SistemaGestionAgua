@@ -116,6 +116,8 @@ public class ControladorServicio {
 
                 JOptionPane.showMessageDialog(vistaPrincipal,
                         "Servicio agregado correctamente", "ANDA", JOptionPane.INFORMATION_MESSAGE);
+                visAgregarServicio.txtNumMedidos.setText("");
+                visAgregarServicio.txtMetrosCubicos.setText("");
 
                 controladorUsuario.mostrarUsersTabla(base.getUsuario());
                 visAgregarServicio.dispose();
