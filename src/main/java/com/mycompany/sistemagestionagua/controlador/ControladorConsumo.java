@@ -93,15 +93,17 @@ public class ControladorConsumo {
                 if (base.agregarConsumos(new ModeloConsumo(numCuenta, idConsumo, mesSeleccionado, numMes, añoSeleccionado, Integer.parseInt(Consumo), false)) != false) {
                     JOptionPane.showMessageDialog(vistaPrincipal, "Consumo Guardado", "ANDA", JOptionPane.INFORMATION_MESSAGE);
                     vistaAgrgarConsumo.dispose();
+                    vistaAgrgarConsumo.txtConsumo.setText("");
+                    
                 } else {
                     JOptionPane.showMessageDialog(vistaPrincipal, "Datos NO Guardados", "ANDA", JOptionPane.WARNING_MESSAGE);
-
+                    
                 }
 
             }
-
+            
         });
-
+        
     }
 
     public void mostrarVista() {

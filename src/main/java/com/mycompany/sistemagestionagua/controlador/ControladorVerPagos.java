@@ -185,6 +185,7 @@ public class ControladorVerPagos {
                     encontrado = true;
 
 
+
                     
                     visVerDetalle.setVisible(true);
 
