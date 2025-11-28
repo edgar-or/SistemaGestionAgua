@@ -66,16 +66,6 @@ public class VistaModificarUsuario extends javax.swing.JInternalFrame {
         btnModificarUsuario.setText("Modificar");
         btnModificarUsuario.setBorder(null);
         btnModificarUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-        btnModificarUsuario.setBorder(null);
-        btnModificarUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-=======
->>>>>>> 7032a784377edb721e9b1b15998efa636d965b1f
->>>>>>> c99a96c45ab956b8a8d7996a25356f5262f59629
-=======
->>>>>>> 2aec7dd8e535d40b8ac643cdf74ba7751a794388
         btnModificarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarUsuarioActionPerformed(evt);
@@ -88,16 +78,6 @@ public class VistaModificarUsuario extends javax.swing.JInternalFrame {
         btCerrar.setText("Cerrar");
         btCerrar.setBorder(null);
         btCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-        btCerrar.setBorder(null);
-        btCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-=======
->>>>>>> 7032a784377edb721e9b1b15998efa636d965b1f
->>>>>>> c99a96c45ab956b8a8d7996a25356f5262f59629
-=======
->>>>>>> 2aec7dd8e535d40b8ac643cdf74ba7751a794388
 
         txtduiUsuario.setBackground(new java.awt.Color(204, 204, 255));
         txtduiUsuario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -150,18 +130,6 @@ public class VistaModificarUsuario extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(153, 204, 255));
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(153, 204, 255));
-=======
-        jLabel1.setBackground(new java.awt.Color(0, 102, 102));
-        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
->>>>>>> 7032a784377edb721e9b1b15998efa636d965b1f
->>>>>>> c99a96c45ab956b8a8d7996a25356f5262f59629
-=======
->>>>>>> 2aec7dd8e535d40b8ac643cdf74ba7751a794388
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("MODIFICAR USUARIO");
 
