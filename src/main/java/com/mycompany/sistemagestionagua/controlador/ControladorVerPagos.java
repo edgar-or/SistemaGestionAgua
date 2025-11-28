@@ -358,13 +358,7 @@ public class ControladorVerPagos {
                 return rango.getPrecio();
             }
         }
-
-        JOptionPane.showMessageDialog(
-                vistaPrincipal,
-                "No se encontró un rango válido para " + metros + " m³.\nVerifique los rangos.",
-                "Error en rangos",
-                JOptionPane.ERROR_MESSAGE
-        );
+        
 
         return BigDecimal.ZERO;
     }

@@ -494,10 +494,6 @@ public class ControladorVerConsumos {
             }
         }
 
-        JOptionPane.showMessageDialog(vistaPrincipal,
-                "No se encontró un rango válido para " + metros + " m³.\n" + "Verifique los rangos registrados.",
-                "Error en rangos", JOptionPane.ERROR_MESSAGE);
-
         return BigDecimal.ZERO;
     }
 
