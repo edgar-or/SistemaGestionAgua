@@ -43,7 +43,6 @@ com\mycompany\sistemagestionagua\controlador\ControladorVerConsumos$2.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarUsurioIndividual$2.class
 com\mycompany\sistemagestionagua\vista\vistaVerServicios$6.class
 com\mycompany\sistemagestionagua\controlador\ControladorVerPagos.class
-com\mycompany\sistemagestionagua\vista\VistaModificarConsumo$3.class
 com\mycompany\sistemagestionagua\vista\VistaModificarUsuario$3.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarPrecios.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarUsuario.class
@@ -63,8 +62,11 @@ com\mycompany\sistemagestionagua\vista\vistaAgregarServicio.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarUsuario$2.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarPrecios$5.class
 com\mycompany\sistemagestionagua\controlador\ControladorVerConsumos$1.class
+<<<<<<< HEAD
 com\mycompany\sistemagestionagua\vista\vistaAgregarServicio$2.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarUsurioIndividual.class
+=======
+>>>>>>> c43458ed5a54f85519083d9e40ce2452c75f3458
 com\mycompany\sistemagestionagua\vista\VistaModificarPrecioMC$3.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarConsumoAgua$4.class
 com\mycompany\sistemagestionagua\vista\VistaConsultarConsumoAgua.class
@@ -114,7 +116,6 @@ com\mycompany\sistemagestionagua\controlador\ControladorVerServicios$2.class
 com\mycompany\sistemagestionagua\vista\VistaPrincipal$4.class
 com\mycompany\sistemagestionagua\modelo\ModeloRuta.class
 com\mycompany\sistemagestionagua\vista\VistaAgregarPrecios$3.class
-com\mycompany\sistemagestionagua\vista\LoginVista$2.class
 com\mycompany\sistemagestionagua\vista\verDetalleConsumo$3.class
 com\mycompany\sistemagestionagua\controlador\ControladorConsumo$1.class
 com\mycompany\sistemagestionagua\controlador\ControladorPrecioMC$2.class

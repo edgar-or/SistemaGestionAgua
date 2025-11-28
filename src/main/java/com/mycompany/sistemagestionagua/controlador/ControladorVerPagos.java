@@ -46,6 +46,7 @@ public class ControladorVerPagos {
 
         visVerDetalle.btnCerrar.addActionListener(e -> visVerDetalle.dispose());
         visVerDetalle.btnRegistrarPago.addActionListener(e -> registrarPago());
+        visVerDetalle.btnFinalizarPago.addActionListener(e-> finalizarPago());
         visPagos.btnBuscar.addActionListener(E -> buscarPago());
 
         // --- Desactivar buscadores ---
@@ -185,7 +186,10 @@ public class ControladorVerPagos {
                 if (cons.getIdConsumo().equals(seleccionado)) {
                     encontrado = true;
 
+<<<<<<< HEAD
                    
+=======
+>>>>>>> c43458ed5a54f85519083d9e40ce2452c75f3458
 
                     
                     visVerDetalle.setVisible(true);
@@ -234,6 +238,7 @@ public class ControladorVerPagos {
 
 // 8️⃣ Cálculo del consumo
                     int metrosConsumidos = cons.getMetrosCubicos() - lecturaAnterior;
+                    BigDecimal monto = calcularMontoConTarifaMinima(metrosConsumidos);
 
                     visVerDetalle.labelNumCuenta.setText(seleccionado);
                     visVerDetalle.labelMes.setText(cons.getMes());
@@ -242,7 +247,7 @@ public class ControladorVerPagos {
                     visVerDetalle.labelLecturaActual.setText(String.valueOf(cons.getMetrosCubicos()) + " m\u00B3");
                     visVerDetalle.labelLecturaAnterior.setText(String.valueOf(lecturaAnterior) + " m\u00B3");
                     visVerDetalle.labelAñoLectura.setText(String.valueOf(cons.getAño()));
-                    visVerDetalle.labelCosto.setText("$ " + obtenerPrecioPorRango(metrosConsumidos)
+                    visVerDetalle.labelCosto.setText("$ " + monto
                             .setScale(2, RoundingMode.HALF_UP)
                             .toPlainString());
 
@@ -290,6 +295,25 @@ public class ControladorVerPagos {
                     JOptionPane.WARNING_MESSAGE);
             visVerDetalle.labelCambio.setText("N/A");
         }
+    }
+      public void finalizarPago() {
+        String pago = visVerDetalle.labelCambio.getText() ; 
+        
+        if (!pago.equals("N/A")) {
+            ModeloConsumo cons =  base.encontrarConsumo(getConsumoSeleccionado()); 
+            cons.setCancelado(true);
+            mostrarConsumosTabla(base.getConsumos());
+            JOptionPane.showMessageDialog(vistaPrincipal,
+                        "Consumo cancelado",
+                        "ANDA",
+                        JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(vistaPrincipal,
+                        "Error al cancelar el consumo",
+                        "ANDA",
+                        JOptionPane.WARNING_MESSAGE);
+        }
+                
     }
 
     public String getConsumoSeleccionado() {
