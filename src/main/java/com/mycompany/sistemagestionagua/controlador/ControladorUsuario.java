@@ -330,21 +330,54 @@ public class ControladorUsuario {
     private void modificarUsuario() {
 
         String seleccionado = getUsuarioSeleccionado();
+        
+     
 
         String nuevoNombre = visModificarUser.txtNombreAgreUsuario.getText();
         String nuevoApellido = visModificarUser.txtApellidoAgreUsuario.getText();
         String nuevoDui = visModificarUser.txtduiUsuario.getText();
+        
+            if (!soloLetras(nuevoNombre)) {
+        JOptionPane.showMessageDialog(vistaPrincipal,
+                "El nombre solo debe contener letras",
+                "ANDA",
+                JOptionPane.WARNING_MESSAGE);
+        visAgregarUser.txtNombreAgreUsuario.requestFocus();
+        return;
+    }
+
+    // 3️⃣ Validar que APELLIDO solo tenga letras
+    if (!soloLetras(nuevoApellido)) {
+        JOptionPane.showMessageDialog(vistaPrincipal,
+                "El apellido solo debe contener letras",
+                "ANDA",
+                JOptionPane.WARNING_MESSAGE);
+        visAgregarUser.txtApellidoAgreUsuario.requestFocus();
+        return;
+    }
+    
+     // 4️⃣ Validar DUI
+    if (!Usuario.validarDUI(nuevoDui)) {
+        JOptionPane.showMessageDialog(vistaPrincipal,
+                "Formato de DUI inválido.\nEjemplo: 12345678-9",
+                "ANDA",
+                JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+        
+        
 
         if (base.modificarUsuario(seleccionado, nuevoDui, nuevoNombre, nuevoApellido)) {
             JOptionPane.showMessageDialog(vistaPrincipal, "Usuario modificado con éxito", "ANDA", JOptionPane.INFORMATION_MESSAGE);
             visModificarUser.dispose();
 
             mostrarUsersTabla(base.getUsuario());
+            
 
         } else {
             JOptionPane.showMessageDialog(vistaPrincipal, "El usuario NO se pudo modificar", "ANDA", JOptionPane.WARNING_MESSAGE);
         }
 
     }
-
+   
 }

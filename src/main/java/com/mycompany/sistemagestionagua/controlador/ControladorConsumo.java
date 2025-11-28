@@ -6,6 +6,7 @@ package com.mycompany.sistemagestionagua.controlador;
 
 import com.mycompany.sistemagestionagua.modelo.Base;
 import com.mycompany.sistemagestionagua.modelo.ModeloConsumo;
+import com.mycompany.sistemagestionagua.modelo.PrecioMC;
 import com.mycompany.sistemagestionagua.modelo.Usuario;
 import com.mycompany.sistemagestionagua.vista.VistaAgregarConsumo;
 import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
@@ -49,13 +50,31 @@ public class ControladorConsumo {
                 String consumo = vistaAgrgarConsumo.txtConsumo.getText().trim();
                 String numCuenta = vistaAgrgarConsumo.txtNumeroCuenta.getText().trim();
                 String mesSeleccionado = (String) vistaAgrgarConsumo.comboAgragarC.getSelectedItem();
+                int añoSeleccionado = (int) vistaAgrgarConsumo.comboAgregarAño.getSelectedItem();
                 int indiceSelec = vistaAgrgarConsumo.comboAgragarC.getSelectedIndex();
                 int numMes = indiceSelec + 1;
+
 
                 // VALIDAR VACÍOS
                 if (consumo.isEmpty() || numCuenta.isEmpty()) {
                     JOptionPane.showMessageDialog(vistaPrincipal, "Complete todos los campos", "ANDA", JOptionPane.WARNING_MESSAGE);
                     return;
+
+                if (Consumo.isEmpty()) {
+                    JOptionPane.showMessageDialog(vistaPrincipal, "Complete los campos", "ANDA", JOptionPane.WARNING_MESSAGE);
+
+                } else {
+                    String idConsumo = generarSiguienteIdConsumo();
+                    
+                    if (base.agregarConsumos(new ModeloConsumo(numCuenta,idConsumo, mesSeleccionado, numMes, añoSeleccionado,  Integer.parseInt(Consumo), false)) != false) {
+                        JOptionPane.showMessageDialog(vistaPrincipal, "Consumo Guardado", "ANDA", JOptionPane.INFORMATION_MESSAGE);
+                        vistaAgrgarConsumo.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(vistaPrincipal, "Datos NO Guardados", "ANDA", JOptionPane.WARNING_MESSAGE);
+
+                    }
+
+
                 }
 
                 // VALIDAR SOLO NÚMEROS
@@ -105,6 +124,8 @@ public class ControladorConsumo {
             vistaAgrgarConsumo.txtNumeroCuenta.setText(seleccionado);
             vistaAgrgarConsumo.txtNumeroCuenta.setEnabled(false);
             formaAgregarConsumo();
+            agregarAñoConsumo();
+            
 
         }
     }
@@ -118,6 +139,17 @@ public class ControladorConsumo {
 
         }
     }
+
+    
+    public void agregarAñoConsumo() {
+        int[] años = {2025, 2026, 2027, 2028, 2029, 2030
+        };
+        for (int año : años) {
+            vistaAgrgarConsumo.comboAgregarAño.addItem(año);
+
+        }
+    }
+    
 
     private String generarSiguienteIdConsumo() {
         ArrayList<ModeloConsumo> consumos = base.getConsumos();
