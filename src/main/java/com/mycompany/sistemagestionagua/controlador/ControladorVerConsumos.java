@@ -13,9 +13,11 @@ import com.mycompany.sistemagestionagua.vista.VistaPrincipal;
 import com.mycompany.sistemagestionagua.vista.VistaVerConsumos;
 import com.mycompany.sistemagestionagua.vista.verDetalleConsumo;
 import java.awt.Dimension;
+import java.awt.List;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Comparator;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -52,7 +54,7 @@ public class ControladorVerConsumos {
         visVerConsumos.btnPagar.addActionListener(e -> pagarCosumo(base.getConsumos()));
         visVerConsumos.btnModificar.addActionListener(e -> mostrarVistaModificar());
 
-        visVerDetalle.btnRegistrarPago.addActionListener(e-> registrarPago());
+        visVerDetalle.btnRegistrarPago.addActionListener(e -> registrarPago());
         visVerDetalle.btnCerrar.addActionListener(e -> visVerDetalle.dispose());
 
         visModificarConsumo.btnModificar.addActionListener(e -> modificarConsumo());
@@ -67,7 +69,7 @@ public class ControladorVerConsumos {
     }
 
     public void mostrarVista() {
-        visVerConsumos.setSize(1000, 600);
+      
         visVerConsumos.toFront();
         visVerConsumos.setVisible(true);
 
@@ -111,14 +113,58 @@ public class ControladorVerConsumos {
 
             String Pago = cons.isCancelado() ? "Cancelado" : "Pendiente";
 
-            int lecturaAnterior;
+            
+            ArrayList<ModeloConsumo> consumosServicio = new ArrayList<>();
 
-            if (cons.getNumMes() - 1 == 0) {
-                lecturaAnterior = (serv != null) ? serv.getMetrosCubicos() : 0;
-            } else {
-                lecturaAnterior = base.obtenerLecturaAnterior(cons.getNumMes() - 1);
+            for (ModeloConsumo c : consumos) {
+                if (c.getNumeroCuenta().equals(cons.getNumeroCuenta())) {
+                    consumosServicio.add(c);
+                }
             }
 
+            int lecturaAnterior = 0;
+
+// 1️⃣ Lectura inicial del servicio (sin fecha)
+            int lecturaInicial = serv.getMetrosCubicos();
+
+// 2️⃣ Primer consumo con fecha
+            ModeloConsumo primer = consumosServicio.get(0);
+            int mesPrimero = primer.getNumMes();
+            int añoPrimero = primer.getAño();
+
+// 3️⃣ Datos del consumo actual
+            int mes = cons.getNumMes();
+            int año = cons.getAño();
+
+// Variable para guardar la lectura que venga de BD
+            Integer lecturaBD = null;
+
+// 4️⃣ Si estamos en el primer consumo registrado → usar lectura inicial
+            if (mes == mesPrimero && año == añoPrimero) {
+
+                lecturaAnterior = lecturaInicial;
+
+            } // 5️⃣ Si estamos en el mismo año inicial y mes posterior
+            else if (año == añoPrimero && mes > mesPrimero) {
+
+                lecturaBD = base.obtenerLecturaAnterior(mes - 1, año, cons.getNumeroCuenta());
+                lecturaAnterior = (lecturaBD == null) ? lecturaInicial : lecturaBD;
+
+            } // 6️⃣ Si estamos en enero pero NO es el primer año
+            else if (mes == 1) {
+
+                lecturaBD = base.obtenerLecturaAnterior(12, año - 1, cons.getNumeroCuenta());
+                lecturaAnterior = (lecturaBD == null) ? lecturaInicial : lecturaBD;
+
+            } // 7️⃣ Mes normal
+            else {
+
+                lecturaBD = base.obtenerLecturaAnterior(mes - 1, año, cons.getNumeroCuenta());
+                lecturaAnterior = (lecturaBD == null) ? lecturaInicial : lecturaBD;
+
+            }
+
+// 8️⃣ Cálculo del consumo real
             int metrosConsumidos = cons.getMetrosCubicos() - lecturaAnterior;
 
             // Cálculo del monto: ahora usando tarifa mínima cuando corresponda
@@ -149,6 +195,8 @@ public class ControladorVerConsumos {
 
         String ServicioSeleccionado = getServicioSeleccionado();
 
+        Servicio servicio = base.datosServicios(ServicioSeleccionado);
+
         if (seleccionado != null) {
             boolean encontrado = false;
 
@@ -156,7 +204,6 @@ public class ControladorVerConsumos {
                 if (cons.getIdConsumo().equals(seleccionado)) {
                     encontrado = true;
 
-                    visVerDetalle.setSize(600, 400);
                     visVerDetalle.setVisible(true);
 
                     // 2️⃣ Centrar la vista
@@ -171,14 +218,37 @@ public class ControladorVerConsumos {
                     // 3️⃣ Mostrar y traer al frente
                     visVerDetalle.toFront();
 
+                    visVerDetalle.txtPago.setText("");
+
                     int lecturaAnterior = 0;
 
-                    if (cons.getNumMes() - 1 == 0) {
-                        lecturaAnterior = (cons != null) ? cons.getMetrosCubicos() : 0;
-                    } else {
-                        lecturaAnterior = base.obtenerLecturaAnterior(cons.getNumMes() - 1);
+// 1️⃣ Leer la lectura inicial desde el servicio (sin fecha)
+                    int lecturaInicial = servicio.getMetrosCubicos();
+
+// 2️⃣ Obtener primer registro de consumo (primer mes con fecha)
+                    ModeloConsumo primer = consumos.get(0);
+                    int mesPrimero = primer.getNumMes();
+                    int añoPrimero = primer.getAño();
+
+// 3️⃣ Datos del consumo actual
+                    int mes = cons.getNumMes();
+                    int año = cons.getAño();
+
+// 4️⃣ Si estamos en el PRIMER consumo registrado con fecha
+                    if (mes == mesPrimero && año == añoPrimero) {
+                        lecturaAnterior = lecturaInicial;
+                    } // 5️⃣ Si estamos en el mismo año del PRIMER consumo pero en un mes posterior
+                    else if (año == añoPrimero && mes > mesPrimero) {
+                        lecturaAnterior = base.obtenerLecturaAnterior(mes - 1, año, cons.getNumeroCuenta());
+                    } // 6️⃣ Si estamos en enero, pero NO es el primer año → buscar diciembre del año anterior
+                    else if (mes == 1) {
+                        lecturaAnterior = base.obtenerLecturaAnterior(12, año - 1, cons.getNumeroCuenta());
+                    } // 7️⃣ Caso general → buscar mes anterior del mismo año
+                    else {
+                        lecturaAnterior = base.obtenerLecturaAnterior(mes - 1, año, cons.getNumeroCuenta());
                     }
 
+// 8️⃣ Cálculo del consumo
                     int metrosConsumidos = cons.getMetrosCubicos() - lecturaAnterior;
 
                     visVerDetalle.labelNumCuenta.setText(seleccionado);
@@ -206,28 +276,43 @@ public class ControladorVerConsumos {
     }
 
     private void registrarPago() {
-        String costoTexto = visVerDetalle.labelCosto.getText()
-                        .replace("$", "")
-                        .replace(" ", "")
-                        .trim();
-        double aPagar = Double.parseDouble(costoTexto);
-        
-        double pago = Double.parseDouble(visVerDetalle.txtPago.getText());
-        
 
         if (!visVerDetalle.txtPago.getText().isEmpty()) {
-            if (pago > aPagar) {
-                double cambio = pago - aPagar;
-                visVerDetalle.labelCambio.setText(String.valueOf(cambio));
-            } else if (pago == aPagar) {
-                visVerDetalle.labelCambio.setText(String.valueOf(0));
-            }else{
-                 JOptionPane.showMessageDialog(vistaPrincipal,
-                        "Pago no sufuciente",
+            String costoTexto = visVerDetalle.labelCosto.getText()
+                    .replace("$", "")
+                    .replace(" ", "")
+                    .trim();
+            double aPagar = Double.parseDouble(costoTexto);
+
+            double pago = Double.parseDouble(visVerDetalle.txtPago.getText());
+
+            if (aPagar != 0) {
+                if (pago > aPagar) {
+                    double cambio = pago - aPagar;
+                    visVerDetalle.labelCambio.setText(String.valueOf(cambio));
+                } else if (pago == aPagar) {
+                    visVerDetalle.labelCambio.setText(String.valueOf(0));
+                } else {
+                    JOptionPane.showMessageDialog(vistaPrincipal,
+                            "Pago no sufuciente",
+                            "ANDA",
+                            JOptionPane.WARNING_MESSAGE);
+                    visVerDetalle.labelCambio.setText("N/A");
+                }
+            } else {
+                JOptionPane.showMessageDialog(vistaPrincipal,
+                        "error en tarifa",
                         "ANDA",
                         JOptionPane.WARNING_MESSAGE);
-                 visVerDetalle.labelCambio.setText("N/A");
+                visVerDetalle.labelCambio.setText("N/A");
             }
+
+        } else {
+            JOptionPane.showMessageDialog(vistaPrincipal,
+                    "Ingrese un valor en pago",
+                    "ANDA",
+                    JOptionPane.WARNING_MESSAGE);
+            visVerDetalle.labelCambio.setText("N/A");
         }
     }
 
@@ -258,6 +343,7 @@ public class ControladorVerConsumos {
             visModificarConsumo.txtIdConsumo.setEditable(false);
 
             llenarComboModificar(base.encontrarConsumo(seleccionado).getMes());
+            llenarComboAñoModificar(base.encontrarConsumo(seleccionado).getAño());
 
             if (base.encontrarConsumo(seleccionado).isCancelado()) {
                 visModificarConsumo.btnCancelado.setSelected(true);
@@ -273,9 +359,9 @@ public class ControladorVerConsumos {
         String idConsumo = visModificarConsumo.txtIdConsumo.getText();
         String mes = (String) visModificarConsumo.comboAgragarC.getSelectedItem();
         String metros = visModificarConsumo.txtConsumo.getText();
-        
+
         if (!esNumero(metros)) {
-             JOptionPane.showMessageDialog(vistaPrincipal,
+            JOptionPane.showMessageDialog(vistaPrincipal,
                     "Digite numeros",
                     "ANDA",
                     JOptionPane.WARNING_MESSAGE);
@@ -462,17 +548,30 @@ public class ControladorVerConsumos {
 
     }
 
-    public boolean esNumero(String texto) {
-    if (texto == null || texto.isEmpty()) {
-        return false;
+    public void llenarComboAñoModificar(int añoSelect) {
+
+        visModificarConsumo.comboAgregarAño.removeAllItems();
+
+        int[] años = {2025, 2026, 2027, 2028, 2029, 2030
+        };
+        for (int año : años) {
+            visModificarConsumo.comboAgregarAño.addItem(año);
+
+        }
+
+        visModificarConsumo.comboAgregarAño.setSelectedItem(añoSelect);
     }
-    for (char c : texto.toCharArray()) {
-        if (!Character.isDigit(c)) {
+
+    public boolean esNumero(String texto) {
+        if (texto == null || texto.isEmpty()) {
             return false;
         }
+        for (char c : texto.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
     }
-    return true;
-}
-   
-    
+
 }

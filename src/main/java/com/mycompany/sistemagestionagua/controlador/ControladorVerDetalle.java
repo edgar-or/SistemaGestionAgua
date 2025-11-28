@@ -36,7 +36,7 @@ public class ControladorVerDetalle {
     
     
      public void mostrarVista() {
-        visVerDetalle.setSize(600, 400);
+        
         visVerDetalle.setVisible(true);
 
         // 2️⃣ Centrar la vista

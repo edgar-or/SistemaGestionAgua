@@ -46,6 +46,7 @@ public class ControladorVerServicios {
         visVerServicios.btnEliminar.addActionListener(e -> eliminarServicio());
         visVerServicios.btnModificar.addActionListener(e -> mostrarModificar());
         visModificarServicio.btnCerrar.addActionListener(e -> visModificarServicio.dispose());
+
         visModificarServicio.btnModificarSer.addActionListener(e -> modificarServicio());
         visVerServicios.btnBuscar.addActionListener(e -> buscarServicio());
 
@@ -53,6 +54,17 @@ public class ControladorVerServicios {
         eventoCampo(visVerServicios.txtBuscar1, visVerServicios.txtBuscar2, visVerServicios.txtBuscar3);
         eventoCampo(visVerServicios.txtBuscar2, visVerServicios.txtBuscar1, visVerServicios.txtBuscar3);
         eventoCampo(visVerServicios.txtBuscar3, visVerServicios.txtBuscar1, visVerServicios.txtBuscar2);
+
+        visModificarServicio.btnModificarSer.addActionListener(e-> modificarServicio());
+        visVerServicios.btnBuscar.addActionListener(e->buscarServicio());
+        
+        
+        
+                // --- Desactivar buscadores ---
+        eventoCampo(visVerServicios.txtBuscar1, visVerServicios.txtBuscar2, visVerServicios.txtBuscar2);
+        eventoCampo(visVerServicios.txtBuscar2, visVerServicios.txtBuscar1, visVerServicios.txtBuscar2);
+        eventoCampo(visVerServicios.txtBuscar2, visVerServicios.txtBuscar1, visVerServicios.txtBuscar2);
+
 
     }
 
@@ -237,9 +249,14 @@ public class ControladorVerServicios {
             identificador = "cuenta";
             busca = visVerServicios.txtBuscar2.getText().trim();
 
-        } else if (!visVerServicios.txtBuscar3.getText().isEmpty()) {
+        } else if (!visVerServicios.txtBuscar2.getText().isEmpty()) {
             identificador = "nombre";
+
             busca = visVerServicios.txtBuscar3.getText().trim();
+
+            busca = visVerServicios.txtBuscar2.getText().trim();
+
+
         }
 
         // NO SE INGRESÓ NADA
@@ -289,7 +306,12 @@ public class ControladorVerServicios {
             // LIMPIAR CAMPOS
             visVerServicios.txtBuscar1.setText("");
             visVerServicios.txtBuscar2.setText("");
+
             visVerServicios.txtBuscar3.setText("");
+
+
+            visVerServicios.txtBuscar2.setText("");
+            //detiene la ejecucion
 
             return;
         }
